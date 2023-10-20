@@ -2,7 +2,9 @@ package aplus.insurancesystem2.customer.dto.response;
 
 import aplus.insurancesystem2.customer.domain.Customer;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class CustomerInfoResponse {
 
