@@ -1,3 +1,6 @@
 spring:
   profiles:
     active: ${profile}
+
+  jpa:
+    open-in-view: false
