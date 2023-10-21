@@ -46,7 +46,7 @@ jobs:
           project: love00huk/choihyeok
           stage: main
           yaml: |
-            name: insurance_system
+            name: insurancesystem
             app: container
             options:
               ports: 8080
