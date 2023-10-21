@@ -8,14 +8,14 @@ import lombok.Getter;
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class CustomerInfoResponse {
 
-    private String id;
-    private String name;
-    private String birth;
-    private String gender;
+    private final String id;
+    private final String name;
+    private final String birth;
+    private final String gender;
 
     public static CustomerInfoResponse of(Customer customer) {
         return new CustomerInfoResponse(
-                customer.getCustomerId(),
+                customer.getId(),
                 customer.getCustomerName(),
                 customer.getBirth(),
                 customer.getEGender().getGenderStr()
