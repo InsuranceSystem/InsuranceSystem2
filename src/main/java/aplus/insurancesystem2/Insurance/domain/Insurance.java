@@ -1,0 +1,53 @@
+package aplus.insurancesystem2.Insurance.domain;
+
+import aplus.insurancesystem2.Insurance.dto.request.insuranceCreateRequest;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Insurance {
+
+    @Id
+    @Column(name = "insuranceID")
+    private String id;
+    private String insuranceName;
+    private String type;
+    private int maxCompensation;
+    private String periodOfInsurance;
+    private String paymentCycle;
+    private String paymentPeriod;
+    private String ageOfTarget;
+    private int basicPremium;
+    private String rate;
+    private boolean distributionStatus;
+    private String TermsIDList;
+    private String insuranceClausePeriod;
+    private String precaution;
+    private boolean authorization;
+
+    public Insurance(insuranceCreateRequest dto){
+        this.id = dto.getId();
+        this.insuranceName = dto.getInsuranceName();
+        this.insuranceClausePeriod = dto.getInsuranceClausePeriod();
+        this.periodOfInsurance = dto.getPeriodOfInsurance();
+        this.ageOfTarget = dto.getAgeOfTarget();
+        this.basicPremium = dto.getBasicPremium();
+        this.distributionStatus = dto.isDistributionStatus();
+        this.maxCompensation = dto.getMaxCompensation();
+        this.paymentCycle = dto.getPaymentCycle();
+        this.paymentPeriod = dto.getPaymentPeriod();
+        this.precaution = dto.getPrecaution();
+        this.rate = dto.getRate();
+        this.TermsIDList = dto.getTermsIDList();
+        this.type = dto.getType();
+        this.authorization = dto.isAuthorization();
+    }
+}
