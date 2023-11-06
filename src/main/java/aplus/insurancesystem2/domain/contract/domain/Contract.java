@@ -48,7 +48,6 @@ public class Contract {
     @JoinColumn(name = "insuranceID", updatable = false, insertable = false)
     private Insurance insurance;
 
-
     //matchCustomerId
 
     //finalize
