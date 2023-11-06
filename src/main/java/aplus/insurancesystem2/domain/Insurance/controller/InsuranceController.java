@@ -41,35 +41,41 @@ public class InsuranceController {
     }
 
     //테마별 보험 조회
-    @GetMapping("/{type}")
-    public List<Insurance> getInsuranceListByType(@PathVariable("type") String type) {
-        return insuranceService.getInsuranceListByType(type);
-    }
-    //승인된 테마별 보험 조회
-    @GetMapping("/{type}/approve")
-    public List<Insurance> getInsuranceListByTypeApprove(@PathVariable("type") String type) {
-        return insuranceService.getInsuranceListByTypeApprove(type);
-    }
+//    @GetMapping("/{type}")
+//    public List<Insurance> getInsuranceListByType(@PathVariable("type") String type) {
+//        return insuranceService.getInsuranceListByType(type);
+//    }
+//    //승인된 테마별 보험 조회
+//    @GetMapping("/{type}/approve")
+//    public List<Insurance> getInsuranceListByTypeApprove(@PathVariable("type") String type) {
+//        return insuranceService.getInsuranceListByTypeApprove(type);
+//    }
     //설계중인 테마별 보험 조회
 //    @GetMapping("/{type}/approve")
 //    public List<Insurance> getInsuranceListByTypeNotApprove(@PathVariable("type") String type) {
 //        return insuranceService.getInsuranceListByTypeNotApprove(type);
 //    }
-    //전체 보험 조회
+    @Operation(summary = "전체 보험 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "전체 보험 정보 list 반환")
+    })
     @GetMapping("/all")
     public List<Insurance> getInsuranceList() {
         return insuranceService.getInsuranceList();
     }
     //승인된 전체 보험 조회
-    @GetMapping("/all/approve")
-    public List<Insurance> getInsuranceListApprove() {
-        return insuranceService.getInsuranceListApprove();
-    }
+//    @GetMapping("/all/approve")
+//    public List<Insurance> getInsuranceListApprove() {
+//        return insuranceService.getInsuranceListApprove();
+//    }
     //설계중인 전체 보험 조회
 //    @GetMapping("/all/approve")
 //    public List<Insurance> getInsuranceListNotApprove() {
 //        return insuranceService.getInsuranceListNotApprove();
 //    }
+/*
     //보험별 약관 조회
     @GetMapping("/terms/{id}")
     public List<Optional<Terms>> getTermsListByInsuranceId(@PathVariable("id") String insuranceId) {
@@ -95,4 +101,5 @@ public class InsuranceController {
     public String updateAuthInsurance(@PathVariable("id") String insuranceId) {
         return insuranceService.updateAuthInsurance(insuranceId);
     }
+ */
 }
