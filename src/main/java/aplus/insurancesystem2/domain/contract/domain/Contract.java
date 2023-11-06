@@ -48,6 +48,18 @@ public class Contract {
     @JoinColumn(name = "insuranceID", updatable = false, insertable = false)
     private Insurance insurance;
 
+    //Generator
     //matchCustomerId
 
+    public void changeCancellation() {
+        this.cancellation = !isCancellation();
+    }
+
+    public void changeResurrection(boolean resurrection) {
+        this.resurrection = resurrection;
+    }
+
+    public void changeMaturity(boolean maturity) {
+        this.maturity = maturity;
+    }
 }
