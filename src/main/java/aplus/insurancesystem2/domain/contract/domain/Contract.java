@@ -9,18 +9,15 @@ import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Getter
-@Setter
-@ToString
 @Entity
 @IdClass(ContractId.class)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Contract {
 
@@ -51,7 +48,6 @@ public class Contract {
     @JoinColumn(name = "insuranceID", updatable = false, insertable = false)
     private Insurance insurance;
 
-    //generator
 
     //matchCustomerId
 
