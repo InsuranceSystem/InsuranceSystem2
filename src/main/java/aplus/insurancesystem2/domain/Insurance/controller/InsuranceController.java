@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/insurance")
+@RequestMapping("/insurances")
 @RequiredArgsConstructor
 public class InsuranceController {
 
