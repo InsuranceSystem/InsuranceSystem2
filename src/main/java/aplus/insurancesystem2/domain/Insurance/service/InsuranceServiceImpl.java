@@ -5,6 +5,7 @@ import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
 import aplus.insurancesystem2.domain.Insurance.domain.Terms;
 import aplus.insurancesystem2.domain.Insurance.dto.request.insuranceCreateRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.exception.InsuranceNotFoundException;
 import aplus.insurancesystem2.domain.Insurance.repository.GuaranteeRepository;
 import aplus.insurancesystem2.domain.Insurance.repository.InsuranceRepository;
 import aplus.insurancesystem2.domain.Insurance.repository.TermsRepository;
@@ -28,7 +29,7 @@ public class InsuranceServiceImpl implements InsuranceService{
     public InsuranceInfoResponse getInsuranceInfo(String insuranceId) {
         return insuranceRepository.findById(insuranceId)
                 .map(InsuranceInfoResponse::of)
-                .orElse(null);
+                .orElseThrow(InsuranceNotFoundException::new);
     }
 
     @Override
