@@ -5,6 +5,11 @@ import aplus.insurancesystem2.domain.Insurance.domain.Terms;
 import aplus.insurancesystem2.domain.Insurance.dto.request.insuranceCreateRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +25,16 @@ public class InsuranceController {
 
     private final InsuranceService insuranceService;
 
-    //보험 상세조회
+    @Operation(summary = "보험 상세 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "상세 보험 반환"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "I001: id에 해당하는 보험을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
     @GetMapping("/{id}")
     public InsuranceInfoResponse getInsurance(@PathVariable("id") String insuranceId) {
         return insuranceService.getInsuranceInfo(insuranceId);

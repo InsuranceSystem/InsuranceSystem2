@@ -1,11 +1,13 @@
 package aplus.insurancesystem2.domain.Insurance.dto.response;
 
 import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
+@Schema(description = "보험 상세 조회 Response")
 public class InsuranceInfoResponse {
     private final String id;
     private final String insuranceName;
