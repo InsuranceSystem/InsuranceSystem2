@@ -38,4 +38,8 @@ public class Payment {
         }
         return false;
     }
+
+    public void changeWhetherPayment(boolean whetherPayment) {
+        this.whetherPayment = whetherPayment;
+    }
 }

@@ -99,13 +99,11 @@ public class PaymentServiceImpl implements PaymentService {
     public boolean updateWhetherPayment(String customerId, String insuranceId) {
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.getCustomer().getId().equals(customerId)
-                    && paymentList.get(i).getInsuranceID().equals(insuranceId)) {
+                    && payment.getInsurance().getId().equals(insuranceId)) {
 
-                boolean newWhetherPayment = !this.paymentList.get(i).isWhetherPayment();
-                if (paymentDao.updateWhetherPayment(customerId, insuranceId, newWhetherPayment)) {
-                    this.paymentList.get(i).setWhetherPayment(newWhetherPayment); // paymentList 업데이트
-                    return true;
-                }
+                boolean newWhetherPayment = !payment.isWhetherPayment();
+                payment.changeWhetherPayment(newWhetherPayment);
+                return true;
             }
         }
         return false;
