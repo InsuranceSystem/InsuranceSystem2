@@ -4,6 +4,7 @@ import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
 import aplus.insurancesystem2.domain.customer.domain.Customer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -16,15 +17,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@IdClass(ContractId.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Contract {
 
-    @Id @EqualsAndHashCode.Include
-    private String customerID;
-    @Id @EqualsAndHashCode.Include
-    private String insuranceID;
+    @Id @GeneratedValue
+    private Long id;
     private String insurancePeriod;
     private int premium;
     private String paymentCycle;
@@ -36,30 +34,16 @@ public class Contract {
     private boolean cancellation;
     private String stringDateOfSubscription;
     private String stringDateOfMaturity;
-    public Payment m_Payment;
 
-    //optional?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerID", updatable = false, insertable = false)
     private Customer customer;
 
-    //optional?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "insuranceID", updatable = false, insertable = false)
     private Insurance insurance;
 
-    //Generator
-    //matchCustomerId
-
-    public void changeCancellation() {
-        this.cancellation = !isCancellation();
-    }
-
-    public void changeResurrection(boolean resurrection) {
-        this.resurrection = resurrection;
-    }
-
-    public void changeMaturity(boolean maturity) {
-        this.maturity = maturity;
+    public boolean match(String customerID, String insuranceID) {
+        return (this.customer.getId().equals(customerID)) && (this.insurance.getId() == insuranceID);
     }
 }
