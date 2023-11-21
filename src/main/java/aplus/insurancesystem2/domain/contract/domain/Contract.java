@@ -50,7 +50,6 @@ public class Contract {
         this.resurrection = resurrection;
     }
 
-
     public void changeMaturity(boolean maturity) {
         this.maturity = maturity;
     }
