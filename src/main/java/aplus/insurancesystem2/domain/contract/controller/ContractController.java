@@ -61,7 +61,7 @@ public class ContractController {
         contractService.setResurrectFromCustomer(customerId);
     }
 
-    @PostMapping("/contract/")
+    @PostMapping("/contract/maturity/update")
     public void setMaturity(@RequestBody String customerId) {
         contractService.setMaturityFromCustomer(customerId);
     }
