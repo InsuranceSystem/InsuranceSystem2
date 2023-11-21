@@ -6,6 +6,7 @@ import aplus.insurancesystem2.domain.contract.domain.Payment;
 import aplus.insurancesystem2.domain.contract.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Transactional
     public boolean update(Payment updatedPayment) {
-        List<Payment> payments = paymentRepository.findAll();
-        for (Payment payment : payments) {
+        for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(updatedPayment.getCustomer().getId(), updatedPayment.getInsurance().getId())) {
                 paymentRepository.delete(payment);
                 paymentRepository.save(updatedPayment);
@@ -49,24 +49,65 @@ public class PaymentServiceImpl implements PaymentService {
         return false;
     }
 
-    public ArrayList<Payment> retrieveCustomerInsurancePayment(String customerId, String selectedInsuranceId) {
-        return null;
+    public List<Payment> retrieveCustomerInsurancePayment(String customerId, String insuranceId) {
+        List<Payment> customerPayment = new ArrayList<>();
+        for (Payment payment : paymentRepository.findAll()) {
+            if (payment.getCustomer().getId().equals(customerId)
+                    && payment.getInsurance().getId().equals(insuranceId)) {
+                customerPayment.add(payment);
+            }
+        }
+        return customerPayment;
     }
 
-    public ArrayList<Payment> retrieveCustomerPayment(String selectedCustomerId) {
-        return null;
+    public List<Payment> retrieveCustomerPayment(String customerId) {
+        List<Payment> customerPayment = new ArrayList<>();
+        for (Payment payment : paymentRepository.findAll()) {
+            if (payment.getCustomer().getId().equals(customerId)) {
+                customerPayment.add(payment);
+            }
+        }
+        return customerPayment;
     }
 
     public ArrayList<String> retrieveUnpaidCustomerId() {
-        return null;
+        ArrayList<String> unPaidCustomerId = new ArrayList<>();
+        HashSet<String> uniqueCustomerId = new HashSet<>();
+
+        for (Payment payment : paymentRepository.findAll()) {
+            if (payment.isWhetherPayment() == false) {
+                uniqueCustomerId.add(payment.getCustomer().getId());
+            }
+        }
+
+        unPaidCustomerId.addAll(uniqueCustomerId);
+        return unPaidCustomerId;
     }
 
-    public ArrayList<String> retrieveDateStatusById(String selectedCustomerId, String selectedInsuranceId) {
-        return null;
+    public List<String> retrieveDateStatusById(String customerId, String insuranceId) {
+        List<String> dateAndStatus = new ArrayList<>();
+        for (Payment payment : paymentRepository.findAll()) {
+            if (payment.getCustomer().getId().equals(customerId)
+                    && payment.getInsurance().getId().equals(insuranceId)) {
+                dateAndStatus.add(payment.getDateOfPayment() + " " + payment.isWhetherPayment());
+            }
+        }
+        return dateAndStatus;
     }
 
     @Transactional
     public boolean updateWhetherPayment(String customerId, String insuranceId) {
+        for (Payment payment : paymentRepository.findAll()) {
+            if (payment.getCustomer().getId().equals(customerId)
+                    && paymentList.get(i).getInsuranceID().equals(insuranceId)) {
+
+                boolean newWhetherPayment = !this.paymentList.get(i).isWhetherPayment();
+                if (paymentDao.updateWhetherPayment(customerId, insuranceId, newWhetherPayment)) {
+                    this.paymentList.get(i).setWhetherPayment(newWhetherPayment); // paymentList 업데이트
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }

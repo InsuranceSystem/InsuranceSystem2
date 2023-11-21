@@ -9,9 +9,9 @@ public interface PaymentService {
     boolean delete();
     List<Payment> retrieve() throws Exception;
     boolean update(Payment updatedPayment);
-    ArrayList<Payment> retrieveCustomerInsurancePayment(String customerId, String selectedInsuranceId);
-    ArrayList<Payment> retrieveCustomerPayment(String selectedCustomerId);
+    List<Payment> retrieveCustomerInsurancePayment(String customerId, String selectedInsuranceId);
+    List<Payment> retrieveCustomerPayment(String selectedCustomerId);
     ArrayList<String> retrieveUnpaidCustomerId();
-    ArrayList<String> retrieveDateStatusById(String selectedCustomerId, String selectedInsuranceId);
+    List<String> retrieveDateStatusById(String selectedCustomerId, String selectedInsuranceId);
     boolean updateWhetherPayment(String selectedCustomerId, String selectedInsuranceId);
 }
