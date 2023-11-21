@@ -3,7 +3,6 @@ package aplus.insurancesystem2.domain.contract.service;
 import static java.util.Objects.isNull;
 
 import aplus.insurancesystem2.domain.contract.domain.Contract;
-import aplus.insurancesystem2.domain.contract.domain.ContractId;
 import aplus.insurancesystem2.domain.contract.repository.ContractRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
