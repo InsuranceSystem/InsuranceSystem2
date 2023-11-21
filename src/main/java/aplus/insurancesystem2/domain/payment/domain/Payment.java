@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.contract.domain;
+package aplus.insurancesystem2.domain.payment.domain;
 
 import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
 import aplus.insurancesystem2.domain.customer.domain.Customer;

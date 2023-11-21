@@ -1,6 +1,6 @@
-package aplus.insurancesystem2.domain.contract.service;
+package aplus.insurancesystem2.domain.payment.service;
 
-import aplus.insurancesystem2.domain.contract.domain.Payment;
+import aplus.insurancesystem2.domain.payment.domain.Payment;
 import java.util.ArrayList;
 import java.util.List;
 

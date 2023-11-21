@@ -1,9 +1,9 @@
-package aplus.insurancesystem2.domain.contract.service;
+package aplus.insurancesystem2.domain.payment.service;
 
 import static java.util.Objects.isNull;
 
-import aplus.insurancesystem2.domain.contract.domain.Payment;
-import aplus.insurancesystem2.domain.contract.repository.PaymentRepository;
+import aplus.insurancesystem2.domain.payment.domain.Payment;
+import aplus.insurancesystem2.domain.payment.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
