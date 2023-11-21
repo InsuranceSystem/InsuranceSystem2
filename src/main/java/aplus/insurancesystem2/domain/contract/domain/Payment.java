@@ -9,18 +9,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import java.time.LocalDate;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Payment {
 
     @Id @GeneratedValue
     private Long id;
     private LocalDate dateOfPayment;
+    private boolean whetherPayment;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerID", updatable = false, insertable = false)
@@ -29,4 +27,15 @@ public class Payment {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "insuranceID", updatable = false, insertable = false)
     private Insurance insurance;
+
+    public Payment() {
+        this.whetherPayment = false;
+    }
+
+    public boolean match(String customerId, String insuranceId) {
+        if (this.customer.getId().equals(customerId) && this.insurance.getId().equals(insuranceId)) {
+            return true;
+        }
+        return false;
+    }
 }
