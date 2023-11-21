@@ -1,42 +1,32 @@
 package aplus.insurancesystem2.domain.contract.domain;
 
+import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
+import aplus.insurancesystem2.domain.customer.domain.Customer;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import java.time.LocalDate;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@IdClass(ContractId.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Payment {
 
-    @Id @EqualsAndHashCode.Include
-    private String customerID;
-    @Id @EqualsAndHashCode.Include
-    private String insuranceID;
+    @Id @GeneratedValue
+    private Long id;
     private LocalDate dateOfPayment;
-    private boolean whetherPayment; // 미납 여부
 
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
-    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerID", updatable = false, insertable = false)
+    private Customer customer;
 
-    public void setInsuranceID(String insuranceID) {
-        this.insuranceID = insuranceID;
-    }
-
-    public void setDateOfPayment(LocalDate date) {
-        this.dateOfPayment = date;
-    }
-
-    public void setWhetherPayment(boolean whetherPayment) {
-        this.whetherPayment = whetherPayment;
-    }
-
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "insuranceID", updatable = false, insertable = false)
+    private Insurance insurance;
 }
