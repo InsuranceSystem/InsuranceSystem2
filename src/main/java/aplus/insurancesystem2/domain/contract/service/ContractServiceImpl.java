@@ -5,6 +5,7 @@ import static java.util.Objects.isNull;
 import aplus.insurancesystem2.domain.contract.domain.Contract;
 import aplus.insurancesystem2.domain.contract.repository.ContractRepository;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,11 +35,11 @@ public class ContractServiceImpl implements ContractService {
     }
 
     public List<Contract> retrieveCustomerContract(String customerId) {
-        return contractRepository.findByCustomerID(customerId);
+        return contractRepository.findByCustomerId(customerId);
     }
 
     public List<String> retrieveCustomerContractStatus(String customerId) {
-        return contractRepository.findByCustomerID(customerId)
+        return contractRepository.findByCustomerId(customerId)
                 .stream()
                 .map(contract -> contract.isMaturity() + " " + contract.isCancellation())
                 .collect(Collectors.toList());
@@ -46,41 +47,42 @@ public class ContractServiceImpl implements ContractService {
 
     // 확인 필요
     public List<Contract> getContractByInsuranceID(String insuranceId) {
-        return contractRepository.findByInsuranceID(insuranceId);
+        return contractRepository.findByInsuranceId(insuranceId);
     }
 
     public List<String> getInsuranceIdFromCustomerId(String customerId) {
-        return contractRepository.findByCustomerID(customerId)
-                .stream()
-                .map(Contract::getInsuranceID)
-                .collect(Collectors.toList());
+        List<String> insuranceIdFromCustomerId = new ArrayList<>();
+        for (Contract contract : contractRepository.findByCustomerId(customerId)) {
+            insuranceIdFromCustomerId.add(contract.getInsurance().getId());
+        }
+        return insuranceIdFromCustomerId;
     }
 
     // 확인 필요
     public String retrievePremiumById(String customerId, String insuranceId) {
-        Optional<Contract> findContract = contractRepository.findById(new ContractId(customerId, insuranceId));
+        Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
         return findContract.map(contract -> Integer.toString(contract.getPremium()))
                         .orElse("Contract not found");
     }
 
     @Transactional
     public boolean updateCancellation(String customerId, String insuranceId) {
-        Optional<Contract> findContract = contractRepository.findById(new ContractId(customerId, insuranceId));
+        Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
         findContract.ifPresent(contract -> {
-            contract.changeCancellation();
+            contract.updateCancellation();
         });
         return findContract.isPresent();
     }
 
     @Transactional
     public void setResurrectFromCustomer(String customerId) {
-        List<Contract> customerContracts = contractRepository.findByCustomerID(customerId);
+        List<Contract> customerContracts = contractRepository.findByCustomerId(customerId);
         customerContracts.forEach(contract -> contract.changeResurrection(false));
     }
 
     @Transactional
     public void setMaturityFromCustomer(String customerId) {
-        List<Contract> customerContracts = contractRepository.findByCustomerID(customerId);
+        List<Contract> customerContracts = contractRepository.findByCustomerId(customerId);
         customerContracts.forEach(contract -> contract.changeMaturity(false));
     }
 }
