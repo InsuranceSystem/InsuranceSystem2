@@ -52,8 +52,7 @@ public class PaymentServiceImpl implements PaymentService {
     public List<Payment> retrieveCustomerInsurancePayment(String customerId, String insuranceId) {
         List<Payment> customerPayment = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
-            if (payment.getCustomer().getId().equals(customerId)
-                    && payment.getInsurance().getId().equals(insuranceId)) {
+            if (payment.match(customerId, insuranceId)) {
                 customerPayment.add(payment);
             }
         }
@@ -87,8 +86,7 @@ public class PaymentServiceImpl implements PaymentService {
     public List<String> retrieveDateStatusById(String customerId, String insuranceId) {
         List<String> dateAndStatus = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
-            if (payment.getCustomer().getId().equals(customerId)
-                    && payment.getInsurance().getId().equals(insuranceId)) {
+            if (payment.match(customerId, insuranceId)) {
                 dateAndStatus.add(payment.getDateOfPayment() + " " + payment.isWhetherPayment());
             }
         }
@@ -98,9 +96,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     public boolean updateWhetherPayment(String customerId, String insuranceId) {
         for (Payment payment : paymentRepository.findAll()) {
-            if (payment.getCustomer().getId().equals(customerId)
-                    && payment.getInsurance().getId().equals(insuranceId)) {
-
+            if (payment.match(customerId, insuranceId)) {
                 boolean newWhetherPayment = !payment.isWhetherPayment();
                 payment.changeWhetherPayment(newWhetherPayment);
                 return true;
