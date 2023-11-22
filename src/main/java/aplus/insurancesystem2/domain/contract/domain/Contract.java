@@ -38,11 +38,7 @@ public class Contract {
     @JoinColumn(name = "insuranceID", updatable = false, insertable = false)
     private Insurance insurance;
 
-    public boolean match(String customerID, String insuranceID) {
-        return (this.customer.getId().equals(customerID)) && (this.insurance.getId() == insuranceID);
-    }
-
-    public void updateCancellation() {
+    public void changeCancellation() {
         this.cancellation = !this.cancellation;
     }
 

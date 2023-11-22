@@ -23,32 +23,32 @@ public class ContractController {
 
     @GetMapping("/contract/get/all")
     public List<Contract> get() throws Exception {
-        return contractService.retrieve();
+        return contractService.getall();
     }
 
     @GetMapping("/contract/get")
     public List<Contract> getByCustomerId(@RequestParam String customerId) {
-        return contractService.retrieveCustomerContract(customerId);
-    }
-
-    @GetMapping("/contract/status/get")
-    public List<String> getStatus(@RequestParam String customerId) {
-        return contractService.retrieveCustomerContractStatus(customerId);
+        return contractService.getByCustomerId(customerId);
     }
 
     @GetMapping("/contract/get")
     public List<Contract> getByInsuranceId(@RequestParam String insuranceId) {
-        return contractService.getContractByInsuranceID(insuranceId);
+        return contractService.getByInsuranceId(insuranceId);
     }
 
     @GetMapping("/contract/insurance-id/get")
-    public List<String> getInsuranceId(@RequestParam String customerId) {
-        return contractService.getInsuranceIdFromCustomerId(customerId);
+    public List<String> getInsuranceIds(@RequestParam String customerId) {
+        return contractService.getInsuranceIds(customerId);
+    }
+
+    @GetMapping("/contract/status/get")
+    public List<String> getStatus(@RequestParam String customerId) {
+        return contractService.getStatus(customerId);
     }
 
     @GetMapping("/contract/premium/get")
-    public String retrievePremiumById(@RequestParam String customerId, @RequestParam String insuranceId) {
-        return contractService.retrievePremiumById(customerId, insuranceId);
+    public String getPremium(@RequestParam String customerId, @RequestParam String insuranceId) {
+        return contractService.getPremium(customerId, insuranceId);
     }
 
     @PostMapping("/contract/cancellation/update")
@@ -57,12 +57,12 @@ public class ContractController {
     }
 
     @PostMapping("/contract/resurrection/update")
-    public void preventResurrection(@RequestBody String customerId) {
-        contractService.setResurrectFromCustomer(customerId);
+    public void setResurrection(@RequestBody String customerId) {
+        contractService.setResurrection(customerId);
     }
 
     @PostMapping("/contract/maturity/update")
     public void setMaturity(@RequestBody String customerId) {
-        contractService.setMaturityFromCustomer(customerId);
+        contractService.setMaturity(customerId);
     }
 }

@@ -5,13 +5,13 @@ import java.util.List;
 
 public interface ContractService {
     boolean add(Contract contract);
-    List<Contract> retrieve() throws Exception;
-    List<Contract> retrieveCustomerContract(String customerId);
-    public List<String> retrieveCustomerContractStatus(String customerId);
-    List<Contract> getContractByInsuranceID(String insuranceID);
-    List<String> getInsuranceIdFromCustomerId(String customerId);
-    String retrievePremiumById(String selectedCustomerId, String selectedInsuranceId);
+    List<Contract> getall() throws Exception;
+    List<Contract> getByCustomerId(String customerId);
+    public List<String> getStatus(String customerId);
+    List<Contract> getByInsuranceId(String insuranceID);
+    List<String> getInsuranceIds(String customerId);
+    String getPremium(String selectedCustomerId, String selectedInsuranceId);
     boolean updateCancellation(String customerId, String insuranceId);
-    void setResurrectFromCustomer(String customerID);
-    void setMaturityFromCustomer(String customerID);
+    void setResurrection(String customerID);
+    void setMaturity(String customerID);
 }

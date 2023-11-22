@@ -18,15 +18,15 @@ public class ContractServiceImpl implements ContractService {
 
     private final ContractRepository contractRepository;
 
-    public boolean add(Contract contract) {
-        Contract savedContract = contractRepository.save(contract);
+    public boolean add(Contract newContract) {
+        Contract savedContract = contractRepository.save(newContract);
         if (!isNull(savedContract)) {
             return true;
         }
         return false;
     }
 
-    public List<Contract> retrieve() throws Exception {
+    public List<Contract> getall() throws Exception {
         List<Contract> allContract = contractRepository.findAll();
         if (allContract.size() == 0) {
             throw new Exception("payment 데이터가 없습니다.");
@@ -34,56 +34,54 @@ public class ContractServiceImpl implements ContractService {
         return allContract;
     }
 
-    public List<Contract> retrieveCustomerContract(String customerId) {
+    public List<Contract> getByCustomerId(String customerId) {
         return contractRepository.findByCustomerId(customerId);
     }
 
-    public List<String> retrieveCustomerContractStatus(String customerId) {
+    public List<Contract> getByInsuranceId(String insuranceId) {
+        return contractRepository.findByInsuranceId(insuranceId);
+    }
+
+    public List<String> getInsuranceIds(String customerId) {
+        List<String> insuranceIds = new ArrayList<>();
+        for (Contract contract : contractRepository.findByCustomerId(customerId)) {
+            insuranceIds.add(contract.getInsurance().getId());
+        }
+        return insuranceIds;
+    }
+
+    public List<String> getStatus(String customerId) {
         return contractRepository.findByCustomerId(customerId)
                 .stream()
                 .map(contract -> contract.isMaturity() + " " + contract.isCancellation())
                 .collect(Collectors.toList());
     }
 
-    // 확인 필요
-    public List<Contract> getContractByInsuranceID(String insuranceId) {
-        return contractRepository.findByInsuranceId(insuranceId);
-    }
-
-    public List<String> getInsuranceIdFromCustomerId(String customerId) {
-        List<String> insuranceIdFromCustomerId = new ArrayList<>();
-        for (Contract contract : contractRepository.findByCustomerId(customerId)) {
-            insuranceIdFromCustomerId.add(contract.getInsurance().getId());
-        }
-        return insuranceIdFromCustomerId;
-    }
-
-    // 확인 필요
-    public String retrievePremiumById(String customerId, String insuranceId) {
+    public String getPremium(String customerId, String insuranceId) {
         Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
         return findContract.map(contract -> Integer.toString(contract.getPremium()))
                         .orElse("Contract not found");
     }
 
     @Transactional
-    public boolean updateCancellation(String customerId, String insuranceId) {
-        Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
-        findContract.ifPresent(contract -> {
-            contract.updateCancellation();
-        });
-        return findContract.isPresent();
-    }
-
-    @Transactional
-    public void setResurrectFromCustomer(String customerId) {
+    public void setResurrection(String customerId) {
         List<Contract> customerContracts = contractRepository.findByCustomerId(customerId);
         customerContracts.forEach(contract -> contract.changeResurrection(false));
     }
 
     @Transactional
-    public void setMaturityFromCustomer(String customerId) {
+    public void setMaturity(String customerId) {
         List<Contract> customerContracts = contractRepository.findByCustomerId(customerId);
         customerContracts.forEach(contract -> contract.changeMaturity(false));
+    }
+
+    @Transactional
+    public boolean updateCancellation(String customerId, String insuranceId) {
+        Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
+        findContract.ifPresent(contract -> {
+            contract.changeCancellation();
+        });
+        return findContract.isPresent();
     }
 }
 
