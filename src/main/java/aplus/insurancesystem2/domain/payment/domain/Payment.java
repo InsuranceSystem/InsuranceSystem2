@@ -39,7 +39,7 @@ public class Payment {
         return false;
     }
 
-    public void changeWhetherPayment(boolean whetherPayment) {
-        this.whetherPayment = whetherPayment;
+    public void changeWhetherPayment() {
+        this.whetherPayment = !this.whetherPayment;
     }
 }

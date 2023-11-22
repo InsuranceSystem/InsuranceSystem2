@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,31 +26,15 @@ public class PaymentServiceImpl implements PaymentService {
         return false;
     }
 
-    public boolean delete() {
-        return false;
-    }
-
-    public List<Payment> retrieve() throws Exception {
-        List<Payment> payments = paymentRepository.findAll();
-        if (payments.size() == 0) {
+    public List<Payment> getAll() throws Exception {
+        List<Payment> allPayments = paymentRepository.findAll();
+        if (allPayments.size() == 0) {
             throw new Exception("payment 데이터가 없습니다.");
         }
-        return payments;
+        return allPayments;
     }
 
-    @Transactional
-    public boolean update(Payment updatedPayment) {
-        for (Payment payment : paymentRepository.findAll()) {
-            if (payment.match(updatedPayment.getCustomer().getId(), updatedPayment.getInsurance().getId())) {
-                paymentRepository.delete(payment);
-                paymentRepository.save(updatedPayment);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public List<Payment> retrieveCustomerInsurancePayment(String customerId, String insuranceId) {
+    public List<Payment> get(String customerId, String insuranceId) {
         List<Payment> customerPayment = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
@@ -59,7 +44,7 @@ public class PaymentServiceImpl implements PaymentService {
         return customerPayment;
     }
 
-    public List<Payment> retrieveCustomerPayment(String customerId) {
+    public List<Payment> getByCustomerId(String customerId) {
         List<Payment> customerPayment = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.getCustomer().getId().equals(customerId)) {
@@ -69,9 +54,9 @@ public class PaymentServiceImpl implements PaymentService {
         return customerPayment;
     }
 
-    public ArrayList<String> retrieveUnpaidCustomerId() {
-        ArrayList<String> unPaidCustomerId = new ArrayList<>();
-        HashSet<String> uniqueCustomerId = new HashSet<>();
+    public List<String> getUnpaidCustomerId() {
+        List<String> unPaidCustomerId = new ArrayList<>();
+        Set<String> uniqueCustomerId = new HashSet<>();
 
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.isWhetherPayment() == false) {
@@ -83,7 +68,7 @@ public class PaymentServiceImpl implements PaymentService {
         return unPaidCustomerId;
     }
 
-    public List<String> retrieveDateStatusById(String customerId, String insuranceId) {
+    public List<String> getStatus(String customerId, String insuranceId) {
         List<String> dateAndStatus = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
@@ -94,14 +79,29 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Transactional
-    public boolean updateWhetherPayment(String customerId, String insuranceId) {
+    public boolean update(Payment newPayment) {
         for (Payment payment : paymentRepository.findAll()) {
-            if (payment.match(customerId, insuranceId)) {
-                boolean newWhetherPayment = !payment.isWhetherPayment();
-                payment.changeWhetherPayment(newWhetherPayment);
+            if (payment.match(newPayment.getCustomer().getId(), newPayment.getInsurance().getId())) {
+                paymentRepository.delete(payment);
+                paymentRepository.save(newPayment);
                 return true;
             }
         }
+        return false;
+    }
+
+    @Transactional
+    public boolean updateWhetherPayment(String customerId, String insuranceId) {
+        for (Payment payment : paymentRepository.findAll()) {
+            if (payment.match(customerId, insuranceId)) {
+                payment.changeWhetherPayment();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean delete() {
         return false;
     }
 }

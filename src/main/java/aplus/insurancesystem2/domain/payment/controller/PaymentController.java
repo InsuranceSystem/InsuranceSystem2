@@ -27,27 +27,27 @@ public class PaymentController {
 
     @GetMapping("/payment/get/all")
     public List<Payment> getAll() throws Exception {
-        return paymentService.retrieve();
+        return paymentService.getAll();
     }
 
     @GetMapping("/payment/get")
     public List<Payment> get(@RequestParam String customerId, @RequestParam String insuranceId) {
-        return paymentService.retrieveCustomerInsurancePayment(customerId, insuranceId);
+        return paymentService.get(customerId, insuranceId);
     }
 
     @GetMapping("/payment/get")
     public List<Payment> get(@RequestParam String customerId) {
-        return paymentService.retrieveCustomerPayment(customerId);
+        return paymentService.getByCustomerId(customerId);
     }
 
     @GetMapping("/payment/date/get")
     public List<String> getDateStatus(@RequestParam String customerId, @RequestParam String insuranceId) {
-        return paymentService.retrieveDateStatusById(customerId, insuranceId);
+        return paymentService.getStatus(customerId, insuranceId);
     }
 
     @GetMapping("/payment/unpaid/get")
     public List<String> getUnpaidCustomerId() {
-        return paymentService.retrieveUnpaidCustomerId();
+        return paymentService.getUnpaidCustomerId();
     }
 
     @PostMapping("/payment/update")
