@@ -1,5 +1,6 @@
 package aplus.insurancesystem2.domain.Insurance.controller;
 
+import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
 import aplus.insurancesystem2.domain.Insurance.domain.Terms;
 import aplus.insurancesystem2.domain.Insurance.dto.request.insuranceCreateRequest;
@@ -13,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,8 +39,10 @@ public class InsuranceController {
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/{id}")
-    public InsuranceInfoResponse getInsurance(@PathVariable("id") String insuranceId) {
-        return insuranceService.getInsuranceInfo(insuranceId);
+    public ResponseEntity<SuccessResponse<InsuranceInfoResponse>> getInsurance(
+            @PathVariable("id") String insuranceId) {
+        return SuccessResponse.of(insuranceService.getInsuranceInfo(insuranceId))
+                .asHttp(HttpStatus.OK);
     }
 
     //테마별 보험 조회

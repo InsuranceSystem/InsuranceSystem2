@@ -1,12 +1,14 @@
 package aplus.insurancesystem2.domain.customer.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
 import aplus.insurancesystem2.domain.customer.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,10 +38,11 @@ public class CustomerController {
                 content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public CustomerInfoResponse getCustomer(
+    public ResponseEntity<SuccessResponse<CustomerInfoResponse>> getCustomer(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
             @PathVariable("id") Long customerId) {
-        return customerService.getCustomerInfo(customerId);
+        return SuccessResponse.of(
+                customerService.getCustomerInfo(customerId)
+        ).asHttp(HttpStatus.OK);
     }
 }
