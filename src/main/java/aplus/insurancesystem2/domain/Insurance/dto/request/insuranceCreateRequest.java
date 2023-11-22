@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class insuranceCreateRequest {
     @NotBlank
-    private String id;
+    private Long id;
     private String insuranceName;
     private String type;
     private int maxCompensation;

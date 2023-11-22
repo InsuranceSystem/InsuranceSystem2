@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface GuaranteeRepository extends JpaRepository<Guarantee, String> {
-    List<Guarantee> findAllByInsuranceID(String insuranceID);
+public interface GuaranteeRepository extends JpaRepository<Guarantee, Long> {
+    List<Guarantee> findAllByInsuranceID(Long insuranceID);
 }

@@ -2,6 +2,8 @@ package aplus.insurancesystem2.domain.Insurance.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,9 +15,9 @@ import lombok.Setter;
 @Setter
 public class Guarantee {
     @Id
-    @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String insuranceID;
-    private String termsID;
+    private Long insuranceID;
+    private Long termsID;
 }

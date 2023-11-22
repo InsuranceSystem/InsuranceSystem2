@@ -39,7 +39,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public CustomerInfoResponse getCustomer(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
-            @PathVariable("id") String customerId) {
+            @PathVariable("id") Long customerId) {
         return customerService.getCustomerInfo(customerId);
     }
 }

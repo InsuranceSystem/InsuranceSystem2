@@ -11,14 +11,14 @@ import java.util.Optional;
 public interface InsuranceService {
     InsuranceInfoResponse getInsuranceInfo(String insuranceId);
     List<Insurance> getInsuranceList();
-    List<Insurance> getInsuranceListApprove();
-    List<Insurance> getInsuranceListNotApprove();
-    List<Insurance> getInsuranceListByType(String type);
-    List<Insurance> getInsuranceListByTypeApprove(String type);
-    List<Insurance> getInsuranceListByTypeNotApprove(String type);
-    String createInsurance(insuranceCreateRequest insurance);
-    String updateInsurance(insuranceCreateRequest insurance, String insuranceId);
-    String updateAuthInsurance(String insuranceId);
-    String deleteInsurance(String insuranceId);
-    List<Optional<Terms>> getTermsListByInsuranceId(String insuranceId);
+//    List<Insurance> getInsuranceListApprove();
+//    List<Insurance> getInsuranceListNotApprove();
+//    List<Insurance> getInsuranceListByType(String type);
+//    List<Insurance> getInsuranceListByTypeApprove(String type);
+//    List<Insurance> getInsuranceListByTypeNotApprove(String type);
+//    String createInsurance(insuranceCreateRequest insurance);
+//    String updateInsurance(insuranceCreateRequest insurance, String insuranceId);
+//    String updateAuthInsurance(String insuranceId);
+//    String deleteInsurance(String insuranceId);
+//    List<Optional<Terms>> getTermsListByInsuranceId(String insuranceId);
 }

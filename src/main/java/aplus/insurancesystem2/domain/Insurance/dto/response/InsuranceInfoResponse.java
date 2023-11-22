@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 @Schema(description = "보험 상세 조회 Response")
 public class InsuranceInfoResponse {
-    private final String id;
+    private final Long id;
     private final String insuranceName;
     private final String type;
     private final int maxCompensation;

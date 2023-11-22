@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,11 +19,12 @@ import lombok.Setter;
 public class Customer {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customerID")
-    private String id;
+    private Long id;
 
+    @Column(name = "id")
+    private String customerId;
     private String address;
     private String customerName;
     private String job;

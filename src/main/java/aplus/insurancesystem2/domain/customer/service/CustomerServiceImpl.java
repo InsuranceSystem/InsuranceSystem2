@@ -15,7 +15,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     @Override
-    public CustomerInfoResponse getCustomerInfo(final String userId) {
+    public CustomerInfoResponse getCustomerInfo(Long userId) {
         return customerRepository.findById(userId)
                 .map(CustomerInfoResponse::of)
                 .orElseThrow(CustomerNotFoundException::new);

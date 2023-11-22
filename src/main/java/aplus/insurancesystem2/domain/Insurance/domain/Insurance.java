@@ -3,6 +3,8 @@ package aplus.insurancesystem2.domain.Insurance.domain;
 import aplus.insurancesystem2.domain.Insurance.dto.request.insuranceCreateRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,8 +18,9 @@ import lombok.Setter;
 public class Insurance {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "insuranceID")
-    private String id;
+    private Long id;
     private String insuranceName;
     private String type;
     private int maxCompensation;

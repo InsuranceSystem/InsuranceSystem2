@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class termsInfoResponse {
-    private final String termsID;
+    private final Long termsID;
     private final String termsName;
     private final String calculatedMoneyMethod;
     private final String termsContent;
