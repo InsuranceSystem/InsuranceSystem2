@@ -3,6 +3,7 @@ package aplus.insurancesystem2.domain.Insurance.service;
 import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
 import aplus.insurancesystem2.domain.Insurance.domain.Terms;
 import aplus.insurancesystem2.domain.Insurance.dto.request.insuranceCreateRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceInfoResponse;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 public interface InsuranceService {
     InsuranceInfoResponse getInsuranceInfo(String insuranceId);
-    List<Insurance> getInsuranceList();
+    List<InsuranceDetailResponse> getInsuranceList();
 //    List<Insurance> getInsuranceListApprove();
 //    List<Insurance> getInsuranceListNotApprove();
 //    List<Insurance> getInsuranceListByType(String type);

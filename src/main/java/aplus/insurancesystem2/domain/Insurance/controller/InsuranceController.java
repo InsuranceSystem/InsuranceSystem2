@@ -4,6 +4,7 @@ import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
 import aplus.insurancesystem2.domain.Insurance.domain.Terms;
 import aplus.insurancesystem2.domain.Insurance.dto.request.insuranceCreateRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,8 +68,9 @@ public class InsuranceController {
                     description = "전체 보험 정보 list 반환")
     })
     @GetMapping("/all")
-    public List<Insurance> getInsuranceList() {
-        return insuranceService.getInsuranceList();
+    public ResponseEntity<SuccessResponse<List<InsuranceDetailResponse>>> getInsuranceList() {
+        return SuccessResponse.of(insuranceService.getInsuranceList())
+                .asHttp(HttpStatus.OK);
     }
     //승인된 전체 보험 조회
 //    @GetMapping("/all/approve")

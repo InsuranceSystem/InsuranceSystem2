@@ -4,6 +4,7 @@ import aplus.insurancesystem2.domain.Insurance.domain.Guarantee;
 import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
 import aplus.insurancesystem2.domain.Insurance.domain.Terms;
 import aplus.insurancesystem2.domain.Insurance.dto.request.insuranceCreateRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.exception.InsuranceNotFoundException;
 import aplus.insurancesystem2.domain.Insurance.repository.GuaranteeRepository;
@@ -56,8 +57,11 @@ public class InsuranceServiceImpl implements InsuranceService{
 //    }
 
     @Override
-    public List<Insurance> getInsuranceList() {
-        return insuranceRepository.findAll();
+    public List<InsuranceDetailResponse> getInsuranceList() {
+        return insuranceRepository.findAll()
+                .stream()
+                .map(InsuranceDetailResponse::of)
+                .collect(Collectors.toList());
     }
 
 //    @Override
