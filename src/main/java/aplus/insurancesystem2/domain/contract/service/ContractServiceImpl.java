@@ -27,11 +27,11 @@ public class ContractServiceImpl implements ContractService {
     }
 
     public List<Contract> getall() throws Exception {
-        List<Contract> allContract = contractRepository.findAll();
-        if (allContract.size() == 0) {
+        List<Contract> allContracts = contractRepository.findAll();
+        if (allContracts.size() == 0) {
             throw new Exception("payment 데이터가 없습니다.");
         }
-        return allContract;
+        return allContracts;
     }
 
     public List<Contract> getByCustomerId(String customerId) {
