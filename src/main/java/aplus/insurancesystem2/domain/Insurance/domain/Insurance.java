@@ -31,7 +31,6 @@ public class Insurance {
     private int basicPremium;
     private String rate;
     private boolean distributionStatus;
-    private String TermsIDList;
     private String insuranceClausePeriod;
     private String precaution;
     private boolean authorization;
@@ -49,7 +48,6 @@ public class Insurance {
         this.paymentPeriod = dto.getPaymentPeriod();
         this.precaution = dto.getPrecaution();
         this.rate = dto.getRate();
-        this.TermsIDList = dto.getTermsIDList();
         this.type = dto.getType();
         this.authorization = dto.isAuthorization();
     }
