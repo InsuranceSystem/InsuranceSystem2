@@ -1,6 +1,4 @@
-package aplus.insurancesystem2.domain.customer.domain;
-
-import org.hibernate.annotations.GenericGenerator;
+package aplus.insurancesystem2.domain.customer.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

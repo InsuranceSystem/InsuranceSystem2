@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.Insurance.domain;
+package aplus.insurancesystem2.domain.Insurance.entity;
 
 import aplus.insurancesystem2.domain.Insurance.dto.request.termsCreateRequest;
 import jakarta.persistence.Column;

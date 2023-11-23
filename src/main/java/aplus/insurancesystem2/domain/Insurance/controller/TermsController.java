@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.Insurance.controller;
 
-import aplus.insurancesystem2.domain.Insurance.domain.Terms;
+import aplus.insurancesystem2.domain.Insurance.entity.Terms;
 import aplus.insurancesystem2.domain.Insurance.dto.request.termsCreateRequest;
 import aplus.insurancesystem2.domain.Insurance.service.TermsService;
 import jakarta.validation.Valid;

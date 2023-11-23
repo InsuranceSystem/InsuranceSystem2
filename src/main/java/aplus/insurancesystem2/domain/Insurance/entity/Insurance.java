@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.Insurance.domain;
+package aplus.insurancesystem2.domain.Insurance.entity;
 
 import java.util.ArrayList;
 import java.util.List;

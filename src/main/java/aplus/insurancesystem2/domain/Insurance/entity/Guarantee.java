@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.Insurance.domain;
+package aplus.insurancesystem2.domain.Insurance.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

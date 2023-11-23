@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.Insurance.dto.response;
 
-import aplus.insurancesystem2.domain.Insurance.domain.Terms;
+import aplus.insurancesystem2.domain.Insurance.entity.Terms;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

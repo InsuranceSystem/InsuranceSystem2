@@ -2,7 +2,7 @@ package aplus.insurancesystem2.domain.Insurance.dto.response;
 
 import java.util.stream.Collectors;
 
-import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
+import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
