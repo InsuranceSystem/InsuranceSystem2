@@ -24,7 +24,7 @@ public class InsuranceDetailResponse {
     private int basicPremium;
     private String rate;
     private boolean distributionStatus;
-    private String TermsIDList;
+//    private String TermsIDList;
     private String insuranceClausePeriod;
     private String precaution;
     private boolean authorization;
@@ -42,7 +42,7 @@ public class InsuranceDetailResponse {
                 insurance.getBasicPremium(),
                 insurance.getRate(),
                 insurance.isDistributionStatus(),
-                insurance.getTermsIDList(),
+//                insurance.getTermsIDList(),
                 insurance.getInsuranceClausePeriod(),
                 insurance.getPrecaution(),
                 insurance.isAuthorization()

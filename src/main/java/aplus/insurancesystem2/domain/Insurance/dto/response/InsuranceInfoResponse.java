@@ -21,7 +21,7 @@ public class InsuranceInfoResponse {
     private final String rate;
     private final boolean distributionStatus;
 
-    private final String TermsIDList;
+//    private final String TermsIDList;
     private final String insuranceClausePeriod;
     private final String precaution;
     private final boolean authorization;
@@ -39,7 +39,6 @@ public class InsuranceInfoResponse {
                 insurance.getBasicPremium(),
                 insurance.getRate(),
                 insurance.isDistributionStatus(),
-                insurance.getTermsIDList(),
                 insurance.getInsuranceClausePeriod(),
                 insurance.getPrecaution(),
                 insurance.isAuthorization()
