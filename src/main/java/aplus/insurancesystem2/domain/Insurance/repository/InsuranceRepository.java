@@ -1,11 +1,14 @@
 package aplus.insurancesystem2.domain.Insurance.repository;
 
-import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 
-public interface InsuranceRepository extends JpaRepository<Insurance, String> {
-    List<Insurance> findByType(String type);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
+
+public interface InsuranceRepository extends JpaRepository<Insurance, Long> {
+
+    @Query("select i from Insurance i join fetch i.guaranteeList")
+    List<Insurance> findAllWithGuarantees();
 }

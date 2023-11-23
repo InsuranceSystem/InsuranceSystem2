@@ -1,11 +1,14 @@
 package aplus.insurancesystem2.domain.Insurance.domain;
 
-import aplus.insurancesystem2.domain.Insurance.dto.request.insuranceCreateRequest;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +24,10 @@ public class Insurance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "insuranceID")
     private Long id;
+
+    @OneToMany(mappedBy = "insurance")
+    private List<Guarantee> guaranteeList;
+
     private String insuranceName;
     private String type;
     private int maxCompensation;
@@ -35,20 +42,23 @@ public class Insurance {
     private String precaution;
     private boolean authorization;
 
-    public Insurance(insuranceCreateRequest dto){
-        this.id = dto.getId();
-        this.insuranceName = dto.getInsuranceName();
-        this.insuranceClausePeriod = dto.getInsuranceClausePeriod();
-        this.periodOfInsurance = dto.getPeriodOfInsurance();
-        this.ageOfTarget = dto.getAgeOfTarget();
-        this.basicPremium = dto.getBasicPremium();
-        this.distributionStatus = dto.isDistributionStatus();
-        this.maxCompensation = dto.getMaxCompensation();
-        this.paymentCycle = dto.getPaymentCycle();
-        this.paymentPeriod = dto.getPaymentPeriod();
-        this.precaution = dto.getPrecaution();
-        this.rate = dto.getRate();
-        this.type = dto.getType();
-        this.authorization = dto.isAuthorization();
+    public Insurance(String insuranceName, String type, int maxCompensation, String periodOfInsurance,
+                     String paymentCycle, String paymentPeriod, String ageOfTarget,
+                     int basicPremium, String rate, boolean distributionStatus, String insuranceClausePeriod,
+                     String precaution, boolean authorization) {
+        this.guaranteeList = new ArrayList<>();
+        this.insuranceName = insuranceName;
+        this.type = type;
+        this.maxCompensation = maxCompensation;
+        this.periodOfInsurance = periodOfInsurance;
+        this.paymentCycle = paymentCycle;
+        this.paymentPeriod = paymentPeriod;
+        this.ageOfTarget = ageOfTarget;
+        this.basicPremium = basicPremium;
+        this.rate = rate;
+        this.distributionStatus = distributionStatus;
+        this.insuranceClausePeriod = insuranceClausePeriod;
+        this.precaution = precaution;
+        this.authorization = authorization;
     }
 }

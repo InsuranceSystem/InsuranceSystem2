@@ -1,5 +1,7 @@
 package aplus.insurancesystem2.domain.Insurance.dto.response;
 
+import java.util.stream.Collectors;
+
 import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
 import aplus.insurancesystem2.domain.customer.domain.Customer;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
@@ -9,7 +11,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
-@Schema(description = "보험 상세조회 Response")
+@Schema(description = "보험 상세 조회 Response")
 public class InsuranceDetailResponse {
 
     @Schema(description = "보험 id", required = true)
@@ -24,7 +26,7 @@ public class InsuranceDetailResponse {
     private int basicPremium;
     private String rate;
     private boolean distributionStatus;
-//    private String TermsIDList;
+    private String TermsIDList;
     private String insuranceClausePeriod;
     private String precaution;
     private boolean authorization;
@@ -42,7 +44,9 @@ public class InsuranceDetailResponse {
                 insurance.getBasicPremium(),
                 insurance.getRate(),
                 insurance.isDistributionStatus(),
-//                insurance.getTermsIDList(),
+                insurance.getGuaranteeList().stream()
+                         .map(guarantee -> guarantee.getTerms().getTermsID().toString())
+                         .collect(Collectors.joining(", ")),
                 insurance.getInsuranceClausePeriod(),
                 insurance.getPrecaution(),
                 insurance.isAuthorization()
