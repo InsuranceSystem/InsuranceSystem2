@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.customer.entity;
+package aplus.insurancesystem2.domain.customer.entity.customer;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

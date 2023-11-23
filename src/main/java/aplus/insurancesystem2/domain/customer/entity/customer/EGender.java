@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.customer.entity;
+package aplus.insurancesystem2.domain.customer.entity.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.customer.dto.response;
 
-import aplus.insurancesystem2.domain.customer.entity.Customer;
+import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import lombok.AllArgsConstructor;

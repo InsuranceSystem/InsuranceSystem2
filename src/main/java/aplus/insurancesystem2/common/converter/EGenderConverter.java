@@ -3,7 +3,7 @@ package aplus.insurancesystem2.common.converter;
 import java.util.EnumSet;
 
 
-import aplus.insurancesystem2.domain.customer.entity.EGender;
+import aplus.insurancesystem2.domain.customer.entity.customer.EGender;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
