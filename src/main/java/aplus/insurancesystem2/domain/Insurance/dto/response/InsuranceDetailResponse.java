@@ -3,8 +3,6 @@ package aplus.insurancesystem2.domain.Insurance.dto.response;
 import java.util.stream.Collectors;
 
 import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
-import aplus.insurancesystem2.domain.customer.domain.Customer;
-import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +24,8 @@ public class InsuranceDetailResponse {
     private int basicPremium;
     private String rate;
     private boolean distributionStatus;
-    private String TermsIDList;
+    @Schema(description = "보장 내용 id 리스트(콤마로 구분)")
+    private String termsIDList;
     private String insuranceClausePeriod;
     private String precaution;
     private boolean authorization;
