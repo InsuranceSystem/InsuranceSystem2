@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import aplus.insurancesystem2.domain.contract.service.ContractService;
+import aplus.insurancesystem2.domain.customer.dto.request.CustomerUpdateRequest;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
@@ -49,5 +50,17 @@ public class CustomerServiceImpl implements CustomerService {
                 familyHistoryService.getFamilyHistories(customer),
                 contractService.getContracts(customer)
         );
+    }
+
+    @Override
+    @Transactional
+    public void updateCustomer(Long customerId, CustomerUpdateRequest request) {
+        Customer customer = getCustomer(customerId);
+        customer.setCustomerName(request.getCustomerName());
+        customer.setEGender(request.getCustomerGender());
+        customer.setBirth(request.getCustomerBirth());
+        customer.setPnumber(request.getCustomerPnumber());
+        customer.setAddress(request.getCustomerAddress());
+        customer.setJob(request.getCustomerJob());
     }
 }

@@ -3,12 +3,15 @@ package aplus.insurancesystem2.domain.customer.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
+import aplus.insurancesystem2.domain.customer.dto.request.CustomerUpdateRequest;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
@@ -29,7 +32,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @Operation(summary = "고객 정보 조회")
+    @Operation(summary = "고객 정보 조회", description = "menu 6(고객 조회): 고객 정보 조회 API")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -48,7 +51,7 @@ public class CustomerController {
         ).asHttp(HttpStatus.OK);
     }
 
-    @Operation(summary = "고객 정보 상세 조회")
+    @Operation(summary = "고객 정보 상세 조회", description = "menu 6(고객 조회): 고객 정보 상세조회 API")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -65,6 +68,25 @@ public class CustomerController {
         return SuccessResponse.of(
                 customerService.getCustomerDetail(customerId)
         ).asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "고객 정보 수정", description = "menu 6(고객 조회): 고객 정보 수정 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "고객 정보 수정 완료"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "U001: id에 해당하는 고객을 찾을 수 없습니다.",
+                content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateCustomer(
+            @Parameter(description = "고객 id", in = ParameterIn.PATH)
+            @PathVariable("id") Long customerId,
+            @RequestBody CustomerUpdateRequest request) {
+        customerService.updateCustomer(customerId, request);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "보험자 정보 확인", description = "menu 4(내 보험 확인): 보험자 정보 확인용 API")
