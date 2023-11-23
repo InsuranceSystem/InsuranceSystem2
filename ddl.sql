@@ -45,7 +45,7 @@ CREATE TABLE CompensationClaim (
 );
 
 CREATE TABLE CarAccident (
-  CCID BIGINT AUTO_INCREMENT PRIMARY KEY,
+  CCID BIGINT PRIMARY KEY,
   type VARCHAR(255),
   dateTime DATETIME,
   place VARCHAR(255),
@@ -58,7 +58,7 @@ CREATE TABLE CarAccident (
 );
 
 CREATE TABLE Survey (
-  CCID BIGINT AUTO_INCREMENT PRIMARY KEY,
+  CCID BIGINT PRIMARY KEY,
   managerName VARCHAR(255),
   reportFilePath VARCHAR(255),
   surveyFee INT,
@@ -95,7 +95,7 @@ CREATE TABLE CounselApplication (
 );
 
 CREATE TABLE Counsel (
-  counselID BIGINT AUTO_INCREMENT PRIMARY KEY,
+  counselID BIGINT PRIMARY KEY,
   customerID BIGINT,
   content VARCHAR(255),
   managerName VARCHAR(255),
