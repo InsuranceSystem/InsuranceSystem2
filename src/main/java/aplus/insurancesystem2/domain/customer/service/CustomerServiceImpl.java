@@ -3,8 +3,11 @@ package aplus.insurancesystem2.domain.customer.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import aplus.insurancesystem2.domain.contract.service.ContractService;
+import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
+import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import aplus.insurancesystem2.domain.customer.exception.CustomerNotFoundException;
 import aplus.insurancesystem2.domain.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,9 @@ import lombok.RequiredArgsConstructor;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final FamilyHistoryService familyHistoryService;
+    private final ContractService contractService;
+
     @Override
     public CustomerInfoResponse getCustomerInfo(Long userId) {
         return customerRepository.findById(userId)
@@ -27,5 +33,21 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByCustomerNameAndPnumber(name, phone)
                 .map(CustomerIdResponse::of)
                 .orElseThrow(CustomerNotFoundException::new);
+    }
+
+    @Override
+    public Customer getCustomer(Long customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(CustomerNotFoundException::new);
+    }
+
+    @Override
+    public CustomerDetailResponse getCustomerDetail(Long customerId) {
+        Customer customer = getCustomer(customerId);
+        return CustomerDetailResponse.of(
+                customer,
+                familyHistoryService.getFamilyHistories(customer),
+                contractService.getContracts(customer)
+        );
     }
 }

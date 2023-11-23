@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
+import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
 import aplus.insurancesystem2.domain.customer.service.CustomerService;
@@ -44,6 +45,25 @@ public class CustomerController {
             @PathVariable("id") Long customerId) {
         return SuccessResponse.of(
                 customerService.getCustomerInfo(customerId)
+        ).asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "고객 정보 상세 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "고객 정보 반환"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "U001: id에 해당하는 고객을 찾을 수 없습니다.",
+                content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{id}/detail")
+    public ResponseEntity<SuccessResponse<CustomerDetailResponse>> getCustomerDetail(
+            @Parameter(description = "고객 id", in = ParameterIn.PATH)
+            @PathVariable("id") Long customerId) {
+        return SuccessResponse.of(
+                customerService.getCustomerDetail(customerId)
         ).asHttp(HttpStatus.OK);
     }
 
