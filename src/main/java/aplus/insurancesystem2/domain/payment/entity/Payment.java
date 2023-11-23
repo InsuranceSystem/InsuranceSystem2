@@ -1,5 +1,8 @@
-package aplus.insurancesystem2.domain.customer.entity;
+package aplus.insurancesystem2.domain.payment.entity;
 
+import java.time.LocalDate;
+
+import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,19 +17,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * CREATE TABLE FamilyHistory(
+ * CREATE TABLE Payment (
  *   id BIGINT AUTO_INCREMENT PRIMARY KEY,
  *   customerID BIGINT,
- *   diseaseName VARCHAR(255),
- *   relationship VARCHAR(255),
- *   FOREIGN KEY (customerID) REFERENCES Customer(customerID)
+ *   insuranceID BIGINT,
+ *   dateOfPayment DATE,
+ *   whetherPayment BOOLEAN,
+ *   FOREIGN KEY (customerID) REFERENCES Customer(customerID),
+ *   FOREIGN KEY (insuranceID) REFERENCES Insurance(insuranceID)
  * );
  */
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FamilyHistory {
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,12 +42,17 @@ public class FamilyHistory {
     @JoinColumn(name = "customerID")
     private Customer customer;
 
-    private String diseaseName;
-    private String relationship;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "insuranceID")
+    private Insurance insurance;
 
-    public FamilyHistory(Customer customer, String diseaseName, String relationship) {
+    private LocalDate dateOfPayment;
+    private Boolean whetherPayment;
+
+    public Payment(Customer customer, Insurance insurance, LocalDate dateOfPayment, Boolean whetherPayment) {
         this.customer = customer;
-        this.diseaseName = diseaseName;
-        this.relationship = relationship;
+        this.insurance = insurance;
+        this.dateOfPayment = dateOfPayment;
+        this.whetherPayment = whetherPayment;
     }
 }
