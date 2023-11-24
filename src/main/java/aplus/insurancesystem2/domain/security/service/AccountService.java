@@ -4,10 +4,9 @@ import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import aplus.insurancesystem2.domain.customer.exception.CustomerNotFoundException;
 import aplus.insurancesystem2.domain.customer.repository.CustomerRepository;
 import aplus.insurancesystem2.domain.security.domain.Role;
-import aplus.insurancesystem2.domain.security.dto.AuthorityResponse;
 import aplus.insurancesystem2.domain.security.dto.request.AuthorityRequest;
 import aplus.insurancesystem2.domain.security.dto.request.JoinRequest;
-import aplus.insurancesystem2.domain.security.dto.JoinResponse;
+import aplus.insurancesystem2.domain.security.dto.response.JoinResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,10 +29,9 @@ public class AccountService {
     }
 
     @Transactional
-    public AuthorityResponse changeAuthority(AuthorityRequest request) {
+    public void changeAuthority(AuthorityRequest request) {
         Customer customer = findByCustomerId(request.getCustomerId());
         customer.setRole(Role.find(request.getRoleName()));
-        return new AuthorityResponse(...);
     }
 
     private Customer findByCustomerId(String customerId) {

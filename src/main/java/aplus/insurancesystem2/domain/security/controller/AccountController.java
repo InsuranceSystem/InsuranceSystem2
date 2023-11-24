@@ -1,10 +1,9 @@
 package aplus.insurancesystem2.domain.security.controller;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
-import aplus.insurancesystem2.domain.security.dto.AuthorityResponse;
 import aplus.insurancesystem2.domain.security.dto.request.AuthorityRequest;
 import aplus.insurancesystem2.domain.security.dto.request.JoinRequest;
-import aplus.insurancesystem2.domain.security.dto.JoinResponse;
+import aplus.insurancesystem2.domain.security.dto.response.JoinResponse;
 import aplus.insurancesystem2.domain.security.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,9 +25,8 @@ public class AccountController {
     }
 
     @PostMapping("/authorize")
-    public ResponseEntity<SuccessResponse<AuthorityResponse>> changeAuthority(AuthorityRequest request) {
-        return SuccessResponse.of(
-                accountService.changeAuthority(request)
-        ).asHttp(HttpStatus.OK);
+    public HttpStatus changeAuthority(AuthorityRequest request) {
+        accountService.changeAuthority(request);
+        return HttpStatus.OK;
     }
 }
