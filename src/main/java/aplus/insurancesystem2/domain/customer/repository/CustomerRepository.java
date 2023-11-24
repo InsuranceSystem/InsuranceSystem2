@@ -8,4 +8,6 @@ import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Optional<Customer> findByCustomerNameAndPnumber(String customerName, String pnumber);
+
+    Optional<Customer> findByCustomerId(String customerId);
 }

@@ -1,5 +1,6 @@
 package aplus.insurancesystem2.domain.customer.entity.customer;
 
+import aplus.insurancesystem2.domain.security.domain.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,4 +30,6 @@ public class Customer {
     private String pnumber;
     private String birth; // 생년월일(yyyy-mm-dd, String)
     private EGender eGender; // 성별
+    private String password;
+    private Role role;
 }

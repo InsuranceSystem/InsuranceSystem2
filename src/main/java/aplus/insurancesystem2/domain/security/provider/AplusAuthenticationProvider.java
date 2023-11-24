@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.security.provider;
 
-import aplus.insurancesystem2.domain.security.service.AccountContext;
+import aplus.insurancesystem2.domain.security.service.CustomerContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,7 +23,7 @@ public class AplusAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
 
-        AccountContext accountContext = (AccountContext) userDetailsService.loadUserByUsername(username);
+        CustomerContext accountContext = (CustomerContext) userDetailsService.loadUserByUsername(username);
 
         if(!passwordEncoder.matches(password, accountContext.getAccount().getPassword())){
             throw new BadCredentialsException("Password is incorrect.");
