@@ -1,11 +1,9 @@
 package aplus.insurancesystem2.domain.Insurance.repository;
 
-import aplus.insurancesystem2.domain.Insurance.domain.Guarantee;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import aplus.insurancesystem2.domain.Insurance.entity.Guarantee;
 
-public interface GuaranteeRepository extends JpaRepository<Guarantee, String> {
-    List<Guarantee> findAllByInsuranceID(String insuranceID);
+public interface GuaranteeRepository extends JpaRepository<Guarantee, Long> {
+
 }

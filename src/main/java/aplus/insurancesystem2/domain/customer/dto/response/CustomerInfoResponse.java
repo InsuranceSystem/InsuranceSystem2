@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.customer.dto.response;
 
-import aplus.insurancesystem2.domain.customer.domain.Customer;
+import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Getter;
 public class CustomerInfoResponse {
 
     @Schema(description = "고객 id", requiredMode = RequiredMode.REQUIRED)
-    private final String id;
+    private final Long id;
     @Schema(description = "고객 이름", requiredMode = RequiredMode.REQUIRED)
     private final String name;
     @Schema(description = "고객  생일", requiredMode = RequiredMode.REQUIRED)

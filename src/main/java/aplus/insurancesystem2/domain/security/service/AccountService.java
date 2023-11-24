@@ -21,6 +21,7 @@ public class AccountService {
         if (findAccount != null) {
             return false; // 이미 존재하는 id
         }
+        // 비밀번호 암호화해서 저장 (SecurityConfig -> passwordEncoder Bean 이용)
         Account newAccount = new Account(request.getUserName(), request.getPassword());
         accountRepository.save(newAccount);
         // customer도 생성되어야, 혹은 account-customer 통합

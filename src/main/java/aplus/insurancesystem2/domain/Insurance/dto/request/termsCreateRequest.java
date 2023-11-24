@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class termsCreateRequest {
     @NotBlank
-    private String termsID;
+    private Long termsID;
 
     private String termsName;
     private String calculatedMoneyMethod;
