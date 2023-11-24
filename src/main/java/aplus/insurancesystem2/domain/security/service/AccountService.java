@@ -8,6 +8,7 @@ import aplus.insurancesystem2.domain.security.dto.request.AuthorityRequest;
 import aplus.insurancesystem2.domain.security.dto.request.JoinRequest;
 import aplus.insurancesystem2.domain.security.dto.response.JoinResponse;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,21 @@ public class AccountService {
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public boolean verifyId(String customerId) {
+        return !customerRepository.existsByCustomerId(customerId);
+    }
+
     @Transactional
-    public JoinResponse join(JoinRequest request) {
-        findByCustomerId(request.getCustomerId());
-        String encryptedPassword = passwordEncoder.encode(request.getPassword());
-        Customer newCustomer = new Customer(...);
-        customerRepository.save(newCustomer);
-        return new JoinResponse(...);
+    public boolean join(JoinRequest request) {
+        try {
+            findByCustomerId(request.getCustomerId());
+            String encryptedPassword = passwordEncoder.encode(request.getPassword());
+            Customer newCustomer = new Customer(...);
+            customerRepository.save(newCustomer);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Transactional
