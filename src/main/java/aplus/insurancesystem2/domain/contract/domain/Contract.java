@@ -1,7 +1,7 @@
 package aplus.insurancesystem2.domain.contract.domain;
 
-import aplus.insurancesystem2.domain.Insurance.domain.Insurance;
-import aplus.insurancesystem2.domain.customer.domain.Customer;
+import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
+import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

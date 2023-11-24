@@ -11,11 +11,11 @@ import org.springframework.data.repository.query.Param;
 public interface ContractRepository extends JpaRepository<Contract, Long> {
 
     @Query("SELECT c FROM Contract c WHERE c.customer.id = :customerId")
-    List<Contract> findByCustomerId(@Param("customerId") String customerId);
+    List<Contract> findByCustomerId(@Param("customerId") Long customerId);
 
-    @Query("SELECT c FROM Contract c WHERE c.customer.id = :customerId")
-    List<Contract> findByInsuranceId(@Param("insuranceId") String insuranceId);
+    @Query("SELECT c FROM Contract c WHERE c.insurance.id = :insuranceId")
+    List<Contract> findByInsuranceId(@Param("insuranceId") Long insuranceId);
 
     @Query("SELECT c FROM Contract c WHERE c.customer.id = :customerId AND c.insurance.id = :insuranceId")
-    Optional<Contract> findByIds(@Param("customerId") String customerId, @Param("insuranceId") String insuranceId);
+    Optional<Contract> findByIds(@Param("customerId") Long customerId, @Param("insuranceId") Long insuranceId);
 }

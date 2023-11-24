@@ -34,49 +34,49 @@ public class ContractServiceImpl implements ContractService {
         return allContracts;
     }
 
-    public List<Contract> getByCustomerId(String customerId) {
+    public List<Contract> getByCustomerId(Long customerId) {
         return contractRepository.findByCustomerId(customerId);
     }
 
-    public List<Contract> getByInsuranceId(String insuranceId) {
+    public List<Contract> getByInsuranceId(Long insuranceId) {
         return contractRepository.findByInsuranceId(insuranceId);
     }
 
-    public List<String> getInsuranceIds(String customerId) {
-        List<String> insuranceIds = new ArrayList<>();
+    public List<Long> getInsuranceIds(Long customerId) {
+        List<Long> insuranceIds = new ArrayList<>();
         for (Contract contract : contractRepository.findByCustomerId(customerId)) {
             insuranceIds.add(contract.getInsurance().getId());
         }
         return insuranceIds;
     }
 
-    public List<String> getStatus(String customerId) {
+    public List<String> getStatus(Long customerId) {
         return contractRepository.findByCustomerId(customerId)
                 .stream()
                 .map(contract -> contract.isMaturity() + " " + contract.isCancellation())
                 .collect(Collectors.toList());
     }
 
-    public String getPremium(String customerId, String insuranceId) {
+    public String getPremium(Long customerId, Long insuranceId) {
         Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
         return findContract.map(contract -> Integer.toString(contract.getPremium()))
                         .orElse("Contract not found");
     }
 
     @Transactional
-    public void setResurrection(String customerId) {
+    public void setResurrection(Long customerId) {
         List<Contract> customerContracts = contractRepository.findByCustomerId(customerId);
         customerContracts.forEach(contract -> contract.changeResurrection(false));
     }
 
     @Transactional
-    public void setMaturity(String customerId) {
+    public void setMaturity(Long customerId) {
         List<Contract> customerContracts = contractRepository.findByCustomerId(customerId);
         customerContracts.forEach(contract -> contract.changeMaturity(false));
     }
 
     @Transactional
-    public boolean updateCancellation(String customerId, String insuranceId) {
+    public boolean updateCancellation(Long customerId, Long insuranceId) {
         Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
         findContract.ifPresent(contract -> {
             contract.changeCancellation();

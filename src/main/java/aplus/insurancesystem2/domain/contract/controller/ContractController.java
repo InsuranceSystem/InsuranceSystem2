@@ -16,53 +16,53 @@ public class ContractController {
 
     private final ContractService contractService;
 
-    @PostMapping("/contract/create")
+    @PostMapping("/create")
     public boolean add(Contract contract) {
         return contractService.add(contract);
     }
 
-    @GetMapping("/contract/get/all")
+    @GetMapping("/get/all")
     public List<Contract> get() throws Exception {
         return contractService.getall();
     }
 
-    @GetMapping("/contract/get")
-    public List<Contract> getByCustomerId(@RequestParam String customerId) {
+    @GetMapping("/get/customer")
+    public List<Contract> getByCustomerId(@RequestParam Long customerId) {
         return contractService.getByCustomerId(customerId);
     }
 
-    @GetMapping("/contract/get")
-    public List<Contract> getByInsuranceId(@RequestParam String insuranceId) {
+    @GetMapping("/get/insurance")
+    public List<Contract> getByInsuranceId(@RequestParam Long insuranceId) {
         return contractService.getByInsuranceId(insuranceId);
     }
 
-    @GetMapping("/contract/insurance-id/get")
-    public List<String> getInsuranceIds(@RequestParam String customerId) {
+    @GetMapping("/insurance-id/get")
+    public List<Long> getInsuranceIds(@RequestParam Long customerId) {
         return contractService.getInsuranceIds(customerId);
     }
 
-    @GetMapping("/contract/status/get")
-    public List<String> getStatus(@RequestParam String customerId) {
+    @GetMapping("/status/get")
+    public List<String> getStatus(@RequestParam Long customerId) {
         return contractService.getStatus(customerId);
     }
 
-    @GetMapping("/contract/premium/get")
-    public String getPremium(@RequestParam String customerId, @RequestParam String insuranceId) {
+    @GetMapping("/premium/get")
+    public String getPremium(@RequestParam Long customerId, @RequestParam Long insuranceId) {
         return contractService.getPremium(customerId, insuranceId);
     }
 
-    @PostMapping("/contract/cancellation/update")
-    public boolean updateCancellation(String customerId, String insuranceId) {
+    @PostMapping("/cancellation/update")
+    public boolean updateCancellation(Long customerId, Long insuranceId) {
         return contractService.updateCancellation(customerId, insuranceId);
     }
 
     @PostMapping("/contract/resurrection/update")
-    public void setResurrection(@RequestBody String customerId) {
+    public void setResurrection(@RequestBody Long customerId) {
         contractService.setResurrection(customerId);
     }
 
     @PostMapping("/contract/maturity/update")
-    public void setMaturity(@RequestBody String customerId) {
+    public void setMaturity(@RequestBody Long customerId) {
         contractService.setMaturity(customerId);
     }
 }
