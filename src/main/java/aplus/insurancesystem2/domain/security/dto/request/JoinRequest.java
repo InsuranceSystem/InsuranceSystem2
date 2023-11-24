@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.security.dto;
+package aplus.insurancesystem2.domain.security.dto.request;
 
 import lombok.Data;
 

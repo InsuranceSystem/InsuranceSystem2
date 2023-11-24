@@ -1,5 +1,6 @@
 package aplus.insurancesystem2.domain.security.domain;
 
+import aplus.insurancesystem2.domain.security.exception.RoleNotFoundException;
 import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,6 @@ public enum Role {
         return Arrays.stream(Role.values())
                 .filter(role -> role.getName().equals(roleName))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(RoleNotFoundException::new);
     }
 }
