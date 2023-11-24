@@ -48,7 +48,7 @@ public class InsuranceDetailResponse {
                          .collect(Collectors.joining(", ")),
                 insurance.getInsuranceClausePeriod(),
                 insurance.getPrecaution(),
-                insurance.isAuthorization()
+                insurance.isAuthorizationn()
         );
     }
 }

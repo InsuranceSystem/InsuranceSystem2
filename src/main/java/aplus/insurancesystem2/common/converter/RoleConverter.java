@@ -1,6 +1,5 @@
 package aplus.insurancesystem2.common.converter;
 
-import aplus.insurancesystem2.domain.customer.entity.customer.EGender;
 import aplus.insurancesystem2.domain.security.domain.Role;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
