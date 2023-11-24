@@ -63,4 +63,11 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setAddress(request.getCustomerAddress());
         customer.setJob(request.getCustomerJob());
     }
+
+    @Override
+    @Transactional
+    public void deleteCustomer(Long customerId) {
+        Customer customer = getCustomer(customerId);
+        customerRepository.delete(customer);
+    }
 }

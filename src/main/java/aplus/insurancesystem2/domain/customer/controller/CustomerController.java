@@ -2,6 +2,7 @@ package aplus.insurancesystem2.domain.customer.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,6 +87,24 @@ public class CustomerController {
             @PathVariable("id") Long customerId,
             @RequestBody CustomerUpdateRequest request) {
         customerService.updateCustomer(customerId, request);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "고객 정보 삭제", description = "menu 6(고객 조회): 고객 정보 삭제 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "고객 정보 삭제 완료"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "U001: id에 해당하는 고객을 찾을 수 없습니다.",
+                content = @Content(schema = @Schema(hidden = true)))
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomer(
+            @Parameter(description = "고객 id", in = ParameterIn.PATH)
+            @PathVariable("id") Long customerId) {
+        customerService.deleteCustomer(customerId);
         return ResponseEntity.ok().build();
     }
 

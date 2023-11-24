@@ -16,4 +16,6 @@ public interface CustomerService {
     CustomerDetailResponse getCustomerDetail(Long customerId);
 
     void updateCustomer(Long customerId, CustomerUpdateRequest request);
+
+    void deleteCustomer(Long customerId);
 }
