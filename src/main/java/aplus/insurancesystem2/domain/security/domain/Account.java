@@ -28,7 +28,7 @@ public class Account {
 
     private Role role;
 
-    // customer 연결
+    // customer 연결 혹은 customer 엔티티와 통합
 
     public Account(String username, String password) {
         this.username = username;
