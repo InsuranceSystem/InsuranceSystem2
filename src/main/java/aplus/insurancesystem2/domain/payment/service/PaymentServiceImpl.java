@@ -34,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
         return allPayments;
     }
 
-    public List<Payment> get(String customerId, String insuranceId) {
+    public List<Payment> get(Long customerId, Long insuranceId) {
         List<Payment> customerPayment = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
@@ -54,9 +54,9 @@ public class PaymentServiceImpl implements PaymentService {
         return customerPayment;
     }
 
-    public List<String> getUnpaidCustomerId() {
-        List<String> unPaidCustomerId = new ArrayList<>();
-        Set<String> uniqueCustomerId = new HashSet<>();
+    public List<Long> getUnpaidCustomerId() {
+        List<Long> unPaidCustomerId = new ArrayList<>();
+        Set<Long> uniqueCustomerId = new HashSet<>();
 
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.isWhetherPayment() == false) {
@@ -68,7 +68,7 @@ public class PaymentServiceImpl implements PaymentService {
         return unPaidCustomerId;
     }
 
-    public List<String> getStatus(String customerId, String insuranceId) {
+    public List<String> getStatus(Long customerId, Long insuranceId) {
         List<String> dateAndStatus = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
@@ -91,7 +91,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Transactional
-    public boolean updateWhetherPayment(String customerId, String insuranceId) {
+    public boolean updateWhetherPayment(Long customerId, Long insuranceId) {
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
                 payment.changeWhetherPayment();
