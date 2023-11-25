@@ -42,8 +42,9 @@ public class InsuranceController {
     @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse<InsuranceDetailResponse>> getInsurance(
             @PathVariable("id") Long insuranceId) {
-        return SuccessResponse.of(insuranceService.getInsuranceInfo(insuranceId))
-                .asHttp(HttpStatus.OK);
+        return SuccessResponse.of(
+                insuranceService.getInsuranceInfo(insuranceId)
+        ).asHttp(HttpStatus.OK);
     }
 
     @Operation(summary = "전체 보험 조회")
@@ -54,8 +55,9 @@ public class InsuranceController {
     })
     @GetMapping("/all")
     public ResponseEntity<SuccessResponse<List<InsuranceDetailResponse>>> getInsuranceList() {
-        return SuccessResponse.of(insuranceService.getInsuranceList())
-                .asHttp(HttpStatus.OK);
+        return SuccessResponse.of(
+                insuranceService.getInsuranceList()
+        ).asHttp(HttpStatus.OK);
     }
 
     @Operation(summary = "보험 약관 리스트 조회", description = "menu 2(보험 조회): 보험 약관 리스트 조회 API")
@@ -71,7 +73,10 @@ public class InsuranceController {
     @GetMapping("/{id}/terms")
     public ResponseEntity<SuccessResponse<List<TermInfoResponse>>> getInsuranceTerms(
             @PathVariable("id") Long insuranceId) {
-        return SuccessResponse.of(termsService.getInsuranceTerms(insuranceId))
-                .asHttp(HttpStatus.OK);
+        return SuccessResponse.of(
+                termsService.getInsuranceTerms(insuranceId)
+        ).asHttp(HttpStatus.OK);
     }
+
+
 }
