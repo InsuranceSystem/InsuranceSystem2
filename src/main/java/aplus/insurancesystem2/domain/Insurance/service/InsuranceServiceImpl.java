@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
+import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem2.domain.Insurance.exception.InsuranceNotFoundException;
 import aplus.insurancesystem2.domain.Insurance.repository.GuaranteeRepository;
 import aplus.insurancesystem2.domain.Insurance.repository.InsuranceRepository;
@@ -34,6 +35,12 @@ public class InsuranceServiceImpl implements InsuranceService {
                                   .stream()
                                   .map(InsuranceDetailResponse::of)
                                   .collect(Collectors.toList());
+    }
+
+    @Override
+    public Insurance getInsurance(Long insuranceId) {
+        return insuranceRepository.findById(insuranceId)
+                                  .orElseThrow(InsuranceNotFoundException::new);
     }
 
 }
