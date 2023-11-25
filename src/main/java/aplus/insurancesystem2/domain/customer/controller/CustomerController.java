@@ -63,7 +63,7 @@ public class CustomerController {
                     description = "U001: id에 해당하는 고객을 찾을 수 없습니다.",
                 content = @Content(schema = @Schema(hidden = true)))
     })
-    @GetMapping
+    @GetMapping("/{id}/all")
     public ResponseEntity<SuccessResponse<CustomerAllInfoResponse>> getCustomerList(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
             @PathVariable("id") Long customerId
