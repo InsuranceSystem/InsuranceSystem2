@@ -26,7 +26,8 @@ CREATE TABLE Customer (
   pnumber VARCHAR(255),
   birth VARCHAR(255),
   eGender VARCHAR(255),
-  address VARCHAR(255)
+  address VARCHAR(255),
+  deletedAt DATETIME
 );
 
 CREATE TABLE CompensationClaim (
