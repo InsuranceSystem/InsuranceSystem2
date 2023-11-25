@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import aplus.insurancesystem2.domain.contract.service.ContractService;
 import aplus.insurancesystem2.domain.customer.dto.request.CustomerUpdateRequest;
+import aplus.insurancesystem2.domain.customer.dto.response.CustomerAllInfoResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
@@ -69,5 +70,12 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(Long customerId) {
         Customer customer = getCustomer(customerId);
         customerRepository.delete(customer);
+    }
+
+    @Override
+    public CustomerAllInfoResponse getCustomerAllInfo(Long customerId) {
+        return customerRepository.findById(customerId)
+                .map(CustomerAllInfoResponse::of)
+                .orElseThrow(CustomerNotFoundException::new);
     }
 }
