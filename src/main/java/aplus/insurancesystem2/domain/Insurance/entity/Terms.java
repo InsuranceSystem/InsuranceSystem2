@@ -1,6 +1,5 @@
 package aplus.insurancesystem2.domain.Insurance.entity;
 
-import aplus.insurancesystem2.domain.Insurance.dto.request.termsCreateRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,10 +22,5 @@ public class Terms {
     private String termsName;
     private String calculatedMoneyMethod;
     private String termsContent;
-    public Terms(termsCreateRequest terms){
-        this.termsID = terms.getTermsID();
-        this.termsContent = terms.getTermsContent();
-        this.termsName = terms.getTermsName();
-        this.calculatedMoneyMethod = terms.getCalculatedMoneyMethod();
-    }
+
 }

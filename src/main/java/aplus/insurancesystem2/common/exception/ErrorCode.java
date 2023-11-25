@@ -14,7 +14,10 @@ public enum ErrorCode {
     USER_NOT_FOUND(404, "U001", "고객을 찾을 수 없습니다."),
 
     // Insurance
-    INSURANCE_NOT_FOUND(404, "I001", "보험을 찾을 수 없습니다.");
+    INSURANCE_NOT_FOUND(404, "I001", "보험을 찾을 수 없습니다."),
+
+    // Terms
+    TERMS_NOT_FOUND(404, "T001", "약관을 찾을 수 없습니다.");
 
     private final int status;
     private final String code;

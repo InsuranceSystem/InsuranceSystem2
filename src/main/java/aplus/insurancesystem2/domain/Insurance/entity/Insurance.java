@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,6 +43,7 @@ public class Insurance {
     private String precaution;
     private boolean authorization;
 
+    @Builder
     public Insurance(String insuranceName, String type, int maxCompensation, String periodOfInsurance,
                      String paymentCycle, String paymentPeriod, String ageOfTarget,
                      int basicPremium, String rate, boolean distributionStatus, String insuranceClausePeriod,

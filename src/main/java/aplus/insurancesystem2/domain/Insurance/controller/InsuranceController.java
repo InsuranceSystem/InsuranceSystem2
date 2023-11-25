@@ -6,10 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.request.DesignInsuranceRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.TermInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceService;
@@ -78,5 +81,19 @@ public class InsuranceController {
         ).asHttp(HttpStatus.OK);
     }
 
-
+    @Operation(summary = "새 보험 설계 API", description = "menu 8(보험 설계): 보험 설계 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "보험 설계 성공"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "T001: id에 해당하는 보험 약관을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PostMapping("/design")
+    public ResponseEntity<Void> designInsurance(@RequestBody DesignInsuranceRequest request) {
+        insuranceService.designInsurance(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }
