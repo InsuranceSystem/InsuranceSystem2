@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.TermInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceService;
+import aplus.insurancesystem2.domain.Insurance.service.TermsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class InsuranceController {
 
     private final InsuranceService insuranceService;
+    private final TermsService termsService;
 
     @Operation(summary = "보험 상세 조회")
     @ApiResponses(value = {
@@ -52,6 +55,23 @@ public class InsuranceController {
     @GetMapping("/all")
     public ResponseEntity<SuccessResponse<List<InsuranceDetailResponse>>> getInsuranceList() {
         return SuccessResponse.of(insuranceService.getInsuranceList())
+                .asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "보험 약관 리스트 조회", description = "menu 2(보험 조회): 보험 약관 리스트 조회 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "보험 약관 리스트 반환"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "I001: id에 해당하는 보험을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{id}/terms")
+    public ResponseEntity<SuccessResponse<List<TermInfoResponse>>> getInsuranceTerms(
+            @PathVariable("id") Long insuranceId) {
+        return SuccessResponse.of(termsService.getInsuranceTerms(insuranceId))
                 .asHttp(HttpStatus.OK);
     }
 }
