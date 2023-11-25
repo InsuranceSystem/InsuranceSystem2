@@ -23,7 +23,6 @@ public class DesignInsuranceRequest {
     private final boolean distributionStatus;
     private final String insuranceClausePeriod;
     private final String precaution;
-    private final boolean authorization;
     @Schema(description = "보험 약관 id 리스트. ','로 구분해주세요.")
     private final String termsIdList;
 

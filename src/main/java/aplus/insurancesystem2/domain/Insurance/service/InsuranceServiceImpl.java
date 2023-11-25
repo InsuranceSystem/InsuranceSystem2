@@ -65,7 +65,7 @@ public class InsuranceServiceImpl implements InsuranceService {
                                        .distributionStatus(request.isDistributionStatus())
                                        .insuranceClausePeriod(request.getInsuranceClausePeriod())
                                        .precaution(request.getPrecaution())
-                                       .authorization(request.isAuthorization())
+                                       .authorization(false)
                                        .build();
 
         insuranceRepository.save(insurance);
