@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final CustomerQueryService customerQueryService;
     private final FamilyHistoryService familyHistoryService;
     private final ContractService contractService;
 
@@ -38,14 +39,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomer(Long customerId) {
-        return customerRepository.findById(customerId)
-                .orElseThrow(CustomerNotFoundException::new);
-    }
-
-    @Override
     public CustomerDetailResponse getCustomerDetail(Long customerId) {
-        Customer customer = getCustomer(customerId);
+        Customer customer = customerQueryService.getCustomer(customerId);
         return CustomerDetailResponse.of(
                 customer,
                 familyHistoryService.getFamilyHistories(customer),
@@ -56,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public void updateCustomer(Long customerId, CustomerUpdateRequest request) {
-        Customer customer = getCustomer(customerId);
+        Customer customer = customerQueryService.getCustomer(customerId);
         customer.setCustomerName(request.getCustomerName());
         customer.setEGender(request.getCustomerGender());
         customer.setBirth(request.getCustomerBirth());
@@ -68,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public void deleteCustomer(Long customerId) {
-        Customer customer = getCustomer(customerId);
+        Customer customer = customerQueryService.getCustomer(customerId);
         customerRepository.delete(customer);
     }
 

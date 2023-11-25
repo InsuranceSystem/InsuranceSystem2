@@ -1,5 +1,7 @@
 package aplus.insurancesystem2.domain.customer.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +19,9 @@ import aplus.insurancesystem2.domain.customer.dto.response.CustomerAllInfoRespon
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
+import aplus.insurancesystem2.domain.customer.dto.response.FamilyHistoryInfoResponse;
 import aplus.insurancesystem2.domain.customer.service.CustomerService;
+import aplus.insurancesystem2.domain.customer.service.FamilyHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -33,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final FamilyHistoryService familyHistoryService;
 
     @Operation(summary = "고객 정보 조회", description = "menu 6(고객 조회): 고객 정보 조회 API")
     @ApiResponses(value = {
@@ -149,4 +154,22 @@ public class CustomerController {
         ).asHttp(HttpStatus.OK);
     }
 
+    @Operation(summary = "고객 가족력 정보 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "고객 가족력 반환"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "U001: id에 해당하는 고객을 찾을 수 없습니다.",
+                content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{id}/families")
+    public ResponseEntity<SuccessResponse<List<FamilyHistoryInfoResponse>>> getFamilyHistories(
+            @Parameter(description = "고객 id", in = ParameterIn.PATH)
+            @PathVariable("id") Long customerId) {
+        return SuccessResponse.of(
+                familyHistoryService.getFamilyHistories(customerId)
+        ).asHttp(HttpStatus.OK);
+    }
 }

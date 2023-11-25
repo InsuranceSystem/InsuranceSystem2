@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import aplus.insurancesystem2.domain.customer.dto.response.FamilyHistoryInfoResponse;
 import aplus.insurancesystem2.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import aplus.insurancesystem2.domain.customer.repository.FamilyHistoryRepository;
@@ -16,9 +17,18 @@ import lombok.RequiredArgsConstructor;
 public class FamilyHistoryServiceImpl implements FamilyHistoryService{
 
     private final FamilyHistoryRepository familyHistoryRepository;
+    private final CustomerQueryService customerQueryService;
 
     @Override
     public List<FamilyHistory> getFamilyHistories(Customer customer) {
         return familyHistoryRepository.findAllByCustomer(customer);
+    }
+
+    @Override
+    public List<FamilyHistoryInfoResponse> getFamilyHistories(Long customerId) {
+        return familyHistoryRepository.findAllByCustomer(customerQueryService.getCustomer(customerId))
+                .stream()
+                .map(FamilyHistoryInfoResponse::of)
+                .toList();
     }
 }
