@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import aplus.insurancesystem2.domain.Insurance.dto.request.DesignInsuranceRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.request.UpdateInsuranceRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.entity.Guarantee;
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
@@ -26,6 +27,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     private final InsuranceRepository insuranceRepository;
     private final GuaranteeRepository guaranteeRepository;
     private final TermsRepository termsRepository;
+    private final InsuranceQueryService insuranceQueryService;
     private final TermsQueryService termsQueryService;
 
     @Override
@@ -43,11 +45,7 @@ public class InsuranceServiceImpl implements InsuranceService {
                                   .collect(Collectors.toList());
     }
 
-    @Override
-    public Insurance getInsurance(Long insuranceId) {
-        return insuranceRepository.findById(insuranceId)
-                                  .orElseThrow(InsuranceNotFoundException::new);
-    }
+
 
     @Override
     @Transactional
@@ -77,6 +75,34 @@ public class InsuranceServiceImpl implements InsuranceService {
                     Terms terms = termsQueryService.getTerms(termsId);
                     guaranteeRepository.save(new Guarantee(insurance, terms));
                 });
+    }
+
+    @Override
+    @Transactional
+    public void updateInsurance(Long insuranceId, UpdateInsuranceRequest request) {
+        Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
+        insurance.setInsuranceName(request.getInsuranceName());
+        insurance.setType(request.getType());
+        insurance.setMaxCompensation(request.getMaxCompensation());
+        insurance.setPeriodOfInsurance(request.getPeriodOfInsurance());
+        insurance.setPaymentCycle(request.getPaymentCycle());
+        insurance.setPaymentPeriod(request.getPaymentPeriod());
+        insurance.setAgeOfTarget(request.getAgeOfTarget());
+        insurance.setBasicPremium(request.getBasicPremium());
+        insurance.setRate(request.getRate());
+        insurance.setDistributionStatus(request.isDistributionStatus());
+        insurance.setInsuranceClausePeriod(request.getInsuranceClausePeriod());
+        insurance.setPrecaution(request.getPrecaution());
+
+        guaranteeRepository.deleteAllByInsuranceId(insuranceId);
+
+        Arrays.stream(request.getTermsIdList().split(","))
+              .map(String::trim)
+              .map(Long::parseLong)
+              .forEach(termsId -> {
+                  Terms terms = termsQueryService.getTerms(termsId);
+                  guaranteeRepository.save(new Guarantee(insurance, terms));
+              });
     }
 
 }

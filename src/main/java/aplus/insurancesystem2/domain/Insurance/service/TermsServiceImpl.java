@@ -14,12 +14,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TermsServiceImpl implements TermsService {
 
-    private final InsuranceService insuranceService;
+    private final InsuranceQueryService insuranceQueryService;
     private final TermsRepository termsRepository;
 
     @Override
     public List<TermInfoResponse> getInsuranceTerms(Long insuranceId) {
-        return termsRepository.findAllByInsurance(insuranceService.getInsurance(insuranceId))
+        return termsRepository.findAllByInsurance(insuranceQueryService.getInsurance(insuranceId))
             .stream()
             .map(TermInfoResponse::of)
             .toList();
