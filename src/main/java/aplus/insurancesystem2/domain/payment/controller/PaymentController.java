@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.payment.controller;
 
-import aplus.insurancesystem2.domain.payment.domain.Payment;
+import aplus.insurancesystem2.domain.payment.entity.Payment;
 import aplus.insurancesystem2.domain.payment.service.PaymentService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,48 +15,48 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    @PostMapping("/payment/create")
+    @PostMapping("/create/payment")
     public boolean add(String paymentInfo) {
         return paymentService.add(paymentInfo);
     }
 
-    @PostMapping("/payment/delete")
+    @PostMapping("/delete")
     public boolean delete() {
         return paymentService.delete();
     }
 
-    @GetMapping("/payment/get/all")
+    @GetMapping("/get/payment/all")
     public List<Payment> getAll() throws Exception {
         return paymentService.getAll();
     }
 
-    @GetMapping("/payment/get")
-    public List<Payment> get(@RequestParam String customerId, @RequestParam String insuranceId) {
+    @GetMapping("/get/customer-insurance")
+    public List<Payment> get(@RequestParam Long customerId, @RequestParam Long insuranceId) {
         return paymentService.get(customerId, insuranceId);
     }
 
-    @GetMapping("/payment/get")
+    @GetMapping("/get/payment/customer")
     public List<Payment> get(@RequestParam String customerId) {
         return paymentService.getByCustomerId(customerId);
     }
 
-    @GetMapping("/payment/date/get")
-    public List<String> getDateStatus(@RequestParam String customerId, @RequestParam String insuranceId) {
+    @GetMapping("/date/get")
+    public List<String> getDateStatus(@RequestParam Long customerId, @RequestParam Long insuranceId) {
         return paymentService.getStatus(customerId, insuranceId);
     }
 
-    @GetMapping("/payment/unpaid/get")
-    public List<String> getUnpaidCustomerId() {
+    @GetMapping("/unpaid/get")
+    public List<Long> getUnpaidCustomerId() {
         return paymentService.getUnpaidCustomerId();
     }
 
-    @PostMapping("/payment/update")
+    @PostMapping("/update")
     public boolean update(Payment newPayment) {
         return paymentService.update(newPayment);
     }
 
-    @PostMapping("/payment/whether-payment/update")
-    public boolean updateWhetherPayment(String customerId, String insuranceId) {
+    @PostMapping("/whether-payment/update")
+    public boolean updateWhetherPayment(Long customerId, Long insuranceId) {
         return paymentService.updateWhetherPayment(customerId, insuranceId);
     }
 }

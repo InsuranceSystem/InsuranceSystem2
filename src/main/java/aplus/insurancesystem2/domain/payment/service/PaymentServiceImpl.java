@@ -2,7 +2,7 @@ package aplus.insurancesystem2.domain.payment.service;
 
 import static java.util.Objects.isNull;
 
-import aplus.insurancesystem2.domain.payment.domain.Payment;
+import aplus.insurancesystem2.domain.payment.entity.Payment;
 import aplus.insurancesystem2.domain.payment.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Transactional
     public boolean add(String paymentInfo) {
-        Payment newPayment = paymentRepository.save(new Payment()); // 정보 안집어넣나?
-        if(!isNull(newPayment))
-            return true;
+//        Payment newPayment = paymentRepository.save(new Payment());
+//        if(!isNull(newPayment))
+//            return true;
         return false;
     }
 
@@ -34,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
         return allPayments;
     }
 
-    public List<Payment> get(String customerId, String insuranceId) {
+    public List<Payment> get(Long customerId, Long insuranceId) {
         List<Payment> customerPayment = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
@@ -54,12 +54,12 @@ public class PaymentServiceImpl implements PaymentService {
         return customerPayment;
     }
 
-    public List<String> getUnpaidCustomerId() {
-        List<String> unPaidCustomerId = new ArrayList<>();
-        Set<String> uniqueCustomerId = new HashSet<>();
+    public List<Long> getUnpaidCustomerId() {
+        List<Long> unPaidCustomerId = new ArrayList<>();
+        Set<Long> uniqueCustomerId = new HashSet<>();
 
         for (Payment payment : paymentRepository.findAll()) {
-            if (payment.isWhetherPayment() == false) {
+            if (!payment.getWhetherPayment()) {
                 uniqueCustomerId.add(payment.getCustomer().getId());
             }
         }
@@ -68,11 +68,11 @@ public class PaymentServiceImpl implements PaymentService {
         return unPaidCustomerId;
     }
 
-    public List<String> getStatus(String customerId, String insuranceId) {
+    public List<String> getStatus(Long customerId, Long insuranceId) {
         List<String> dateAndStatus = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
-                dateAndStatus.add(payment.getDateOfPayment() + " " + payment.isWhetherPayment());
+                dateAndStatus.add(payment.getDateOfPayment() + " " + payment.getWhetherPayment());
             }
         }
         return dateAndStatus;
@@ -91,10 +91,10 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Transactional
-    public boolean updateWhetherPayment(String customerId, String insuranceId) {
+    public boolean updateWhetherPayment(Long customerId, Long insuranceId) {
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
-                payment.changeWhetherPayment();
+                payment.setWhetherPayment(!payment.getWhetherPayment());
                 return true;
             }
         }

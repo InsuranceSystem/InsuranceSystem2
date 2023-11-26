@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -41,33 +41,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/보험조회").permitAll()
-                        .requestMatchers("/customer").hasRole("CUSTOMER")
-                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers( "/join", "/verify/id/**", "/authorize/update").permitAll()
+//                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
-                )
-                .formLogin((login) -> login
-                        .loginPage("/로그인")
-                        .defaultSuccessUrl("/")
-                        .successHandler(aplusLoginSuccessHandler())
-                        .failureHandler(aplusLoginFailureHandler())
-                        .permitAll()
-                )
-                .logout((logout) -> logout
-                        .logoutUrl("/로그아웃")
-                        .logoutSuccessUrl("/로그아웃성공후이동") // 필요?
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                )
-                .exceptionHandling((exception) -> exception
-                        .accessDeniedHandler(aplusAccessDeniedHandler())
-                )
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .invalidSessionUrl("/세션유효X")
-                        .maximumSessions(1)
-                        .expiredUrl("/세션만료후")
+//                )
+//                .formLogin((login) -> login
+//                        .loginPage("/로그인")
+//                        .defaultSuccessUrl("/")
+//                        .successHandler(aplusLoginSuccessHandler())
+//                        .failureHandler(aplusLoginFailureHandler())
+//                        .permitAll()
+//                )
+//                .logout((logout) -> logout
+//                        .logoutUrl("/로그아웃")
+//                        .logoutSuccessUrl("/로그아웃성공후이동") // 필요?
+//                        .invalidateHttpSession(true)
+//                        .deleteCookies("JSESSIONID")
+//                )
+//                .exceptionHandling((exception) -> exception
+//                        .accessDeniedHandler(aplusAccessDeniedHandler())
+//                )
+//                .sessionManagement((session) -> session
+//                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//                        .invalidSessionUrl("/세션유효X")
+//                        .maximumSessions(1)
+//                        .expiredUrl("/세션만료후")
                 );
         return http.build();
     }

@@ -55,4 +55,11 @@ public class Payment {
         this.dateOfPayment = dateOfPayment;
         this.whetherPayment = whetherPayment;
     }
+
+    public boolean match(Long customerId, Long insuranceId) {
+        if (this.customer.getId() == customerId && this.insurance.getId() == insuranceId) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.payment.service;
 
-import aplus.insurancesystem2.domain.payment.domain.Payment;
+import aplus.insurancesystem2.domain.payment.entity.Payment;
 import java.util.List;
 
 public interface PaymentService {
@@ -8,9 +8,10 @@ public interface PaymentService {
     boolean delete();
     List<Payment> getAll() throws Exception;
     boolean update(Payment updatedPayment);
-    List<Payment> get(String customerId, String selectedInsuranceId);
+    List<Payment> get(Long customerId, Long selectedInsuranceId);
     List<Payment> getByCustomerId(String customerId);
-    List<String> getUnpaidCustomerId();
-    List<String> getStatus(String customerId, String insuranceId);
-    boolean updateWhetherPayment(String customerId, String insuranceId);
+    List<Long> getUnpaidCustomerId();
+    List<String> getStatus(Long customerId, Long insuranceId);
+
+    boolean updateWhetherPayment(Long customerId, Long insuranceId);
 }
