@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.contract.controller;
 
-import aplus.insurancesystem2.domain.contract.domain.Contract;
+import aplus.insurancesystem2.domain.contract.entity.Contract;
 import aplus.insurancesystem2.domain.contract.service.ContractService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

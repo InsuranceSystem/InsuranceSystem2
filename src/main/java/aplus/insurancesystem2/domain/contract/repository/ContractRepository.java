@@ -1,7 +1,7 @@
 package aplus.insurancesystem2.domain.contract.repository;
 
 
-import aplus.insurancesystem2.domain.contract.domain.Contract;
+import aplus.insurancesystem2.domain.contract.entity.Contract;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

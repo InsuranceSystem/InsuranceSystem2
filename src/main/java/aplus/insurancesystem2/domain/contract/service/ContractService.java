@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.contract.service;
 
-import aplus.insurancesystem2.domain.contract.domain.Contract;
+import aplus.insurancesystem2.domain.contract.entity.Contract;
 import java.util.List;
 
 public interface ContractService {
