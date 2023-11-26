@@ -28,31 +28,38 @@ import lombok.Setter;
  * );
  */
 
-//@Entity
-//@Getter
-//@Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
-//public class Payment {
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "customerID")
-//    private Customer customer;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "insuranceID")
-//    private Insurance insurance;
-//
-//    private LocalDate dateOfPayment;
-//    private Boolean whetherPayment;
-//
-//    public Payment(Customer customer, Insurance insurance, LocalDate dateOfPayment, Boolean whetherPayment) {
-//        this.customer = customer;
-//        this.insurance = insurance;
-//        this.dateOfPayment = dateOfPayment;
-//        this.whetherPayment = whetherPayment;
-//    }
-//}
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Payment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerID")
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "insuranceID")
+    private Insurance insurance;
+
+    private LocalDate dateOfPayment;
+    private Boolean whetherPayment;
+
+    public Payment(Customer customer, Insurance insurance, LocalDate dateOfPayment, Boolean whetherPayment) {
+        this.customer = customer;
+        this.insurance = insurance;
+        this.dateOfPayment = dateOfPayment;
+        this.whetherPayment = whetherPayment;
+    }
+
+    public boolean match(Long customerId, Long insuranceId) {
+        if (this.customer.getId() == customerId && this.insurance.getId() == insuranceId) {
+            return true;
+        }
+        return false;
+    }
+}

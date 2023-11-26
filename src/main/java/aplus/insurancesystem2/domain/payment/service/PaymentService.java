@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.payment.service;
 
-import aplus.insurancesystem2.domain.payment.domain.Payment;
+import aplus.insurancesystem2.domain.payment.entity.Payment;
 import java.util.List;
 
 public interface PaymentService {

@@ -1,6 +1,6 @@
 package aplus.insurancesystem2.domain.payment.controller;
 
-import aplus.insurancesystem2.domain.payment.domain.Payment;
+import aplus.insurancesystem2.domain.payment.entity.Payment;
 import aplus.insurancesystem2.domain.payment.service.PaymentService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package aplus.insurancesystem2.domain.payment.service;
 
 import static java.util.Objects.isNull;
 
-import aplus.insurancesystem2.domain.payment.domain.Payment;
+import aplus.insurancesystem2.domain.payment.entity.Payment;
 import aplus.insurancesystem2.domain.payment.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Transactional
     public boolean add(String paymentInfo) {
-        Payment newPayment = paymentRepository.save(new Payment()); // 정보 안집어넣나?
-        if(!isNull(newPayment))
-            return true;
+//        Payment newPayment = paymentRepository.save(new Payment());
+//        if(!isNull(newPayment))
+//            return true;
         return false;
     }
 
@@ -59,7 +59,7 @@ public class PaymentServiceImpl implements PaymentService {
         Set<Long> uniqueCustomerId = new HashSet<>();
 
         for (Payment payment : paymentRepository.findAll()) {
-            if (payment.isWhetherPayment() == false) {
+            if (!payment.getWhetherPayment()) {
                 uniqueCustomerId.add(payment.getCustomer().getId());
             }
         }
@@ -72,7 +72,7 @@ public class PaymentServiceImpl implements PaymentService {
         List<String> dateAndStatus = new ArrayList<>();
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
-                dateAndStatus.add(payment.getDateOfPayment() + " " + payment.isWhetherPayment());
+                dateAndStatus.add(payment.getDateOfPayment() + " " + payment.getWhetherPayment());
             }
         }
         return dateAndStatus;
@@ -94,7 +94,7 @@ public class PaymentServiceImpl implements PaymentService {
     public boolean updateWhetherPayment(Long customerId, Long insuranceId) {
         for (Payment payment : paymentRepository.findAll()) {
             if (payment.match(customerId, insuranceId)) {
-                payment.changeWhetherPayment();
+                payment.setWhetherPayment(!payment.getWhetherPayment());
                 return true;
             }
         }
