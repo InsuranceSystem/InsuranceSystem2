@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class JoinRequest {
-    private String id; // 사용자 로그인 id
+    private String username;
     private String password;
     private String name;
     private String phoneNumber;
@@ -13,5 +13,5 @@ public class JoinRequest {
     private String gender;
     private String birth;
     private String address;
-    private List<FamilyHistoryDto> familyHistoryList;
+    private List<FamilyHistory> familyHistoryList;
 }

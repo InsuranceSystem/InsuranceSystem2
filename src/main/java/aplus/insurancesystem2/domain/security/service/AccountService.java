@@ -6,7 +6,7 @@ import aplus.insurancesystem2.domain.customer.entity.customer.EGender;
 import aplus.insurancesystem2.domain.customer.exception.CustomerNotFoundException;
 import aplus.insurancesystem2.domain.customer.repository.CustomerRepository;
 import aplus.insurancesystem2.domain.customer.repository.FamilyHistoryRepository;
-import aplus.insurancesystem2.domain.security.domain.Role;
+import aplus.insurancesystem2.domain.customer.entity.customer.Role;
 import aplus.insurancesystem2.domain.security.dto.request.AuthorityRequest;
 import aplus.insurancesystem2.domain.security.dto.request.JoinRequest;
 import jakarta.transaction.Transactional;
@@ -22,17 +22,17 @@ public class AccountService {
     private final FamilyHistoryRepository familyHistoryRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public boolean verifyId(String customerId) {
-        return !customerRepository.existsByCustomerId(customerId);
+    public boolean verifyId(String username) {
+        return !customerRepository.existsByCustomerId(username);
     }
 
     @Transactional
     public boolean join(JoinRequest request) {
         try {
-            String customerId = request.getId();
+            String username = request.getUsername();
             String encryptedPassword = passwordEncoder.encode(request.getPassword());
             EGender eGender = EGender.find(request.getGender());
-            Customer joinCustomer = Customer.builder().customerId(customerId)
+            Customer joinCustomer = Customer.builder().customerId(username)
                                                 .address(request.getAddress())
                                                 .customerName(request.getName())
                                                 .job(request.getJob())
@@ -54,7 +54,7 @@ public class AccountService {
 
     @Transactional
     public void changeAuthority(AuthorityRequest request) {
-        Customer customer = customerRepository.findByCustomerId(request.getCustomerId())
+        Customer customer = customerRepository.findByCustomerId(request.getUsername())
                 .orElseThrow(CustomerNotFoundException::new);
         customer.setRole(Role.find(request.getRoleName()));
     }

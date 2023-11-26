@@ -5,6 +5,7 @@ import aplus.insurancesystem2.domain.security.dto.request.JoinRequest;
 import aplus.insurancesystem2.domain.security.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,28 +19,28 @@ public class AccountController {
     private final AccountService accountService;
 
     @GetMapping("/verify/id")
-    public HttpStatus verifyId(@RequestParam String customerId) {
-        boolean isNormal = accountService.verifyId(customerId);
+    public ResponseEntity<Void> verifyId(@RequestParam String username) {
+        boolean isNormal = accountService.verifyId(username);
         return getHttpStatus(isNormal);
     }
 
     @PostMapping("/join")
-    public HttpStatus join(@RequestBody JoinRequest request) {
+    public ResponseEntity<Void> join(@RequestBody JoinRequest request) {
         System.out.println(0);
         boolean isNormal = accountService.join(request);
         return getHttpStatus(isNormal);
     }
 
-    @PostMapping("/authorize")
+    @PostMapping("/authorize/update")
     public HttpStatus changeAuthority(@RequestBody AuthorityRequest request) {
         accountService.changeAuthority(request);
         return HttpStatus.OK;
     }
 
-    private HttpStatus getHttpStatus(boolean isNormal) {
+    private ResponseEntity<Void> getHttpStatus(boolean isNormal) {
         if (isNormal) {
-            return HttpStatus.OK;
+            return ResponseEntity.ok().build();
         }
-        return HttpStatus.BAD_REQUEST;
+        return ResponseEntity.badRequest().build();
     }
 }
