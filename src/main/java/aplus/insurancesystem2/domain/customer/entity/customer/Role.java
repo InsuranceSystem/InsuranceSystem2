@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.security.domain;
+package aplus.insurancesystem2.domain.customer.entity.customer;
 
 import aplus.insurancesystem2.domain.security.exception.RoleNotFoundException;
 import java.util.Arrays;

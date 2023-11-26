@@ -1,6 +1,5 @@
 package aplus.insurancesystem2.domain.customer.entity.customer;
 
-import aplus.insurancesystem2.domain.security.domain.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
