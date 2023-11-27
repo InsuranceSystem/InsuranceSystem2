@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class InsuranceServiceImpl implements InsuranceService {
+
     private final InsuranceRepository insuranceRepository;
     private final GuaranteeRepository guaranteeRepository;
     private final TermsRepository termsRepository;
@@ -44,8 +45,6 @@ public class InsuranceServiceImpl implements InsuranceService {
                                   .map(InsuranceDetailResponse::of)
                                   .collect(Collectors.toList());
     }
-
-
 
     @Override
     @Transactional
@@ -103,6 +102,13 @@ public class InsuranceServiceImpl implements InsuranceService {
                   Terms terms = termsQueryService.getTerms(termsId);
                   guaranteeRepository.save(new Guarantee(insurance, terms));
               });
+    }
+
+    @Override
+    @Transactional
+    public void deleteInsurance(Long insuranceId) {
+        Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
+        insuranceRepository.delete(insurance);
     }
 
 }

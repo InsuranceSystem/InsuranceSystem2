@@ -12,4 +12,6 @@ public interface InsuranceService {
     void designInsurance(DesignInsuranceRequest request);
 
     void updateInsurance(Long insuranceId, UpdateInsuranceRequest request);
+
+    void deleteInsurance(Long insuranceId);
 }

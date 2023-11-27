@@ -15,7 +15,8 @@ CREATE TABLE Insurance(
   distributionStatus BOOL,
   insuranceClausePeriod VARCHAR(255),
   precaution VARCHAR(255),
-  authorization BOOL
+  authorization BOOL,
+  deletedAt DATETIME
 );
 
 CREATE TABLE Customer (

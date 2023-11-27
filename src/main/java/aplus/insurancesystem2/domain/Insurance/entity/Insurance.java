@@ -1,7 +1,11 @@
 package aplus.insurancesystem2.domain.Insurance.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +23,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Where(clause = "deletedAt is null")
+@SQLDelete(sql = "UPDATE Insurance SET deletedAt = current_timestamp WHERE insuranceID = ?")
 public class Insurance {
 
     @Id
@@ -42,6 +48,7 @@ public class Insurance {
     private String insuranceClausePeriod;
     private String precaution;
     private boolean authorization;
+    private LocalDateTime deletedAt;
 
     @Builder
     public Insurance(String insuranceName, String type, int maxCompensation, String periodOfInsurance,
