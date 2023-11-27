@@ -14,4 +14,6 @@ public interface InsuranceService {
     void updateInsurance(Long insuranceId, UpdateInsuranceRequest request);
 
     void deleteInsurance(Long insuranceId);
+
+    void registerInsurance(Long insuranceId);
 }

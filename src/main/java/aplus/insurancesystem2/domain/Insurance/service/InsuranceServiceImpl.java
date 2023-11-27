@@ -111,4 +111,11 @@ public class InsuranceServiceImpl implements InsuranceService {
         insuranceRepository.delete(insurance);
     }
 
+    @Override
+    @Transactional
+    public void registerInsurance(Long insuranceId) {
+        Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
+        insurance.setAuthorization(true);
+    }
+
 }

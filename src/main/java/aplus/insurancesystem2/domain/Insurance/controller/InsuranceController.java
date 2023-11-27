@@ -129,9 +129,26 @@ public class InsuranceController {
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteInsurance(
-            @PathVariable("id") Long insuranceId) {
+    public ResponseEntity<Void> deleteInsurance(@PathVariable("id") Long insuranceId) {
         insuranceService.deleteInsurance(insuranceId);
         return ResponseEntity.ok().build();
     }
+
+    @Operation(summary = "보험 등록", description = "menu 8(보험 설계): 보험 등록 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "보험 등록 완료"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "I001: id에 해당하는 보험을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PostMapping("/{id}/register")
+    public ResponseEntity<Void> registerInsurance(@PathVariable("id") Long insuranceId) {
+        insuranceService.registerInsurance(insuranceId);
+        return ResponseEntity.ok().build();
+    }
+
+
 }
