@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -42,6 +43,7 @@ public class InsuranceApplication {
     private Boolean approval;
     private String reasonOfApproval;
 
+    @Builder
     public InsuranceApplication(Insurance insurance, Customer customer, LocalDate createdAt,
                                 String insurancePeriod,
                                 String paymentCycle, String subscriptionFilePath, Integer premium,

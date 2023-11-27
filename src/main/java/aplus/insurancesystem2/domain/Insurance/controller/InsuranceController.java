@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.DesignInsuranceRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.UpdateInsuranceRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
@@ -150,4 +151,22 @@ public class InsuranceController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "보험 신청", description = "menu 8(보험 설계): 보험 신청 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "보험 신청 완료"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "I001: id에 해당하는 보험을 찾을 수 없습니다. \n"
+                                  + "U001: id에 해당하는 유저를 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PostMapping("/{id}/apply")
+    public ResponseEntity<Void> applyInsurance(
+            @PathVariable("id") Long insuranceId,
+            @RequestBody CreateInsuranceApplicationRequest request) {
+        insuranceService.applyInsurance(insuranceId, request);
+        return ResponseEntity.ok().build();
+    }
 }
