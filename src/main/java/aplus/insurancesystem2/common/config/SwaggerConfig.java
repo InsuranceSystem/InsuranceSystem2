@@ -40,4 +40,15 @@ public class SwaggerConfig {
                 .pathsToMatch(paths)
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi termsOpenApi() {
+        String[] paths = {"/terms/**"};
+
+        return GroupedOpenApi
+                .builder()
+                .group("약관 API")
+                .pathsToMatch(paths)
+                .build();
+    }
 }
