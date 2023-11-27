@@ -80,7 +80,7 @@ public class InsuranceController {
     public ResponseEntity<SuccessResponse<List<TermInfoResponse>>> getInsuranceTerms(
             @PathVariable("id") Long insuranceId) {
         return SuccessResponse.of(
-                termsService.getInsuranceTerms(insuranceId)
+                termsService.getInsuranceTermsList(insuranceId)
         ).asHttp(HttpStatus.OK);
     }
 
@@ -149,6 +149,5 @@ public class InsuranceController {
         insuranceService.registerInsurance(insuranceId);
         return ResponseEntity.ok().build();
     }
-
 
 }

@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import aplus.insurancesystem2.domain.Insurance.dto.request.CreateTermsRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.TermInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.entity.Terms;
 import aplus.insurancesystem2.domain.Insurance.repository.TermsRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -31,5 +33,15 @@ public class TermsServiceImpl implements TermsService {
             .stream()
             .map(TermInfoResponse::of)
             .toList();
+    }
+
+    @Override
+    @Transactional
+    public void createTerms(CreateTermsRequest request) {
+        termsRepository.save(Terms.builder()
+                                  .termsName(request.getTermsName())
+                                  .calculatedMoneyMethod(request.getCalculatedMoneyMethod())
+                                  .termsContent(request.getTermsContent())
+                                  .build());
     }
 }
