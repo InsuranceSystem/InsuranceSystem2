@@ -1,5 +1,8 @@
 package aplus.insurancesystem2.domain.customer.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +12,7 @@ import aplus.insurancesystem2.domain.customer.dto.response.CustomerAllInfoRespon
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
+import aplus.insurancesystem2.domain.customer.entity.TargetType;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import aplus.insurancesystem2.domain.customer.exception.CustomerNotFoundException;
 import aplus.insurancesystem2.domain.customer.repository.CustomerRepository;
@@ -72,5 +76,13 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(customerId)
                 .map(CustomerAllInfoResponse::of)
                 .orElseThrow(CustomerNotFoundException::new);
+    }
+
+    @Override
+    public List<CustomerAllInfoResponse> getContractMaintenanceCustomers(TargetType targetType) {
+        return targetType.applyFunction(customerRepository)
+                         .stream()
+                         .map(CustomerAllInfoResponse::of)
+                         .collect(Collectors.toList());
     }
 }

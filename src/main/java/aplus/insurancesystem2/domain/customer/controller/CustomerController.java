@@ -20,6 +20,7 @@ import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailRespons
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.FamilyHistoryInfoResponse;
+import aplus.insurancesystem2.domain.customer.entity.TargetType;
 import aplus.insurancesystem2.domain.customer.service.CustomerService;
 import aplus.insurancesystem2.domain.customer.service.FamilyHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -170,6 +171,22 @@ public class CustomerController {
             @PathVariable("id") Long customerId) {
         return SuccessResponse.of(
                 familyHistoryService.getFamilyHistories(customerId)
+        ).asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "계약 유지 대상자들 조회", description = "menu 6(고객 조회): 계약 유지 대상자들"
+                                                        + "(만기계약대상자/미납대상자/부활대상자 조회 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "고객 가족력 반환")
+    })
+    @GetMapping("/contract-maintenance")
+    public ResponseEntity<SuccessResponse<List<CustomerAllInfoResponse>>> getContractMaintenanceCustomers(
+            @Parameter(description = "계약 유지 대상자 타입", in = ParameterIn.QUERY)
+            @RequestParam TargetType targetType) {
+        return SuccessResponse.of(
+                customerService.getContractMaintenanceCustomers(targetType)
         ).asHttp(HttpStatus.OK);
     }
 }
