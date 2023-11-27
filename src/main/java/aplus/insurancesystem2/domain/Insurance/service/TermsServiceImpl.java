@@ -18,8 +18,16 @@ public class TermsServiceImpl implements TermsService {
     private final TermsRepository termsRepository;
 
     @Override
-    public List<TermInfoResponse> getInsuranceTerms(Long insuranceId) {
+    public List<TermInfoResponse> getInsuranceTermsList(Long insuranceId) {
         return termsRepository.findAllByInsurance(insuranceQueryService.getInsurance(insuranceId))
+            .stream()
+            .map(TermInfoResponse::of)
+            .toList();
+    }
+
+    @Override
+    public List<TermInfoResponse> getTermsList() {
+        return termsRepository.findAll()
             .stream()
             .map(TermInfoResponse::of)
             .toList();
