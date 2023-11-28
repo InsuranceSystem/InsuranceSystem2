@@ -134,6 +134,7 @@ public class InsuranceServiceImpl implements InsuranceService {
                                                         .createdAt(LocalDate.now())
                                                         .insurancePeriod(request.getInsurancePeriod())
                                                         .paymentCycle(request.getPaymentCycle())
+                                                        .paymentPeriod(request.getPaymentPeriod())
                                                         .subscriptionFilePath(request.getSubscriptionFilePath())
                                                         .build();
         insuranceApplicationRepository.save(insuranceApplication);
