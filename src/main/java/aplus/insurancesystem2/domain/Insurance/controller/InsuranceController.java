@@ -21,6 +21,8 @@ import aplus.insurancesystem2.domain.Insurance.dto.response.TermInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceService;
 import aplus.insurancesystem2.domain.Insurance.service.TermsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -47,6 +49,7 @@ public class InsuranceController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse<InsuranceDetailResponse>> getInsurance(
+            @Parameter(description = "보험 id", in = ParameterIn.PATH)
             @PathVariable("id") Long insuranceId) {
         return SuccessResponse.of(
                 insuranceService.getInsuranceInfo(insuranceId)
@@ -78,6 +81,7 @@ public class InsuranceController {
     })
     @GetMapping("/{id}/terms")
     public ResponseEntity<SuccessResponse<List<TermInfoResponse>>> getInsuranceTerms(
+            @Parameter(description = "보험 id", in = ParameterIn.PATH)
             @PathVariable("id") Long insuranceId) {
         return SuccessResponse.of(
                 termsService.getInsuranceTermsList(insuranceId)
@@ -112,6 +116,7 @@ public class InsuranceController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateInsurance(
+            @Parameter(description = "보험 id", in = ParameterIn.PATH)
             @PathVariable("id") Long insuranceId,
             @RequestBody UpdateInsuranceRequest request) {
         insuranceService.updateInsurance(insuranceId, request);
@@ -129,7 +134,8 @@ public class InsuranceController {
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteInsurance(@PathVariable("id") Long insuranceId) {
+    public ResponseEntity<Void> deleteInsurance(@Parameter(description = "보험 id", in = ParameterIn.PATH)
+                                                    @PathVariable("id") Long insuranceId) {
         insuranceService.deleteInsurance(insuranceId);
         return ResponseEntity.ok().build();
     }
@@ -145,7 +151,8 @@ public class InsuranceController {
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @PostMapping("/{id}/register")
-    public ResponseEntity<Void> registerInsurance(@PathVariable("id") Long insuranceId) {
+    public ResponseEntity<Void> registerInsurance(@Parameter(description = "보험 id", in = ParameterIn.PATH)
+                                                      @PathVariable("id") Long insuranceId) {
         insuranceService.registerInsurance(insuranceId);
         return ResponseEntity.ok().build();
     }

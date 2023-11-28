@@ -17,6 +17,8 @@ import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplication
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -43,6 +45,7 @@ public class InsuranceApplicationController {
     })
     @PostMapping("/{id}")
     public ResponseEntity<Void> applyInsurance(
+            @Parameter(description = "보험 id", in = ParameterIn.PATH)
             @PathVariable("id") Long insuranceId,
             @RequestBody CreateInsuranceApplicationRequest request) {
         insuranceApplicationService.applyInsurance(insuranceId, request);
@@ -75,7 +78,8 @@ public class InsuranceApplicationController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse<InsuranceApplicationDetailResponse>>
-        getInsuranceApplication(@PathVariable("id") Long insuranceApplicationId) {
+        getInsuranceApplication(@Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
+                                @PathVariable("id") Long insuranceApplicationId) {
         return SuccessResponse.of(
                 insuranceApplicationService.getInsuranceApplication(insuranceApplicationId)
         ).asHttp(HttpStatus.OK);
