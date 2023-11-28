@@ -15,6 +15,7 @@ import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
 import aplus.insurancesystem2.domain.Insurance.exception.InsuranceApplicationNotFoundException;
 import aplus.insurancesystem2.domain.Insurance.repository.InsuranceApplicationRepository;
+import aplus.insurancesystem2.domain.contract.service.ContractService;
 import aplus.insurancesystem2.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import aplus.insurancesystem2.domain.customer.service.CustomerQueryService;
@@ -27,9 +28,11 @@ import lombok.RequiredArgsConstructor;
 public class InsuranceApplicationServiceImpl implements InsuranceApplicationService {
 
     private final InsuranceApplicationRepository insuranceApplicationRepository;
+    private final InsuranceApplicationQueryService insuranceApplicationQueryService;
     private final CustomerQueryService customerQueryService;
     private final InsuranceQueryService insuranceQueryService;
     private final FamilyHistoryService familyHistoryService;
+    private final ContractService contractService;
 
     @Override
     @Transactional
@@ -59,8 +62,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
     @Override
     public InsuranceApplicationDetailResponse getInsuranceApplication(Long insuranceApplicationId) {
         InsuranceApplication insuranceApplication =
-                insuranceApplicationRepository.findById(insuranceApplicationId)
-                                              .orElseThrow(InsuranceApplicationNotFoundException::new);
+                insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
         List<FamilyHistory> familyHistories =
                 familyHistoryService.getFamilyHistories(insuranceApplication.getCustomer());
         return InsuranceApplicationDetailResponse.of(insuranceApplication, familyHistories);
@@ -68,9 +70,9 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
 
     @Override
     public SubscriptionFilePathResponse getSubscription(Long insuranceApplicationId) {
-        return insuranceApplicationRepository.findById(insuranceApplicationId)
-                                             .map(SubscriptionFilePathResponse::of)
-                                             .orElseThrow(InsuranceApplicationNotFoundException::new);
+        return SubscriptionFilePathResponse.of(
+                insuranceApplicationQueryService.getInsurance(insuranceApplicationId)
+        );
     }
 
     @Override
@@ -84,10 +86,27 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
     @Transactional
     public void calculatePremium(CalculatePremiumRequest request) {
         InsuranceApplication insuranceApplication =
-                insuranceApplicationRepository.findById(request.getInsuranceApplicationId())
-                                              .orElseThrow(InsuranceApplicationNotFoundException::new);
+                insuranceApplicationQueryService.getInsurance(request.getInsuranceApplicationId());
         insuranceApplication.setReasonOfApproval(request.getReasonOfApproval());
         insuranceApplication.setPaymentPeriod(request.getPaymentPeriod());
         insuranceApplication.setPremium(request.getPremium());
+    }
+
+    @Override
+    @Transactional
+    public void approvalInsuranceApplication(Long insuranceApplicationId) {
+        InsuranceApplication insuranceApplication =
+                insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
+        insuranceApplication.setApproval(true);
+
+        contractService.createContract(insuranceApplication);
+    }
+
+    @Override
+    @Transactional
+    public void rejectionInsuranceApplication(Long insuranceApplicationId, String reasonOfRejection) {
+        InsuranceApplication insuranceApplication =
+                insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
+        insuranceApplication.setReasonOfApproval(reasonOfRejection);
     }
 }

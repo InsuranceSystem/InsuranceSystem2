@@ -56,6 +56,7 @@ public class Contract {
         this.insurancePeriod = insurancePeriod;
         this.premium = premium;
         this.paymentCycle = paymentCycle;
+        this.paymentPeriod = paymentPeriod;
         this.maxCompensation = maxCompensation;
         this.dateOfSubscription = dateOfSubscription;
         this.dateOfMaturity = dateOfMaturity;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CalculatePremiumRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.request.RejectInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
@@ -121,6 +122,44 @@ public class InsuranceApplicationController {
     @PatchMapping("/calculate-premium")
     public ResponseEntity<Void> calculatePremium(@RequestBody CalculatePremiumRequest request) {
         insuranceApplicationService.calculatePremium(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "보험 가입 신청 승인" , description = "menu 10(보험 가입 신청 내역): 보험 가입 신청 승인 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "보험 가입 신청 승인 완료"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "IA001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PostMapping("/{id}/approval")
+    public ResponseEntity<Void> approvalInsuranceApplication(
+            @Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
+            @PathVariable("id") Long insuranceApplicationId) {
+        insuranceApplicationService.approvalInsuranceApplication(insuranceApplicationId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "보험 가입 신청 거절", description = "menu 10(보험 가입 신청 내역): 보험 가입 신청 거절 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "보험 가입 신청 거절 완료"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "IA001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PostMapping("/{id}/rejection")
+    public ResponseEntity<Void> rejectionInsuranceApplication(
+            @Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
+            @PathVariable("id") Long insuranceApplicationId,
+            @RequestBody RejectInsuranceApplicationRequest request) {
+        insuranceApplicationService.rejectionInsuranceApplication(insuranceApplicationId,
+                                                                  request.getReasonOfRejection());
         return ResponseEntity.ok().build();
     }
 }

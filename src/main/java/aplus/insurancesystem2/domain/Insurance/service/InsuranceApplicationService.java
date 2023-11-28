@@ -21,4 +21,8 @@ public interface InsuranceApplicationService {
     InsuranceApplicationInfoResponse getInsuranceApplicationInfo(Long insuranceApplicationId);
 
     void calculatePremium(CalculatePremiumRequest request);
+
+    void approvalInsuranceApplication(Long insuranceApplicationId);
+
+    void rejectionInsuranceApplication(Long insuranceApplicationId, String reasonOfRejection);
 }
