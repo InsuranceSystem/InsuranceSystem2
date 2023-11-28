@@ -39,8 +39,6 @@ public class Insurance {
     private String type;
     private int maxCompensation;
     private String periodOfInsurance;
-    private String paymentCycle;
-    private String paymentPeriod;
     private String ageOfTarget;
     private int basicPremium;
     private String rate;
@@ -60,8 +58,6 @@ public class Insurance {
         this.type = type;
         this.maxCompensation = maxCompensation;
         this.periodOfInsurance = periodOfInsurance;
-        this.paymentCycle = paymentCycle;
-        this.paymentPeriod = paymentPeriod;
         this.ageOfTarget = ageOfTarget;
         this.basicPremium = basicPremium;
         this.rate = rate;

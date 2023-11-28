@@ -18,8 +18,6 @@ public class InsuranceDetailResponse {
     private String type;
     private int maxCompensation;
     private String periodOfInsurance;
-    private String paymentCycle;
-    private String paymentPeriod;
     private String ageOfTarget;
     private int basicPremium;
     private String rate;
@@ -37,8 +35,6 @@ public class InsuranceDetailResponse {
                 insurance.getType(),
                 insurance.getMaxCompensation(),
                 insurance.getPeriodOfInsurance(),
-                insurance.getPaymentCycle(),
-                insurance.getPaymentPeriod(),
                 insurance.getAgeOfTarget(),
                 insurance.getBasicPremium(),
                 insurance.getRate(),

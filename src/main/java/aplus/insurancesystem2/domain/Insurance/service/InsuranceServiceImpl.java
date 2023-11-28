@@ -62,8 +62,6 @@ public class InsuranceServiceImpl implements InsuranceService {
                                        .type(request.getType())
                                        .maxCompensation(request.getMaxCompensation())
                                        .periodOfInsurance(request.getPeriodOfInsurance())
-                                       .paymentCycle(request.getPaymentCycle())
-                                       .paymentPeriod(request.getPaymentPeriod())
                                        .ageOfTarget(request.getAgeOfTarget())
                                        .basicPremium(request.getBasicPremium())
                                        .rate(request.getRate())
@@ -92,8 +90,6 @@ public class InsuranceServiceImpl implements InsuranceService {
         insurance.setType(request.getType());
         insurance.setMaxCompensation(request.getMaxCompensation());
         insurance.setPeriodOfInsurance(request.getPeriodOfInsurance());
-        insurance.setPaymentCycle(request.getPaymentCycle());
-        insurance.setPaymentPeriod(request.getPaymentPeriod());
         insurance.setAgeOfTarget(request.getAgeOfTarget());
         insurance.setBasicPremium(request.getBasicPremium());
         insurance.setRate(request.getRate());

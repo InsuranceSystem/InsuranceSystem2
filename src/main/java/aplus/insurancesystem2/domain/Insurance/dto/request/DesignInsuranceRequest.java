@@ -15,8 +15,6 @@ public class DesignInsuranceRequest {
     private final String type;
     private final int maxCompensation;
     private final String periodOfInsurance;
-    private final String paymentCycle;
-    private final String paymentPeriod;
     private final String ageOfTarget;
     private final int basicPremium;
     private final String rate;
