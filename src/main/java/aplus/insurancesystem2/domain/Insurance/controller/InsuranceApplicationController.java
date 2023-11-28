@@ -15,6 +15,7 @@ import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -73,7 +74,7 @@ public class InsuranceApplicationController {
                     description = "보험 가입 신청 내역 반환"),
             @ApiResponse(
                     responseCode = "404",
-                    description = "I001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
+                    description = "IA001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/{id}")
@@ -82,6 +83,24 @@ public class InsuranceApplicationController {
                                 @PathVariable("id") Long insuranceApplicationId) {
         return SuccessResponse.of(
                 insuranceApplicationService.getInsuranceApplication(insuranceApplicationId)
+        ).asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "청약서 조회", description = "menu 10(보험 가입 신청 내역): 청약서 조회 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "청약서 반환"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "IA001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{id}/subscription")
+    public ResponseEntity<SuccessResponse<SubscriptionFilePathResponse>>
+        getSubscription(@PathVariable("id") Long insuranceApplicationId) {
+        return SuccessResponse.of(
+                insuranceApplicationService.getSubscription(insuranceApplicationId)
         ).asHttp(HttpStatus.OK);
     }
 }

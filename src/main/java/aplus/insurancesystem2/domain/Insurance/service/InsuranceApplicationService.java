@@ -5,6 +5,7 @@ import java.util.List;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 
 public interface InsuranceApplicationService {
 
@@ -13,4 +14,6 @@ public interface InsuranceApplicationService {
     List<InsuranceApplicationInfoResponse> getInsuranceApplicationList();
 
     InsuranceApplicationDetailResponse getInsuranceApplication(Long insuranceApplicationId);
+
+    SubscriptionFilePathResponse getSubscription(Long insuranceApplicationId);
 }

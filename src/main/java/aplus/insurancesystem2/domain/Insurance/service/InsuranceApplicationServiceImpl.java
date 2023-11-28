@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
 import aplus.insurancesystem2.domain.Insurance.exception.InsuranceApplicationNotFoundException;
@@ -62,5 +63,12 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
         List<FamilyHistory> familyHistories =
                 familyHistoryService.getFamilyHistories(insuranceApplication.getCustomer());
         return InsuranceApplicationDetailResponse.of(insuranceApplication, familyHistories);
+    }
+
+    @Override
+    public SubscriptionFilePathResponse getSubscription(Long insuranceApplicationId) {
+        return insuranceApplicationRepository.findById(insuranceApplicationId)
+                                             .map(SubscriptionFilePathResponse::of)
+                                             .orElseThrow(InsuranceApplicationNotFoundException::new);
     }
 }
