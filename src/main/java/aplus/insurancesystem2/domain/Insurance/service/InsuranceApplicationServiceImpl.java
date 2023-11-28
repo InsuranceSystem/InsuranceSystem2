@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import aplus.insurancesystem2.domain.Insurance.dto.request.CalculatePremiumRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
@@ -70,5 +71,23 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
         return insuranceApplicationRepository.findById(insuranceApplicationId)
                                              .map(SubscriptionFilePathResponse::of)
                                              .orElseThrow(InsuranceApplicationNotFoundException::new);
+    }
+
+    @Override
+    public InsuranceApplicationInfoResponse getInsuranceApplicationInfo(Long insuranceApplicationId) {
+        return insuranceApplicationRepository.findById(insuranceApplicationId)
+                                             .map(InsuranceApplicationInfoResponse::of)
+                                             .orElseThrow(InsuranceApplicationNotFoundException::new);
+    }
+
+    @Override
+    @Transactional
+    public void calculatePremium(CalculatePremiumRequest request) {
+        InsuranceApplication insuranceApplication =
+                insuranceApplicationRepository.findById(request.getInsuranceApplicationId())
+                                              .orElseThrow(InsuranceApplicationNotFoundException::new);
+        insuranceApplication.setReasonOfApproval(request.getReasonOfApproval());
+        insuranceApplication.setMaxCompensation(request.getMaxCompensation());
+        insuranceApplication.setPremium(request.getPremium());
     }
 }

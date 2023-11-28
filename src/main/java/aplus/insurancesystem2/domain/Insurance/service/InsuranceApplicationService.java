@@ -2,6 +2,7 @@ package aplus.insurancesystem2.domain.Insurance.service;
 
 import java.util.List;
 
+import aplus.insurancesystem2.domain.Insurance.dto.request.CalculatePremiumRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
@@ -16,4 +17,8 @@ public interface InsuranceApplicationService {
     InsuranceApplicationDetailResponse getInsuranceApplication(Long insuranceApplicationId);
 
     SubscriptionFilePathResponse getSubscription(Long insuranceApplicationId);
+
+    InsuranceApplicationInfoResponse getInsuranceApplicationInfo(Long insuranceApplicationId);
+
+    void calculatePremium(CalculatePremiumRequest request);
 }
