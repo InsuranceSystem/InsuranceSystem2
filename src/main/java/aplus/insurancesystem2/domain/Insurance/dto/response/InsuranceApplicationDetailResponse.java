@@ -23,6 +23,10 @@ public class InsuranceApplicationDetailResponse {
 
     private final String insuranceType;
     private final String insuranceName;
+    @Schema(description = "기본 보험료")
+    private final Integer insuranceBasicPremium;
+    @Schema(description = "요율")
+    private final String insuranceRate;
     @Schema(description = "insuranceApplication.createAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private final LocalDate insuranceApplicationDate;
@@ -41,6 +45,8 @@ public class InsuranceApplicationDetailResponse {
         return InsuranceApplicationDetailResponse.builder()
                 .insuranceType(insuranceApplication.getInsurance().getType())
                 .insuranceName(insuranceApplication.getInsurance().getInsuranceName())
+                .insuranceBasicPremium(insuranceApplication.getInsurance().getBasicPremium())
+                .insuranceRate(insuranceApplication.getInsurance().getRate())
                 .insuranceApplicationDate(insuranceApplication.getCreatedAt())
                 .customerName(insuranceApplication.getCustomer().getCustomerName())
                 .customerBirth(insuranceApplication.getCustomer().getBirth())

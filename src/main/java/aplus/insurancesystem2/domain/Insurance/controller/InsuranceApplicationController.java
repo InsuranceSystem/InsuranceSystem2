@@ -67,7 +67,8 @@ public class InsuranceApplicationController {
         ).asHttp(HttpStatus.OK);
     }
 
-    @Operation(summary = "보험 가입 신청 내역 상세보기", description = "menu 10(보험 가입 신청 내역): 보험 가입 신청 내역 상세보기 API")
+    @Operation(summary = "보험 가입 신청 내역 상세보기", description = "menu 10(보험 가입 신청 내역): 보험 가입 신청 내역 상세보기 API"
+                                                           + "+ 보험료 산정 시 보여줄 고객, 보험, 가족력 정보 반환 API")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
