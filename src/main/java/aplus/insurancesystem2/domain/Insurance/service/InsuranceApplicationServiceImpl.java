@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
+import aplus.insurancesystem2.domain.Insurance.exception.InsuranceApplicationNotFoundException;
 import aplus.insurancesystem2.domain.Insurance.repository.InsuranceApplicationRepository;
+import aplus.insurancesystem2.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import aplus.insurancesystem2.domain.customer.service.CustomerQueryService;
+import aplus.insurancesystem2.domain.customer.service.FamilyHistoryService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -23,6 +27,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
     private final InsuranceApplicationRepository insuranceApplicationRepository;
     private final CustomerQueryService customerQueryService;
     private final InsuranceQueryService insuranceQueryService;
+    private final FamilyHistoryService familyHistoryService;
 
     @Override
     @Transactional
@@ -47,5 +52,15 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
         return insuranceApplicationRepository.findAll().stream()
                 .map(InsuranceApplicationInfoResponse::of)
                 .toList();
+    }
+
+    @Override
+    public InsuranceApplicationDetailResponse getInsuranceApplication(Long insuranceApplicationId) {
+        InsuranceApplication insuranceApplication =
+                insuranceApplicationRepository.findById(insuranceApplicationId)
+                                              .orElseThrow(InsuranceApplicationNotFoundException::new);
+        List<FamilyHistory> familyHistories =
+                familyHistoryService.getFamilyHistories(insuranceApplication.getCustomer());
+        return InsuranceApplicationDetailResponse.of(insuranceApplication, familyHistories);
     }
 }

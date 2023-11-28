@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,6 +60,24 @@ public class InsuranceApplicationController {
         getInsuranceApplicationList() {
         return SuccessResponse.of(
                 insuranceApplicationService.getInsuranceApplicationList()
+        ).asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "보험 가입 신청 내역 상세보기", description = "menu 10(보험 가입 신청 내역): 보험 가입 신청 내역 상세보기 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "보험 가입 신청 내역 반환"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "I001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<SuccessResponse<InsuranceApplicationDetailResponse>>
+        getInsuranceApplication(@PathVariable("id") Long insuranceApplicationId) {
+        return SuccessResponse.of(
+                insuranceApplicationService.getInsuranceApplication(insuranceApplicationId)
         ).asHttp(HttpStatus.OK);
     }
 }
