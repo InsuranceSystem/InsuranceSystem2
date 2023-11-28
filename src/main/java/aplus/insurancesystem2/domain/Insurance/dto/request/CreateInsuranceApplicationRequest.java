@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class CreateInsuranceApplicationRequest {
 
     private final Long customerId;
-    private final String insurancePeriod;
     private final String paymentCycle;
-    private final String paymentPeriod;
     private final String subscriptionFilePath;
 
 }
