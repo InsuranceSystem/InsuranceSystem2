@@ -13,6 +13,6 @@ public class CalculatePremiumRequest {
 
     private final Long insuranceApplicationId;
     private final String reasonOfApproval;
-    private final Integer maxCompensation;
+    private final String paymentPeriod;
     private final Integer premium;
 }

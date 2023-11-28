@@ -87,7 +87,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
                 insuranceApplicationRepository.findById(request.getInsuranceApplicationId())
                                               .orElseThrow(InsuranceApplicationNotFoundException::new);
         insuranceApplication.setReasonOfApproval(request.getReasonOfApproval());
-        insuranceApplication.setMaxCompensation(request.getMaxCompensation());
+        insuranceApplication.setPaymentPeriod(request.getPaymentPeriod());
         insuranceApplication.setPremium(request.getPremium());
     }
 }
