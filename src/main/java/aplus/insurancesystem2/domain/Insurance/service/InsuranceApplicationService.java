@@ -1,0 +1,13 @@
+package aplus.insurancesystem2.domain.Insurance.service;
+
+import java.util.List;
+
+import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+
+public interface InsuranceApplicationService {
+
+    void applyInsurance(Long insuranceId, CreateInsuranceApplicationRequest request);
+
+    List<InsuranceApplicationInfoResponse> getInsuranceApplicationList();
+}

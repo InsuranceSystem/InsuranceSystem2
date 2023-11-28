@@ -1,6 +1,5 @@
 package aplus.insurancesystem2.domain.Insurance.service;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,20 +7,17 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.DesignInsuranceRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.UpdateInsuranceRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.entity.Guarantee;
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
-import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
 import aplus.insurancesystem2.domain.Insurance.entity.Terms;
 import aplus.insurancesystem2.domain.Insurance.exception.InsuranceNotFoundException;
 import aplus.insurancesystem2.domain.Insurance.repository.GuaranteeRepository;
 import aplus.insurancesystem2.domain.Insurance.repository.InsuranceApplicationRepository;
 import aplus.insurancesystem2.domain.Insurance.repository.InsuranceRepository;
 import aplus.insurancesystem2.domain.Insurance.repository.TermsRepository;
-import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import aplus.insurancesystem2.domain.customer.service.CustomerQueryService;
 import aplus.insurancesystem2.domain.customer.service.TermsQueryService;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +29,6 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     private final InsuranceRepository insuranceRepository;
     private final GuaranteeRepository guaranteeRepository;
-    private final TermsRepository termsRepository;
-    private final InsuranceApplicationRepository insuranceApplicationRepository;
-    private final CustomerQueryService customerQueryService;
     private final InsuranceQueryService insuranceQueryService;
     private final TermsQueryService termsQueryService;
 
@@ -120,24 +113,6 @@ public class InsuranceServiceImpl implements InsuranceService {
     public void registerInsurance(Long insuranceId) {
         Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
         insurance.setAuthorization(true);
-    }
-
-    @Override
-    @Transactional
-    public void applyInsurance(Long insuranceId, CreateInsuranceApplicationRequest request) {
-        Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
-        Customer customer = customerQueryService.getCustomer(request.getCustomerId());
-
-        InsuranceApplication insuranceApplication = InsuranceApplication.builder()
-                                                        .insurance(insurance)
-                                                        .customer(customer)
-                                                        .createdAt(LocalDate.now())
-                                                        .insurancePeriod(insurance.getPeriodOfInsurance())
-                                                        .paymentCycle(request.getPaymentCycle())
-                                                        .maxCompensation(insurance.getMaxCompensation())
-                                                        .subscriptionFilePath(request.getSubscriptionFilePath())
-                                                        .build();
-        insuranceApplicationRepository.save(insuranceApplication);
     }
 
 }

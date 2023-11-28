@@ -51,4 +51,15 @@ public class SwaggerConfig {
                 .pathsToMatch(paths)
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi insuranceApplicationOpenApi() {
+        String[] paths = {"/insurance-applications/**"};
+
+        return GroupedOpenApi
+                .builder()
+                .group("보험 신청 API")
+                .pathsToMatch(paths)
+                .build();
+    }
 }

@@ -2,12 +2,12 @@ package aplus.insurancesystem2.domain.Insurance.dto.response;
 
 import aplus.insurancesystem2.domain.Insurance.entity.Terms;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 @Schema(description = "보험 약관 정보 Response")
-@AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class TermInfoResponse {
     private final Long termsID;
     private final String termsName;
