@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.compensation.entity;
+package aplus.insurancesystem2.domain.compensationClaim.entity;
 
 import java.time.LocalDateTime;
 

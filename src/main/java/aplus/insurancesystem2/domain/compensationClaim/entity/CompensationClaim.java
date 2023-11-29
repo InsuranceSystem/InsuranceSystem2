@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.compensation.entity;
+package aplus.insurancesystem2.domain.compensationClaim.entity;
 
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
