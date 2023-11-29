@@ -2,6 +2,7 @@ package aplus.insurancesystem2.domain.Insurance.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import aplus.insurancesystem2.domain.Insurance.dto.request.CalculatePremiumReque
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
@@ -108,5 +110,12 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
         InsuranceApplication insuranceApplication =
                 insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
         insuranceApplication.setReasonOfApproval(reasonOfRejection);
+    }
+
+    @Override
+    public List<MyInsuranceApplicationResponse> getMyInsuranceApplicationList(Long customerId) {
+        return insuranceApplicationRepository.findAllByCustomerId(customerId).stream()
+                                             .map(MyInsuranceApplicationResponse::of)
+                                             .collect(Collectors.toList());
     }
 }

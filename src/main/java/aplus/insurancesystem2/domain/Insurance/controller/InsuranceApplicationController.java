@@ -18,6 +18,7 @@ import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplic
 import aplus.insurancesystem2.domain.Insurance.dto.request.RejectInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -161,5 +162,19 @@ public class InsuranceApplicationController {
         insuranceApplicationService.rejectionInsuranceApplication(insuranceApplicationId,
                                                                   request.getReasonOfRejection());
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "내 보험 신청 내역 리스트 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "내 보험 가입 신청 내역 리스트 반환(신청 내역이 없다면 빈 리스트 반환)")
+    })
+    @GetMapping("/my")
+    public ResponseEntity<SuccessResponse<List<MyInsuranceApplicationResponse>>>
+        getMyInsuranceApplicationList() {
+        return SuccessResponse.of(
+                insuranceApplicationService.getMyInsuranceApplicationList(1L)
+        ).asHttp(HttpStatus.OK);
     }
 }
