@@ -1,9 +1,13 @@
 package aplus.insurancesystem2.domain.contract.controller;
 
+import aplus.insurancesystem2.common.dto.SuccessResponse;
+import aplus.insurancesystem2.domain.contract.dto.ContractInfoResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import aplus.insurancesystem2.domain.contract.service.ContractService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContractController {
 
     private final ContractService contractService;
+
+    @GetMapping("/get/contract")
+    public ResponseEntity<SuccessResponse<ContractInfoResponse>> getContract(@RequestParam String id) {
+        return SuccessResponse.of(contractService.getContractInfo(id))
+                .asHttp(HttpStatus.OK);
+    }
 
     @PostMapping("/create")
     public boolean add(Contract contract) {

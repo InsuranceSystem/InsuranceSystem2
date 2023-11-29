@@ -16,7 +16,10 @@ public enum ErrorCode {
     ROLE_NOT_FOUND(404, "U003", "권한을 찾을 수 없습니다."),
 
     // Insurance
-    INSURANCE_NOT_FOUND(404, "I001", "보험을 찾을 수 없습니다.");
+    INSURANCE_NOT_FOUND(404, "I001", "보험을 찾을 수 없습니다."),
+
+    // Contract
+    CONTRACT_NOT_FOUND(404, "C001", "계약을 찾을 수 없습니다.");
 
     private final int status;
     private final String code;

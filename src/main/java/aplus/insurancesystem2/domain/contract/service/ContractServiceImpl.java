@@ -2,7 +2,9 @@ package aplus.insurancesystem2.domain.contract.service;
 
 import static java.util.Objects.isNull;
 
+import aplus.insurancesystem2.domain.contract.dto.ContractInfoResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
+import aplus.insurancesystem2.domain.contract.exception.ContractNotFoundException;
 import aplus.insurancesystem2.domain.contract.repository.ContractRepository;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -17,6 +19,12 @@ import org.springframework.stereotype.Service;
 public class ContractServiceImpl implements ContractService {
 
     private final ContractRepository contractRepository;
+
+    public ContractInfoResponse getContractInfo(String contractId) {
+        return contractRepository.findById(Long.parseLong(contractId))
+                .map(ContractInfoResponse::of)
+                .orElseThrow(ContractNotFoundException::new);
+    }
 
     public boolean add(Contract newContract) {
         Contract savedContract = contractRepository.save(newContract);
@@ -53,7 +61,7 @@ public class ContractServiceImpl implements ContractService {
     public List<String> getStatus(Long customerId) {
         return contractRepository.findByCustomerId(customerId)
                 .stream()
-                .map(contract -> contract.getMaturity() + " " + contract.getCancellation())
+                .map(contract -> contract.getMaturity() + " " + contract.getCancellation()  )
                 .collect(Collectors.toList());
     }
 

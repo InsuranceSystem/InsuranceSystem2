@@ -1,9 +1,12 @@
 package aplus.insurancesystem2.domain.contract.service;
 
+import aplus.insurancesystem2.domain.contract.dto.ContractInfoResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import java.util.List;
 
 public interface ContractService {
+
+    ContractInfoResponse getContractInfo(String contractId);
     boolean add(Contract contract);
     List<Contract> getall() throws Exception;
     List<Contract> getByCustomerId(Long customerId);
