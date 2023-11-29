@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class MyInsuranceApplicationResponse {
 
     private final Long insuranceApplicationID;
+    private final Long insuranceID;
+    private final String insuranceName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private final LocalDate createdAt;
     private final String insurancePeriod;
@@ -30,6 +32,8 @@ public class MyInsuranceApplicationResponse {
 
     public static MyInsuranceApplicationResponse of(InsuranceApplication insuranceApplication) {
         return MyInsuranceApplicationResponse.builder()
+                .insuranceID(insuranceApplication.getInsurance().getId())
+                .insuranceName(insuranceApplication.getInsurance().getInsuranceName())
                 .insuranceApplicationID(insuranceApplication.getId())
                 .createdAt(insuranceApplication.getCreatedAt())
                 .insurancePeriod(insuranceApplication.getInsurancePeriod())
