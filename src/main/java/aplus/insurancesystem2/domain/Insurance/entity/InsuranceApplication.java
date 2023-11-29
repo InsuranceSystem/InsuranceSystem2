@@ -12,11 +12,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InsuranceApplication {
 
@@ -36,20 +39,23 @@ public class InsuranceApplication {
     private LocalDate createdAt;
     private String insurancePeriod;
     private String paymentCycle;
+    private String paymentPeriod;
     private String subscriptionFilePath;
     private Integer premium;
     private Integer maxCompensation;
     private Boolean approval;
     private String reasonOfApproval;
 
+    @Builder
     public InsuranceApplication(Insurance insurance, Customer customer, LocalDate createdAt,
-                                String insurancePeriod,
+                                String insurancePeriod, String paymentPeriod,
                                 String paymentCycle, String subscriptionFilePath, Integer premium,
                                 Integer maxCompensation, Boolean approval, String reasonOfApproval) {
         this.insurance = insurance;
         this.customer = customer;
         this.createdAt = createdAt;
         this.insurancePeriod = insurancePeriod;
+        this.paymentPeriod = paymentPeriod;
         this.paymentCycle = paymentCycle;
         this.subscriptionFilePath = subscriptionFilePath;
         this.premium = premium;

@@ -1,7 +1,11 @@
 package aplus.insurancesystem2.domain.Insurance.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +23,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Where(clause = "deletedAt is null")
+@SQLDelete(sql = "UPDATE Insurance SET deletedAt = current_timestamp WHERE insuranceID = ?")
 public class Insurance {
 
     @Id
@@ -32,8 +39,6 @@ public class Insurance {
     private String type;
     private int maxCompensation;
     private String periodOfInsurance;
-    private String paymentCycle;
-    private String paymentPeriod;
     private String ageOfTarget;
     private int basicPremium;
     private String rate;
@@ -41,7 +46,9 @@ public class Insurance {
     private String insuranceClausePeriod;
     private String precaution;
     private boolean authorization;
+    private LocalDateTime deletedAt;
 
+    @Builder
     public Insurance(String insuranceName, String type, int maxCompensation, String periodOfInsurance,
                      String paymentCycle, String paymentPeriod, String ageOfTarget,
                      int basicPremium, String rate, boolean distributionStatus, String insuranceClausePeriod,
@@ -51,8 +58,6 @@ public class Insurance {
         this.type = type;
         this.maxCompensation = maxCompensation;
         this.periodOfInsurance = periodOfInsurance;
-        this.paymentCycle = paymentCycle;
-        this.paymentPeriod = paymentPeriod;
         this.ageOfTarget = ageOfTarget;
         this.basicPremium = basicPremium;
         this.rate = rate;

@@ -12,11 +12,15 @@ public enum ErrorCode {
 
     // Customer
     USER_NOT_FOUND(404, "U001", "고객을 찾을 수 없습니다."),
-    EGENDER_NOT_FOUND(404, "U002", "성별을 찾을 수 없습니다."),
-    ROLE_NOT_FOUND(404, "U003", "권한을 찾을 수 없습니다."),
 
     // Insurance
     INSURANCE_NOT_FOUND(404, "I001", "보험을 찾을 수 없습니다."),
+
+    // Terms
+    TERMS_NOT_FOUND(404, "T001", "약관을 찾을 수 없습니다."),
+
+    // InsuranceApplication
+    INSURANCE_APPLICATION_NOT_FOUND(404, "IA001", "보험 신청을 찾을 수 없습니다."),
 
     // Contract
     CONTRACT_NOT_FOUND(404, "C001", "계약을 찾을 수 없습니다.");

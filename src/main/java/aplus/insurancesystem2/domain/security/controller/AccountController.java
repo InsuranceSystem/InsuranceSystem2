@@ -26,7 +26,6 @@ public class AccountController {
 
     @PostMapping("/join")
     public ResponseEntity<Void> join(@RequestBody JoinRequest request) {
-        System.out.println(0);
         boolean isNormal = accountService.join(request);
         return getHttpStatus(isNormal);
     }

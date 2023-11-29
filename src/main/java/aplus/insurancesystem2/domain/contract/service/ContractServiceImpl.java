@@ -1,5 +1,6 @@
 package aplus.insurancesystem2.domain.contract.service;
 
+<<<<<<< HEAD
 import static java.util.Objects.isNull;
 
 import aplus.insurancesystem2.domain.contract.dto.ContractDetailResponse;
@@ -17,12 +18,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+=======
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
+import aplus.insurancesystem2.domain.contract.entity.Contract;
+import aplus.insurancesystem2.domain.contract.repository.ContractRepository;
+import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@Transactional(readOnly = true)
+>>>>>>> 88576b260b94243ffa6788228039aef3bb2ff71f
 @RequiredArgsConstructor
 public class ContractServiceImpl implements ContractService {
 
     private final ContractRepository contractRepository;
 
     @Override
+<<<<<<< HEAD
     public ContractDetailResponse getContractDetail(String contractId) {
         return contractRepository.findById(Long.parseLong(contractId))
                 .map(ContractDetailResponse::of)
@@ -84,13 +102,18 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public String getPremium(Long customerId, Long insuranceId) {
-        Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
+        Optional<Contract> findContract = contractRepository.findAllByContractAndInsurance(customerId, insuranceId);
         return findContract.map(contract -> Integer.toString(contract.getPremium()))
                         .orElse("Contract not found");
+=======
+    public List<Contract> getContracts(Customer customer) {
+        return contractRepository.findAllByCustomer(customer);
+>>>>>>> 88576b260b94243ffa6788228039aef3bb2ff71f
     }
 
     @Override
     @Transactional
+<<<<<<< HEAD
     public void setResurrection(Long customerId) {
         List<Contract> customerContracts = contractRepository.findByCustomerId(customerId);
         customerContracts.forEach(contract -> contract.setResurrection(false));
@@ -106,7 +129,7 @@ public class ContractServiceImpl implements ContractService {
     @Override
     @Transactional
     public boolean updateCancellation(Long customerId, Long insuranceId) {
-        Optional<Contract> findContract = contractRepository.findByIds(customerId, insuranceId);
+        Optional<Contract> findContract = contractRepository.findAllByContractAndInsurance(customerId, insuranceId);
         findContract.ifPresent(contract -> {
             contract.setCancellation(!contract.getCancellation());
         });
@@ -114,3 +137,23 @@ public class ContractServiceImpl implements ContractService {
     }
 }
 
+=======
+    public void createContract(InsuranceApplication insuranceApplication) {
+        Contract contract = Contract.builder()
+                                    .customer(insuranceApplication.getCustomer())
+                                    .insurance(insuranceApplication.getInsurance())
+                                    .insurancePeriod(insuranceApplication.getInsurancePeriod())
+                                    .premium(insuranceApplication.getPremium())
+                                    .paymentCycle(insuranceApplication.getPaymentCycle())
+                                    .maxCompensation(insuranceApplication.getMaxCompensation())
+                                    .dateOfSubscription(insuranceApplication.getCreatedAt())
+                                    .dateOfMaturity(LocalDate.parse("2099-12-31"))
+                                    .paymentPeriod(insuranceApplication.getPaymentPeriod())
+                                    .maturity(false)
+                                    .resurrection(false)
+                                    .cancellation(false)
+                                    .build();
+        contractRepository.save(contract);
+    }
+}
+>>>>>>> 88576b260b94243ffa6788228039aef3bb2ff71f

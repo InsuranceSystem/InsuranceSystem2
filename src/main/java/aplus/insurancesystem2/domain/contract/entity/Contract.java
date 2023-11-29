@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,6 +39,7 @@ public class Contract {
     private String paymentPeriod;
     private Integer premium;
     private String paymentCycle;
+    private String paymentPeriod;
     private Integer maxCompensation;
     private LocalDate dateOfSubscription;
     private LocalDate dateOfMaturity;
@@ -45,14 +47,17 @@ public class Contract {
     private Boolean resurrection;
     private Boolean cancellation;
 
+    @Builder
     public Contract(Insurance insurance, Customer customer, String insurancePeriod, Integer premium,
-                    String paymentCycle, Integer maxCompensation, LocalDate dateOfSubscription,
-                    LocalDate dateOfMaturity, Boolean maturity, Boolean resurrection, Boolean cancellation) {
+                    String paymentCycle, String paymentPeriod, Integer maxCompensation,
+                    LocalDate dateOfSubscription, LocalDate dateOfMaturity, Boolean maturity,
+                    Boolean resurrection, Boolean cancellation) {
         this.insurance = insurance;
         this.customer = customer;
         this.insurancePeriod = insurancePeriod;
         this.premium = premium;
         this.paymentCycle = paymentCycle;
+        this.paymentPeriod = paymentPeriod;
         this.maxCompensation = maxCompensation;
         this.dateOfSubscription = dateOfSubscription;
         this.dateOfMaturity = dateOfMaturity;

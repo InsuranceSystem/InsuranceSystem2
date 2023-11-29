@@ -1,5 +1,10 @@
 package aplus.insurancesystem2.domain.customer.entity.customer;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +20,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Where(clause = "deletedAt is null")
+@SQLDelete(sql = "UPDATE Customer SET deletedAt = current_timestamp WHERE customerID = ?")
 public class Customer {
 
     @Id
@@ -30,12 +37,11 @@ public class Customer {
     private String pnumber;
     private String birth; // 생년월일(yyyy-mm-dd, String)
     private EGender eGender; // 성별
-    private String password;
-    private Role role;
+    private LocalDateTime deletedAt;
 
     @Builder
-    public Customer(String customerId, String address, String customerName, String job,
-                    String pnumber, String birth, EGender eGender, String password) {
+    public Customer(String customerId, String address, String customerName, String job, String pnumber,
+                    String birth, EGender eGender) {
         this.customerId = customerId;
         this.address = address;
         this.customerName = customerName;
@@ -43,7 +49,6 @@ public class Customer {
         this.pnumber = pnumber;
         this.birth = birth;
         this.eGender = eGender;
-        this.password = password;
-        this.role = Role.CUSTOMER;
+        this.deletedAt = null;
     }
 }
