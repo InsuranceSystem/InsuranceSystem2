@@ -39,7 +39,6 @@ public class Contract {
     private String paymentPeriod;
     private Integer premium;
     private String paymentCycle;
-    private String paymentPeriod;
     private Integer maxCompensation;
     private LocalDate dateOfSubscription;
     private LocalDate dateOfMaturity;

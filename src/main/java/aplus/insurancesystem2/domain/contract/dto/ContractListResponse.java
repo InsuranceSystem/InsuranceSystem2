@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ContractListResponse {
-    private List<ContractInfo> contractInfoList;
+    private List<ContractListElement> contractInfoList;
 
-    public static ContractListResponse of(List<ContractInfo> contractInfoList) {
+    public static ContractListResponse of(List<ContractListElement> contractInfoList) {
         return new ContractListResponse(contractInfoList);
     }
 }
