@@ -1,12 +1,14 @@
 package aplus.insurancesystem2.domain.contract.service;
 
 import aplus.insurancesystem2.domain.contract.dto.ContractDetailResponse;
+import aplus.insurancesystem2.domain.contract.dto.ContractListResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import java.util.List;
 
 public interface ContractService {
 
     ContractDetailResponse getContractDetail(String contractId);
+    ContractListResponse getContractAll(String customerId);
     boolean add(Contract contract);
     List<Contract> getall() throws Exception;
     List<Contract> getByCustomerId(Long customerId);
@@ -16,5 +18,6 @@ public interface ContractService {
     String getPremium(Long selectedCustomerId, Long selectedInsuranceId);
     boolean updateCancellation(Long customerId, Long insuranceId);
     void setResurrection(Long customerID);
+
     void setMaturity(Long customerID);
 }

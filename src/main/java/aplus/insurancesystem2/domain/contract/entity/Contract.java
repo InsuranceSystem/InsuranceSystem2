@@ -35,6 +35,7 @@ public class Contract {
     private Customer customer;
 
     private String insurancePeriod;
+    private String paymentPeriod;
     private Integer premium;
     private String paymentCycle;
     private Integer maxCompensation;

@@ -2,6 +2,7 @@ package aplus.insurancesystem2.domain.contract.controller;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.contract.dto.ContractDetailResponse;
+import aplus.insurancesystem2.domain.contract.dto.ContractListResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import aplus.insurancesystem2.domain.contract.service.ContractService;
 import java.util.List;
@@ -9,20 +10,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/contracts")
 @RequiredArgsConstructor
 public class ContractController {
 
     private final ContractService contractService;
 
-    @GetMapping("/get/contract")
-    public ResponseEntity<SuccessResponse<ContractDetailResponse>> getContractDetail(@RequestParam String contractId) {
+    @GetMapping("{id}/detail")
+    public ResponseEntity<SuccessResponse<ContractDetailResponse>> getContractDetail(@PathVariable String contractId) {
         return SuccessResponse.of(contractService.getContractDetail(contractId))
+                .asHttp(HttpStatus.OK);
+    }
+
+    @GetMapping("{id}/all")
+    public ResponseEntity<SuccessResponse<ContractListResponse>> getContractAll(@PathVariable String customerId) {
+        return SuccessResponse.of(contractService.getContractAll(customerId))
                 .asHttp(HttpStatus.OK);
     }
 
