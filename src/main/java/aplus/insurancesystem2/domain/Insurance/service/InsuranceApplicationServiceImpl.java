@@ -11,6 +11,7 @@ import aplus.insurancesystem2.domain.Insurance.dto.request.CalculatePremiumReque
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
@@ -117,5 +118,12 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
         return insuranceApplicationRepository.findAllByCustomerId(customerId).stream()
                                              .map(MyInsuranceApplicationResponse::of)
                                              .collect(Collectors.toList());
+    }
+
+    @Override
+    public InsuranceApplicationResultResponse getInsuranceApplicationResult(Long insuranceApplicationId) {
+        InsuranceApplication insuranceApplication =
+                insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
+        return InsuranceApplicationResultResponse.of(insuranceApplication);
     }
 }
