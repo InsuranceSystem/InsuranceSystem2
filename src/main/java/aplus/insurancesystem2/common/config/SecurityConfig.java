@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import aplus.insurancesystem2.common.security.AplusAccessDeniedHandler;
 import aplus.insurancesystem2.common.security.AplusAuthenticationFailureHandler;
 import aplus.insurancesystem2.common.security.AplusAuthenticationSuccessHandler;
+import aplus.insurancesystem2.domain.customer.entity.customer.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -27,41 +29,51 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SimpleUrlAuthenticationSuccessHandler aplusLoginSuccessHandler() {
+    public SimpleUrlAuthenticationSuccessHandler loginSuccessHandler() {
         return new AplusAuthenticationSuccessHandler();
     }
 
     @Bean
-    public AccessDeniedHandler aplusAccessDeniedHandler() {
+    public AccessDeniedHandler accessDeniedHandler() {
         return new AplusAccessDeniedHandler();
     }
 
     @Bean
-    public AuthenticationFailureHandler aplusLoginFailureHandler() {
+    public AuthenticationFailureHandler authenticationFailureHandler() {
         return new AplusAuthenticationFailureHandler();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new AplusAuthenticationEntryPoint();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                 http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/", "/보험조회").permitAll()
+                        .requestMatchers("/customer/**").hasRole(Role.CUSTOMER.name())
+                        .requestMatchers("/admin").hasRole(Role.ADMIN.name())
+                        .requestMatchers("/login", "/customers/join","/v3/api-docs/**","/swagger-ui/**",
+                                         "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin((login) -> login
-//                        .loginPage("/asdasdsd")
+                        .loginPage("/loginpage")
                         .loginProcessingUrl("/login")
                         .usernameParameter("loginId")
                         .passwordParameter("password")
-                        .successHandler(aplusLoginSuccessHandler())
-                        .failureHandler(aplusLoginFailureHandler())
+                        .successHandler(loginSuccessHandler())
+                        .failureHandler(authenticationFailureHandler())
+                )
+                .exceptionHandling((exception) -> exception
+                        .accessDeniedHandler(accessDeniedHandler())
+                        .authenticationEntryPoint(authenticationEntryPoint())
                 )
                 .logout((logout) -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/home")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                 );
