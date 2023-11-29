@@ -54,7 +54,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public ContractListResponse getContractAll(String customerId) {
+    public ContractListResponse getAllContract(String customerId) {
         return ContractListResponse.of(contractRepository.findByCustomerId(Long.parseLong(customerId))
                 .stream()
                 .map(ContractListElement::of)

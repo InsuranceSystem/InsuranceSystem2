@@ -10,7 +10,7 @@ import java.util.List;
 public interface ContractService {
 
     ContractDetailResponse getContractDetail(String contractId);
-    ContractListResponse getContractAll(String customerId);
+    ContractListResponse getAllContract(String customerId);
 
     public List<Contract> getContracts(Customer customer);
     void createContract(InsuranceApplication insuranceApplication);

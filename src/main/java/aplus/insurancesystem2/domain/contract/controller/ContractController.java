@@ -32,7 +32,7 @@ public class ContractController {
 
     @GetMapping("{id}/all")
     public ResponseEntity<SuccessResponse<ContractListResponse>> getContractAll(@PathVariable String customerId) {
-        return SuccessResponse.of(contractService.getContractAll(customerId))
+        return SuccessResponse.of(contractService.getAllContract(customerId))
                 .asHttp(HttpStatus.OK);
     }
 
