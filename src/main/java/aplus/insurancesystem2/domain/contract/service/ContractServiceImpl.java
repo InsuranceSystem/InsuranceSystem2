@@ -2,7 +2,7 @@ package aplus.insurancesystem2.domain.contract.service;
 
 import static java.util.Objects.isNull;
 
-import aplus.insurancesystem2.domain.contract.dto.ContractInfoResponse;
+import aplus.insurancesystem2.domain.contract.dto.ContractDetailResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import aplus.insurancesystem2.domain.contract.exception.ContractNotFoundException;
 import aplus.insurancesystem2.domain.contract.repository.ContractRepository;
@@ -20,9 +20,9 @@ public class ContractServiceImpl implements ContractService {
 
     private final ContractRepository contractRepository;
 
-    public ContractInfoResponse getContractInfo(String contractId) {
+    public ContractDetailResponse getContractDetail(String contractId) {
         return contractRepository.findById(Long.parseLong(contractId))
-                .map(ContractInfoResponse::of)
+                .map(ContractDetailResponse::of)
                 .orElseThrow(ContractNotFoundException::new);
     }
 

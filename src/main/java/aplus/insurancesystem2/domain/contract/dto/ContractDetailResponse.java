@@ -2,12 +2,11 @@ package aplus.insurancesystem2.domain.contract.dto;
 
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
-public class ContractInfoResponse {
+public class ContractDetailResponse {
 
     private String id;
     private String insuranceName;
@@ -22,8 +21,8 @@ public class ContractInfoResponse {
     private Boolean resurrection;
     private Boolean cancellation;
 
-    public static ContractInfoResponse of(Contract contract) {
-        return new ContractInfoResponse(String.valueOf(contract.getId()),
+    public static ContractDetailResponse of(Contract contract) {
+        return new ContractDetailResponse(String.valueOf(contract.getId()),
                 contract.getInsurance().getInsuranceName(),
                 contract.getInsurance().getType(),
                 contract.getInsurancePeriod(),

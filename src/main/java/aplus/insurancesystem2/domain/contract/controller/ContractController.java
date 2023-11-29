@@ -1,7 +1,7 @@
 package aplus.insurancesystem2.domain.contract.controller;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
-import aplus.insurancesystem2.domain.contract.dto.ContractInfoResponse;
+import aplus.insurancesystem2.domain.contract.dto.ContractDetailResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import aplus.insurancesystem2.domain.contract.service.ContractService;
 import java.util.List;
@@ -21,8 +21,8 @@ public class ContractController {
     private final ContractService contractService;
 
     @GetMapping("/get/contract")
-    public ResponseEntity<SuccessResponse<ContractInfoResponse>> getContract(@RequestParam String id) {
-        return SuccessResponse.of(contractService.getContractInfo(id))
+    public ResponseEntity<SuccessResponse<ContractDetailResponse>> getContractDetail(@RequestParam String contractId) {
+        return SuccessResponse.of(contractService.getContractDetail(contractId))
                 .asHttp(HttpStatus.OK);
     }
 
