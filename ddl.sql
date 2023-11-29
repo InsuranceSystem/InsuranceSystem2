@@ -19,14 +19,16 @@ CREATE TABLE Insurance(
 
 CREATE TABLE Customer (
   customerID BIGINT AUTO_INCREMENT PRIMARY KEY,
-  id VARCHAR(255),
+  loginId VARCHAR(255),
   customerName VARCHAR(255),
   job VARCHAR(255),
   pnumber VARCHAR(255),
   birth VARCHAR(255),
   eGender VARCHAR(255),
   address VARCHAR(255),
-  deletedAt DATETIME
+  deletedAt DATETIME,
+  password VARCHAR(255),
+  role VARCHAR(255)
 );
 
 CREATE TABLE CompensationClaim (
