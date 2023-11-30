@@ -3,32 +3,26 @@ package aplus.insurancesystem2.common.security;
 import java.io.IOException;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class AplusAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private RequestCache requestCache = new HttpSessionRequestCache();
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+//    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws
                                                                                                                                  IOException {
-        setDefaultTargetUrl("/");
-        SavedRequest saveRequest = requestCache.getRequest(request, response);
-
-        if(saveRequest != null){
-            String targetUrl = saveRequest.getRedirectUrl();
-            redirectStrategy.sendRedirect(request, response, targetUrl);
-        } else {
-            redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
-        }
+//        SavedRequest save = (SavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+//        System.out.println("save = " + save);
+//        String uri = save != null ? save.getRedirectUrl() : "/";
+//        System.out.println("uri = " + uri);
+//        redirectStrategy.sendRedirect(request, response, uri);
+//        Enumeration<String> list = request.getSession().getAttributeNames();
+//        while (list.hasMoreElements()) {
+//            System.out.println(list.nextElement());
+//        }
     }
 }
