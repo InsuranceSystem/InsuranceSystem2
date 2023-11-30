@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import aplus.insurancesystem2.common.converter.GetCustomer;
 import aplus.insurancesystem2.common.dto.SuccessResponse;
+import aplus.insurancesystem2.common.security.CustomerInfo;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CalculatePremiumRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.request.RejectInsuranceApplicationRequest;
@@ -174,9 +176,9 @@ public class InsuranceApplicationController {
     })
     @GetMapping("/my")
     public ResponseEntity<SuccessResponse<List<MyInsuranceApplicationResponse>>>
-        getMyInsuranceApplicationList() {
+        getMyInsuranceApplicationList(@GetCustomer CustomerInfo customerInfo) {
         return SuccessResponse.of(
-                insuranceApplicationService.getMyInsuranceApplicationList(1L)
+                insuranceApplicationService.getMyInsuranceApplicationList(customerInfo.getCustomerId())
         ).asHttp(HttpStatus.OK);
     }
 
