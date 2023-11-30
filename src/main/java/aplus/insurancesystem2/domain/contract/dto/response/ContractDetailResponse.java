@@ -13,7 +13,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ContractDetailResponse {
 
-    @Schema(description = "계약 id", requiredMode = RequiredMode.REQUIRED)
+    @Schema(description = "계약 id")
     private Long id;
     private String insuranceName;
     private String insuranceType;
