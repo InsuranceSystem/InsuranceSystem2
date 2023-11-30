@@ -131,7 +131,7 @@ CREATE TABLE Guarantee(
 );
 
 CREATE TABLE Contract (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  contractID BIGINT AUTO_INCREMENT PRIMARY KEY,
   insuranceID BIGINT,
   customerID BIGINT,
   insurancePeriod VARCHAR(255),
@@ -149,13 +149,15 @@ CREATE TABLE Contract (
 );
 
 CREATE TABLE Payment (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  paymentID BIGINT AUTO_INCREMENT PRIMARY KEY,
   customerID BIGINT,
   insuranceID BIGINT,
+  contractID BIGINT,
   dateOfPayment DATE,
   whetherPayment BOOLEAN,
   FOREIGN KEY (customerID) REFERENCES Customer(customerID),
-  FOREIGN KEY (insuranceID) REFERENCES Insurance(insuranceID)
+  FOREIGN KEY (insuranceID) REFERENCES Insurance(insuranceID),
+  FOREIGN KEY (contractID) REFERENCES Contract(contractID)
 );
 
 INSERT INTO Terms (termsName, calculatedMoneyMethod, termsContent) VALUES
@@ -253,15 +255,15 @@ VALUES
   (1, '72주', 200000, '4주', '1년', 3000000, '2019-02-22', '2024-03-23', 0, 1, 0, 5),
   (1, '72주', 200000, '4주', '1년', 3000000, '2019-01-29', '2024-03-23', 1, 1, 0, 6);
   
-INSERT INTO Payment (customerID, insuranceID, dateOfPayment, whetherPayment)
+INSERT INTO Payment (customerID, insuranceID, ContractID, dateOfPayment, whetherPayment)
 VALUES
-  (1, 1, '2023-06-22', 0),
-  (1, 2, '2023-05-20', 1),
-  (1, 3, '2023-06-25', 0),
-  (2, 2, '2023-05-30', 0),
-  (3, 1, '2023-05-29', 1),
-  (4, 3, '2023-05-29', 1),
-  (5, 2, '2023-05-28', 0);
+  (1, 1, 4, '2023-06-22', 0),
+  (1, 2, 5,'2023-05-20', 1),
+  (1, 3, 6, '2023-06-25', 0),
+  (2, 2, 14, '2023-05-30', 0),
+  (3, 1, 15, '2023-05-29', 1),
+  (4, 3, 8, '2023-05-29', 1),
+  (5, 2, 9, '2023-05-28', 0);
   
 INSERT INTO CounselApplication(counselID, category, customerID, dateOfFirst, dateOfSecond, requirement)
 VALUES
