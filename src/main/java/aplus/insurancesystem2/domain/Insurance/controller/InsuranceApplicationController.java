@@ -167,8 +167,7 @@ public class InsuranceApplicationController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "내 보험 신청 내역 리스트 조회", description = "현재는 고객 id가 1인 고객의 보험 신청 내역 리스트만 조회"
-                                                            + ". 나중에 로그인 기능 구현되면 로그인한 고객의 id로 조회하도록 변경")
+    @Operation(summary = "내 보험 신청 내역 리스트 조회")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -182,7 +181,7 @@ public class InsuranceApplicationController {
         ).asHttp(HttpStatus.OK);
     }
 
-    @Operation(summary = "보험 신청서 결과 조회")
+    @Operation(summary = "보험 신청서 결과 조회", description = "로그인한 고객이 보험 신청서 결과를 조회하는 API")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
