@@ -6,6 +6,8 @@ import aplus.insurancesystem2.domain.Insurance.dto.request.CalculatePremiumReque
 import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 
 public interface InsuranceApplicationService {
@@ -25,4 +27,8 @@ public interface InsuranceApplicationService {
     void approvalInsuranceApplication(Long insuranceApplicationId);
 
     void rejectionInsuranceApplication(Long insuranceApplicationId, String reasonOfRejection);
+
+    List<MyInsuranceApplicationResponse> getMyInsuranceApplicationList(Long customerId);
+
+    InsuranceApplicationResultResponse getInsuranceApplicationResult(Long insuranceApplicationId);
 }

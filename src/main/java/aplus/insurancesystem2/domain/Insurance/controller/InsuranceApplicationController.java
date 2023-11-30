@@ -18,6 +18,8 @@ import aplus.insurancesystem2.domain.Insurance.dto.request.CreateInsuranceApplic
 import aplus.insurancesystem2.domain.Insurance.dto.request.RejectInsuranceApplicationRequest;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
+import aplus.insurancesystem2.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
 import aplus.insurancesystem2.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem2.domain.Insurance.service.InsuranceApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -161,5 +163,39 @@ public class InsuranceApplicationController {
         insuranceApplicationService.rejectionInsuranceApplication(insuranceApplicationId,
                                                                   request.getReasonOfRejection());
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "내 보험 신청 내역 리스트 조회", description = "현재는 고객 id가 1인 고객의 보험 신청 내역 리스트만 조회"
+                                                            + ". 나중에 로그인 기능 구현되면 로그인한 고객의 id로 조회하도록 변경")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "내 보험 가입 신청 내역 리스트 반환(신청 내역이 없다면 빈 리스트 반환)")
+    })
+    @GetMapping("/my")
+    public ResponseEntity<SuccessResponse<List<MyInsuranceApplicationResponse>>>
+        getMyInsuranceApplicationList() {
+        return SuccessResponse.of(
+                insuranceApplicationService.getMyInsuranceApplicationList(1L)
+        ).asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "보험 신청서 결과 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "신청서 결과 반환"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "IA001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{id}/result")
+    public ResponseEntity<SuccessResponse<InsuranceApplicationResultResponse>>
+        getInsuranceApplicationInfo(@Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
+                                    @PathVariable("id") Long insuranceApplicationId) {
+        return SuccessResponse.of(
+                insuranceApplicationService.getInsuranceApplicationResult(insuranceApplicationId)
+        ).asHttp(HttpStatus.OK);
     }
 }
