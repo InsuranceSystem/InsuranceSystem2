@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import aplus.insurancesystem2.domain.customer.dto.request.CreateFamilyHistoryRequest;
 import aplus.insurancesystem2.domain.customer.dto.response.FamilyHistoryInfoResponse;
 import aplus.insurancesystem2.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
@@ -30,5 +31,13 @@ public class FamilyHistoryServiceImpl implements FamilyHistoryService{
                 .stream()
                 .map(FamilyHistoryInfoResponse::of)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public void createFamilyHistory(Customer customer, CreateFamilyHistoryRequest request) {
+        familyHistoryRepository.save(new FamilyHistory(customer,
+                                                       request.getDiseaseName(),
+                                                       request.getRelationship()));
     }
 }

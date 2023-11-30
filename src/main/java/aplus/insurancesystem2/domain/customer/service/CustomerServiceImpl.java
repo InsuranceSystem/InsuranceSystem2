@@ -3,11 +3,13 @@ package aplus.insurancesystem2.domain.customer.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import aplus.insurancesystem2.domain.contract.service.ContractService;
 import aplus.insurancesystem2.domain.customer.dto.request.CustomerUpdateRequest;
+import aplus.insurancesystem2.domain.customer.dto.request.JoinRequest;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerAllInfoResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
@@ -27,6 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerQueryService customerQueryService;
     private final FamilyHistoryService familyHistoryService;
     private final ContractService contractService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public CustomerInfoResponse getCustomerInfo(Long userId) {
@@ -84,5 +87,24 @@ public class CustomerServiceImpl implements CustomerService {
                          .stream()
                          .map(CustomerAllInfoResponse::of)
                          .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void join(JoinRequest request) {
+        Customer joinCustomer = Customer.builder().loginId(request.getLoginId())
+                                        .address(request.getAddress())
+                                        .customerName(request.getName())
+                                        .job(request.getJob())
+                                        .pnumber(request.getPhoneNumber())
+                                        .birth(request.getBirth())
+                                        .eGender(request.getGender())
+                                        .password(passwordEncoder.encode(request.getPassword()))
+                                        .build();
+        customerRepository.save(joinCustomer);
+
+        request.getFamilyHistoryList()
+                .forEach(familyHistory ->
+                                 familyHistoryService.createFamilyHistory(joinCustomer, familyHistory));
     }
 }

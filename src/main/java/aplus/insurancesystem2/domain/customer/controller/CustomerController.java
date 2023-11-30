@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import aplus.insurancesystem2.common.dto.SuccessResponse;
 import aplus.insurancesystem2.domain.customer.dto.request.CustomerUpdateRequest;
+import aplus.insurancesystem2.domain.customer.dto.request.JoinRequest;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerAllInfoResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
@@ -189,4 +191,17 @@ public class CustomerController {
                 customerService.getContractMaintenanceCustomers(targetType)
         ).asHttp(HttpStatus.OK);
     }
+
+    @Operation(summary = "회원가입", description = "회원가입 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "회원가입 완료")
+    })
+    @PostMapping("/join")
+    public ResponseEntity<Void> join(@RequestBody JoinRequest request) {
+        customerService.join(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }
