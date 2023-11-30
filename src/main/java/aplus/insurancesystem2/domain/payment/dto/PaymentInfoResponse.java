@@ -16,7 +16,7 @@ public class PaymentInfoResponse {
     private Integer premium;
     private Boolean whetherPayment;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate StringDateOfPayment;
+    private LocalDate stringDateOfPayment;
 
     public static PaymentInfoResponse of(Payment payment, Integer premium) {
         return new PaymentInfoResponse(
