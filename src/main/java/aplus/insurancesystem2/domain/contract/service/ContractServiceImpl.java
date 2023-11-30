@@ -1,23 +1,21 @@
 package aplus.insurancesystem2.domain.contract.service;
 
 import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
-import aplus.insurancesystem2.domain.contract.dto.Premium;
 import aplus.insurancesystem2.domain.contract.dto.response.ContractDetailResponse;
-import aplus.insurancesystem2.domain.contract.dto.response.ContractListElement;
-import aplus.insurancesystem2.domain.contract.dto.response.ContractListResponse;
+import aplus.insurancesystem2.domain.contract.dto.response.ContractAllInfoResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import aplus.insurancesystem2.domain.contract.exception.ContractNotFoundException;
 import aplus.insurancesystem2.domain.contract.repository.ContractRepository;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
-import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ContractServiceImpl implements ContractService {
 
@@ -49,23 +47,23 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public ContractDetailResponse getContractDetail(String contractId) {
-        return contractRepository.findById(Long.parseLong(contractId))
+    public ContractDetailResponse getContractDetail(Long contractId) {
+        return contractRepository.findById(contractId)
                 .map(ContractDetailResponse::of)
                 .orElseThrow(ContractNotFoundException::new);
     }
 
     @Override
-    public ContractListResponse getAllContract(String customerId) {
-        return ContractListResponse.of(contractRepository.findByCustomerId(Long.parseLong(customerId))
+    public List<ContractAllInfoResponse> getContractList(Long customerId) {
+        return contractRepository.findByCustomerId(customerId)
                 .stream()
-                .map(ContractListElement::of)
+                .map(ContractAllInfoResponse::of)
                 .collect(Collectors.toList()));
     }
 
     @Override
-    public Integer getPremium(String contractId) {
-        return contractRepository.findById(Long.parseLong(contractId))
+    public Integer getPremium(Long contractId) {
+        return contractRepository.findById(contractId)
                 .orElseThrow(ContractNotFoundException::new).getPremium();
     }
 }
