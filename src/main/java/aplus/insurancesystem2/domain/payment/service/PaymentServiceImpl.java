@@ -7,6 +7,7 @@ import aplus.insurancesystem2.domain.payment.entity.Payment;
 import aplus.insurancesystem2.domain.payment.repository.PaymentRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +23,8 @@ public class PaymentServiceImpl implements PaymentService {
         List<Payment> payments = paymentRepository.findByContractId(Long.parseLong(contractId));
         Integer premium = contractService.getPremium(contractId);
 
-        List<PaymentListResponseElement> paymentListResponseElements = new ArrayList<>();
-
-        for (Payment payment : payments) {
-            paymentListResponseElements.add(PaymentListResponseElement.of(payment, premium));
-        }
-
-        return PaymentListResponse.of(paymentListResponseElements);
+        return PaymentListResponse.of(payments.stream()
+                .map(payment -> PaymentListResponseElement.of(payment, premium))
+                .collect(Collectors.toList()));
     }
 }
