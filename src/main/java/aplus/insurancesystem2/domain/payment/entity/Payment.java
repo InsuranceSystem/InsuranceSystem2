@@ -1,6 +1,7 @@
 package aplus.insurancesystem2.domain.payment.entity;
 
 import aplus.insurancesystem2.domain.contract.entity.Contract;
+import jakarta.persistence.Column;
 import java.time.LocalDate;
 
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
@@ -37,6 +38,7 @@ public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "paymentID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,17 +1,16 @@
 package aplus.insurancesystem2.domain.payment.service;
 
 import aplus.insurancesystem2.domain.contract.service.ContractService;
-import aplus.insurancesystem2.domain.payment.dto.PaymentListResponseElement;
-import aplus.insurancesystem2.domain.payment.dto.PaymentListResponse;
-import aplus.insurancesystem2.domain.payment.entity.Payment;
+import aplus.insurancesystem2.domain.payment.dto.PaymentInfoResponse;
 import aplus.insurancesystem2.domain.payment.repository.PaymentRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
@@ -19,12 +18,11 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
 
     @Override
-    public PaymentListResponse getPaymentList(String contractId) {
-        List<Payment> payments = paymentRepository.findByContractId(Long.parseLong(contractId));
+    public List<PaymentInfoResponse> getPaymentList(Long contractId) {
         Integer premium = contractService.getPremium(contractId);
 
-        return PaymentListResponse.of(payments.stream()
-                .map(payment -> PaymentListResponseElement.of(payment, premium))
-                .collect(Collectors.toList()));
+        return paymentRepository.findByContractId(contractId).stream()
+                .map(payment -> PaymentInfoResponse.of(payment, premium))
+                .collect(Collectors.toList());
     }
 }

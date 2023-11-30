@@ -8,8 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@Schema(description = "납입 정보 Response")
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
-public class PaymentListResponseElement {
+public class PaymentInfoResponse {
     @Schema(description = "납입 id")
     private Long id;
     private Integer premium;
@@ -17,8 +18,8 @@ public class PaymentListResponseElement {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate StringDateOfPayment;
 
-    public static PaymentListResponseElement of(Payment payment, Integer premium) {
-        return new PaymentListResponseElement(
+    public static PaymentInfoResponse of(Payment payment, Integer premium) {
+        return new PaymentInfoResponse(
                 payment.getId(),
                 premium,
                 payment.getWhetherPayment(),
