@@ -58,7 +58,7 @@ public class ContractServiceImpl implements ContractService {
         return contractRepository.findByCustomerId(customerId)
                 .stream()
                 .map(ContractAllInfoResponse::of)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
     }
 
     @Override
