@@ -12,6 +12,7 @@ import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,11 @@ public class ContractServiceImpl implements ContractService {
                 .stream()
                 .map(ContractListElement::of)
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public Integer getPremium(String contractId) {
+        return contractRepository.findById(Long.parseLong(contractId))
+                .orElseThrow(ContractNotFoundException::new).getPremium();
     }
 }

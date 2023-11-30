@@ -6,15 +6,15 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
-public class PaymentListElement {
+public class PaymentListResponseElement {
     private String id;
     private String premium;
     private Boolean whetherPayment;
     private String StringDateOfPayment;
 
-    public static PaymentListElement of(Payment payment) {
-        return new PaymentListElement(String.valueOf(payment.getId()),
-                                        String.valueOf(payment.getInsurance().getBasicPremium()),
+    public static PaymentListResponseElement of(Payment payment, Integer premium) {
+        return new PaymentListResponseElement(String.valueOf(payment.getId()),
+                                        String.valueOf(premium),
                                         payment.getWhetherPayment(),
                                         String.valueOf(payment.getDateOfPayment()));
     }

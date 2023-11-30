@@ -8,9 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class PaymentListResponse {
 
-    private List<PaymentListElement> paymentList;
+    private List<PaymentListResponseElement> paymentList;
 
-    public static PaymentListResponse of(List<PaymentListElement>paymentList) {
+    public static PaymentListResponse of(List<PaymentListResponseElement> paymentList) {
         return new PaymentListResponse(paymentList);
     }
 }

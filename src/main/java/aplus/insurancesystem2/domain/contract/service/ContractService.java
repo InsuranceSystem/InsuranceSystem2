@@ -15,4 +15,5 @@ public interface ContractService {
     ContractDetailResponse getContractDetail(String contractId);
     ContractListResponse getAllContract(String customerId);
 
+    Integer getPremium(String contractId);
 }
