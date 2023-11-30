@@ -50,7 +50,7 @@ public class Payment {
     private Insurance insurance;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "contractID")
     private Contract contract;
 
     private LocalDate dateOfPayment;
