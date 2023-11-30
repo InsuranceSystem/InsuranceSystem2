@@ -54,7 +54,7 @@ public class ContractController {
     @GetMapping("{id}/all")
     public ResponseEntity<SuccessResponse<List<ContractAllInfoResponse>>> getContractList(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
-            @PathVariable Long customerId) {
+            @PathVariable("id") Long customerId) {
         return SuccessResponse.of(contractService.getContractList(customerId))
                 .asHttp(HttpStatus.OK);
     }
