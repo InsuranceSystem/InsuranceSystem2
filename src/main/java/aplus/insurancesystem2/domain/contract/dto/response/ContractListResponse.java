@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.contract.dto;
+package aplus.insurancesystem2.domain.contract.dto.response;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

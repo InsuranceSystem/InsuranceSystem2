@@ -19,14 +19,16 @@ CREATE TABLE Insurance(
 
 CREATE TABLE Customer (
   customerID BIGINT AUTO_INCREMENT PRIMARY KEY,
-  id VARCHAR(255),
+  loginId VARCHAR(255),
   customerName VARCHAR(255),
   job VARCHAR(255),
   pnumber VARCHAR(255),
   birth VARCHAR(255),
   eGender VARCHAR(255),
   address VARCHAR(255),
-  deletedAt DATETIME
+  deletedAt DATETIME,
+  password VARCHAR(255),
+  role VARCHAR(255)
 );
 
 CREATE TABLE CompensationClaim (
@@ -222,7 +224,7 @@ VALUES
 (19, 16),
 (20, 17);
 
-INSERT INTO Customer (id, customerName, job, pnumber, birth, eGender, address)
+INSERT INTO Customer (loginId, customerName, job, pnumber, birth, eGender, address)
 VALUES ('id1', '김철수', '회사원', '01012345678', '1997-11-19', '남', '서울특별시 서대문구 거북골로 12'),
        ('id2', '김영희', '학생', '01023456789', '1997-11-19', '여', '서울특별시 서대문구 거북골로 23'),
        ('id3', '김가나', '학생', '01034567891', '1997-04-19', '여', '서울특별시 서대문구 거북골로 34'),

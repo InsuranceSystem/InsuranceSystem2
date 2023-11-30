@@ -7,6 +7,8 @@ import org.hibernate.annotations.Where;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,27 +30,31 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customerID")
     private Long id;
-
-    @Column(name = "id")
-    private String customerId;
+    private String loginId;
     private String address;
     private String customerName;
     private String job;
     private String pnumber;
     private String birth; // 생년월일(yyyy-mm-dd, String)
+//    @Enumerated(EnumType.STRING)
     private EGender eGender; // 성별
     private LocalDateTime deletedAt;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Builder
-    public Customer(String customerId, String address, String customerName, String job, String pnumber,
-                    String birth, EGender eGender) {
-        this.customerId = customerId;
+    public Customer(String loginId, String address, String customerName, String job, String pnumber,
+                    String password, String birth, EGender eGender) {
+        this.loginId = loginId;
         this.address = address;
         this.customerName = customerName;
         this.job = job;
         this.pnumber = pnumber;
+        this.password = password;
         this.birth = birth;
         this.eGender = eGender;
         this.deletedAt = null;
+        this.role = Role.CUSTOMER;
     }
 }

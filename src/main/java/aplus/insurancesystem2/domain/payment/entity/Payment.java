@@ -1,5 +1,6 @@
 package aplus.insurancesystem2.domain.payment.entity;
 
+import aplus.insurancesystem2.domain.contract.entity.Contract;
 import java.time.LocalDate;
 
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
@@ -46,20 +47,19 @@ public class Payment {
     @JoinColumn(name = "insuranceID")
     private Insurance insurance;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private Contract contract;
+
     private LocalDate dateOfPayment;
     private Boolean whetherPayment;
 
-    public Payment(Customer customer, Insurance insurance, LocalDate dateOfPayment, Boolean whetherPayment) {
+    public Payment(Customer customer, Insurance insurance, Contract contract,
+                   LocalDate dateOfPayment, Boolean whetherPayment) {
         this.customer = customer;
         this.insurance = insurance;
+        this.contract = contract;
         this.dateOfPayment = dateOfPayment;
         this.whetherPayment = whetherPayment;
-    }
-
-    public boolean match(Long customerId, Long insuranceId) {
-        if (this.customer.getId() == customerId && this.insurance.getId() == insuranceId) {
-            return true;
-        }
-        return false;
     }
 }

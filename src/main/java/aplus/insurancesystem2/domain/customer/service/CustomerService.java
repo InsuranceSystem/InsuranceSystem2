@@ -3,6 +3,7 @@ package aplus.insurancesystem2.domain.customer.service;
 import java.util.List;
 
 import aplus.insurancesystem2.domain.customer.dto.request.CustomerUpdateRequest;
+import aplus.insurancesystem2.domain.customer.dto.request.JoinRequest;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerAllInfoResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerDetailResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
@@ -23,4 +24,6 @@ public interface CustomerService {
     CustomerAllInfoResponse getCustomerAllInfo(Long customerId);
 
     List<CustomerAllInfoResponse> getContractMaintenanceCustomers(TargetType targetType);
+
+    void join(JoinRequest request);
 }

@@ -15,11 +15,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
 
-    public PaymentListResponse getAllPayment(String customerId) {
-        return PaymentListResponse.of(
-                paymentRepository.findByCustomerId(Long.parseLong(customerId))
-                .stream()
-                .map(PaymentListElement::of)
-                .collect(Collectors.toList()));
+    public PaymentListResponse getPaymentList(String contractId) {
+
     }
 }

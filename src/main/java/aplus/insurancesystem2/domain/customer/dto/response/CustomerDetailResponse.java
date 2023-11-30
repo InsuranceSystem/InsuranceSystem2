@@ -2,7 +2,7 @@ package aplus.insurancesystem2.domain.customer.dto.response;
 
 import java.util.List;
 
-import aplus.insurancesystem2.domain.contract.dto.ContractInfoResponse;
+import aplus.insurancesystem2.domain.contract.dto.response.ContractInfoResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import aplus.insurancesystem2.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;

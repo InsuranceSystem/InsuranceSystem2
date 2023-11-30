@@ -19,4 +19,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query("select customer from Payment p join p.customer customer where p.whetherPayment = false")
     List<Customer> findAllUnpaidCustomers();
+
+    Optional<Customer> findByLoginId(String loginId);
 }

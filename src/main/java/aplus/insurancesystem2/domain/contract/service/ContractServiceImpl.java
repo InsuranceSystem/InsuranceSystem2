@@ -1,9 +1,10 @@
 package aplus.insurancesystem2.domain.contract.service;
 
 import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
-import aplus.insurancesystem2.domain.contract.dto.ContractDetailResponse;
-import aplus.insurancesystem2.domain.contract.dto.ContractListElement;
-import aplus.insurancesystem2.domain.contract.dto.ContractListResponse;
+import aplus.insurancesystem2.domain.contract.dto.Premium;
+import aplus.insurancesystem2.domain.contract.dto.response.ContractDetailResponse;
+import aplus.insurancesystem2.domain.contract.dto.response.ContractListElement;
+import aplus.insurancesystem2.domain.contract.dto.response.ContractListResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import aplus.insurancesystem2.domain.contract.exception.ContractNotFoundException;
 import aplus.insurancesystem2.domain.contract.repository.ContractRepository;
