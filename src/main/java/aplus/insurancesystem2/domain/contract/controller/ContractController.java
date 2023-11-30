@@ -51,7 +51,7 @@ public class ContractController {
                     responseCode = "200",
                     description = "계약 정보 list 반환(계약이 없다면 빈 리스트 반환)")
     })
-    @GetMapping("{id}/all")
+    @GetMapping("{id}")
     public ResponseEntity<SuccessResponse<List<ContractAllInfoResponse>>> getContractList(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
             @PathVariable("id") Long customerId) {

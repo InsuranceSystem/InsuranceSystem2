@@ -30,7 +30,7 @@ public class PaymentController {
                     responseCode = "200",
                     description = "납입 정보 list 반환(납입이 없다면 빈 리스트 반환)"),
     })
-    @GetMapping("/{id}/all")
+    @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse<List<PaymentInfoResponse>>> getPaymentList(
             @Parameter(description = "계약 id", in = ParameterIn.PATH)
             @PathVariable("id") Long contractId) {
