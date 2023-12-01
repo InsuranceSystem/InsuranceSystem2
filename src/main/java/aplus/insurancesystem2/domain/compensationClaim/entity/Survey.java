@@ -1,15 +1,9 @@
 package aplus.insurancesystem2.domain.compensationClaim.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 /**
  * CREATE TABLE Survey (
@@ -34,7 +28,8 @@ public class Survey {
     @Column(name = "CCID")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "CCID")
     private CompensationClaim compensationClaim;
 
@@ -45,7 +40,16 @@ public class Survey {
     private Boolean responsibility;
     private String responsibilityReason;
 
-
-
-
+    @Builder
+    public Survey(Long id, CompensationClaim compensationClaim, String managerName, String reportFilePath, Integer surveyFee,
+                       Integer decisionMoney, Boolean responsibility, String responsibilityReason) {
+        this.id = id;
+        this.compensationClaim = compensationClaim;
+        this.managerName = managerName;
+        this.reportFilePath = reportFilePath;
+        this.surveyFee = surveyFee;
+        this.decisionMoney = decisionMoney;
+        this.responsibility = responsibility;
+        this.responsibilityReason = responsibilityReason;
+    }
 }
