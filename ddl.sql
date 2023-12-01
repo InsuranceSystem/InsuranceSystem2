@@ -257,13 +257,13 @@ VALUES
   
 INSERT INTO Payment (customerID, insuranceID, ContractID, dateOfPayment, whetherPayment)
 VALUES
-  (1, 1, 4, '2023-06-22', 0),
-  (1, 2, 5,'2023-05-20', 1),
-  (1, 3, 6, '2023-06-25', 0),
-  (2, 2, 14, '2023-05-30', 0),
-  (3, 1, 15, '2023-05-29', 1),
-  (4, 3, 8, '2023-05-29', 1),
-  (5, 2, 9, '2023-05-28', 0);
+  (1, 1, 1, '2023-06-22', 0),
+  (1, 2, 2,'2023-05-20', 1),
+  (1, 3, 3, '2023-06-25', 0),
+  (2, 2, 11, '2023-05-30', 0),
+  (3, 1, 12, '2023-05-29', 1),
+  (4, 3, 5, '2023-05-29', 1),
+  (5, 2, 6, '2023-05-28', 0);
   
 INSERT INTO CounselApplication(counselID, category, customerID, dateOfFirst, dateOfSecond, requirement)
 VALUES
