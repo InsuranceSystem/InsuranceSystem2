@@ -84,15 +84,4 @@ public class SwaggerConfig {
                 .pathsToMatch(paths)
                 .build();
     }
-
-    @Bean
-    public GroupedOpenApi loginOpenApi() {
-        String[] paths = {"/**"};
-
-        return GroupedOpenApi
-                .builder()
-                .group("로그인 API")
-                .pathsToMatch(paths)
-                .build();
-    }
 }
