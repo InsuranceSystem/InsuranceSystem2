@@ -1,17 +1,10 @@
 package aplus.insurancesystem2.domain.payment.service;
 
-import aplus.insurancesystem2.domain.payment.entity.Payment;
+import aplus.insurancesystem2.domain.payment.dto.PaymentInfoResponse;
 import java.util.List;
 
 public interface PaymentService {
-    boolean add(String paymentInfo);
-    boolean delete();
-    List<Payment> getAll() throws Exception;
-    boolean update(Payment updatedPayment);
-    List<Payment> get(Long customerId, Long selectedInsuranceId);
-    List<Payment> getByCustomerId(String customerId);
-    List<Long> getUnpaidCustomerId();
-    List<String> getStatus(Long customerId, Long insuranceId);
+    // 납입 생성
 
-    boolean updateWhetherPayment(Long customerId, Long insuranceId);
+    List<PaymentInfoResponse> getPaymentList(Long contractId);
 }

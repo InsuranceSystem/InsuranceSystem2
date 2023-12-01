@@ -4,31 +4,29 @@ import java.util.stream.Collectors;
 
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 @Schema(description = "보험 상세 조회 Response")
+@RequiredArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class InsuranceDetailResponse {
 
     @Schema(description = "보험 id", required = true)
-    private Long id;
-    private String insuranceName;
-    private String type;
-    private int maxCompensation;
-    private String periodOfInsurance;
-    private String paymentCycle;
-    private String paymentPeriod;
-    private String ageOfTarget;
-    private int basicPremium;
-    private String rate;
-    private boolean distributionStatus;
+    private final Long id;
+    private final String insuranceName;
+    private final String type;
+    private final int maxCompensation;
+    private final String periodOfInsurance;
+    private final String ageOfTarget;
+    private final int basicPremium;
+    private final String rate;
+    private final boolean distributionStatus;
     @Schema(description = "보장 내용 id 리스트(콤마로 구분)")
-    private String termsIDList;
-    private String insuranceClausePeriod;
-    private String precaution;
-    private boolean authorization;
+    private final String termsIDList;
+    private final String insuranceClausePeriod;
+    private final String precaution;
+    private final boolean authorization;
 
     public static InsuranceDetailResponse of(Insurance insurance) {
         return new InsuranceDetailResponse(
@@ -37,8 +35,6 @@ public class InsuranceDetailResponse {
                 insurance.getType(),
                 insurance.getMaxCompensation(),
                 insurance.getPeriodOfInsurance(),
-                insurance.getPaymentCycle(),
-                insurance.getPaymentPeriod(),
                 insurance.getAgeOfTarget(),
                 insurance.getBasicPremium(),
                 insurance.getRate(),

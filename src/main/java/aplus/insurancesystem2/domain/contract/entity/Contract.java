@@ -1,5 +1,6 @@
 package aplus.insurancesystem2.domain.contract.entity;
 
+import jakarta.persistence.Column;
 import java.time.LocalDate;
 
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +26,7 @@ public class Contract {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contractID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,6 +38,7 @@ public class Contract {
     private Customer customer;
 
     private String insurancePeriod;
+    private String paymentPeriod;
     private Integer premium;
     private String paymentCycle;
     private Integer maxCompensation;
@@ -44,14 +48,17 @@ public class Contract {
     private Boolean resurrection;
     private Boolean cancellation;
 
+    @Builder
     public Contract(Insurance insurance, Customer customer, String insurancePeriod, Integer premium,
-                    String paymentCycle, Integer maxCompensation, LocalDate dateOfSubscription,
-                    LocalDate dateOfMaturity, Boolean maturity, Boolean resurrection, Boolean cancellation) {
+                    String paymentCycle, String paymentPeriod, Integer maxCompensation,
+                    LocalDate dateOfSubscription, LocalDate dateOfMaturity, Boolean maturity,
+                    Boolean resurrection, Boolean cancellation) {
         this.insurance = insurance;
         this.customer = customer;
         this.insurancePeriod = insurancePeriod;
         this.premium = premium;
         this.paymentCycle = paymentCycle;
+        this.paymentPeriod = paymentPeriod;
         this.maxCompensation = maxCompensation;
         this.dateOfSubscription = dateOfSubscription;
         this.dateOfMaturity = dateOfMaturity;

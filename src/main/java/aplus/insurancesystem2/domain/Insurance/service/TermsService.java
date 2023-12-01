@@ -1,11 +1,14 @@
 package aplus.insurancesystem2.domain.Insurance.service;
 
-import aplus.insurancesystem2.domain.Insurance.entity.Terms;
-import aplus.insurancesystem2.domain.Insurance.dto.request.termsCreateRequest;
-
 import java.util.List;
 
+import aplus.insurancesystem2.domain.Insurance.dto.request.CreateTermsRequest;
+import aplus.insurancesystem2.domain.Insurance.dto.response.TermInfoResponse;
+
 public interface TermsService {
-    List<Terms> getTermsList();
-    String createTerms(termsCreateRequest terms);
+    List<TermInfoResponse> getInsuranceTermsList(Long insuranceId);
+
+    List<TermInfoResponse> getTermsList();
+
+    void createTerms(CreateTermsRequest request);
 }

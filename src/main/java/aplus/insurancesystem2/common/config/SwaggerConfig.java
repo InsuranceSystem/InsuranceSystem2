@@ -40,4 +40,37 @@ public class SwaggerConfig {
                 .pathsToMatch(paths)
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi termsOpenApi() {
+        String[] paths = {"/terms/**"};
+
+        return GroupedOpenApi
+                .builder()
+                .group("약관 API")
+                .pathsToMatch(paths)
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi insuranceApplicationOpenApi() {
+        String[] paths = {"/insurance-applications/**"};
+
+        return GroupedOpenApi
+                .builder()
+                .group("보험 신청 API")
+                .pathsToMatch(paths)
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi loginOpenApi() {
+        String[] paths = {"/**"};
+
+        return GroupedOpenApi
+                .builder()
+                .group("로그인 API")
+                .pathsToMatch(paths)
+                .build();
+    }
 }

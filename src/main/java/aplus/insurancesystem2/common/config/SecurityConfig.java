@@ -1,80 +1,71 @@
 package aplus.insurancesystem2.common.config;
 
-import aplus.insurancesystem2.domain.security.handler.AplusAccessDeniedHandler;
-import aplus.insurancesystem2.domain.security.handler.AplusAuthenticationFailureHandler;
-import aplus.insurancesystem2.domain.security.handler.AplusAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
+import aplus.insurancesystem2.common.security.AplusAccessDeniedHandler;
+import aplus.insurancesystem2.common.security.AplusAuthenticationSuccessHandler;
+
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SimpleUrlAuthenticationSuccessHandler aplusLoginSuccessHandler() {
+    public SimpleUrlAuthenticationSuccessHandler loginSuccessHandler() {
         return new AplusAuthenticationSuccessHandler();
     }
 
     @Bean
-    public SimpleUrlAuthenticationFailureHandler aplusLoginFailureHandler() {
-        return new AplusAuthenticationFailureHandler();
-    }
-
-    @Bean
-    public AccessDeniedHandler aplusAccessDeniedHandler() {
+    public AccessDeniedHandler accessDeniedHandler() {
         return new AplusAccessDeniedHandler();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers( "/join", "/verify/id/**", "/authorize/update").permitAll()
-//                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-//                )
-//                .formLogin((login) -> login
-//                        .loginPage("/로그인")
-//                        .defaultSuccessUrl("/")
-//                        .successHandler(aplusLoginSuccessHandler())
-//                        .failureHandler(aplusLoginFailureHandler())
-//                        .permitAll()
-//                )
-//                .logout((logout) -> logout
-//                        .logoutUrl("/로그아웃")
-//                        .logoutSuccessUrl("/로그아웃성공후이동") // 필요?
-//                        .invalidateHttpSession(true)
-//                        .deleteCookies("JSESSIONID")
-//                )
-//                .exceptionHandling((exception) -> exception
-//                        .accessDeniedHandler(aplusAccessDeniedHandler())
-//                )
-//                .sessionManagement((session) -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                        .invalidSessionUrl("/세션유효X")
-//                        .maximumSessions(1)
-//                        .expiredUrl("/세션만료후")
-                );
-        return http.build();
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new AplusAuthenticationEntryPoint();
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/보안검사X1", "/보안검사X2");
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                http
+                .authorizeHttpRequests((auth) -> auth
+//                        .requestMatchers("/customer/**").hasRole(Role.CUSTOMER.name())
+//                        .requestMatchers("/admin").hasRole(Role.ADMIN.name())
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin((login) -> login
+                        .loginPage("/loginpage")
+                        .loginProcessingUrl("/login")
+                        .usernameParameter("loginId")
+                        .passwordParameter("password")
+                        .successHandler(loginSuccessHandler())
+                )
+                .exceptionHandling((exception) -> exception
+                        .accessDeniedHandler(accessDeniedHandler())
+                        .authenticationEntryPoint(authenticationEntryPoint())
+                )
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                );
+        return http.build();
     }
 }

@@ -1,17 +1,18 @@
 package aplus.insurancesystem2.domain.contract.service;
 
+import aplus.insurancesystem2.domain.Insurance.entity.InsuranceApplication;
+import aplus.insurancesystem2.domain.contract.dto.response.ContractAllInfoResponse;
+import aplus.insurancesystem2.domain.contract.dto.response.ContractDetailResponse;
 import aplus.insurancesystem2.domain.contract.entity.Contract;
+import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
 import java.util.List;
 
 public interface ContractService {
-    boolean add(Contract contract);
-    List<Contract> getall() throws Exception;
-    List<Contract> getByCustomerId(Long customerId);
-    public List<String> getStatus(Long customerId);
-    List<Contract> getByInsuranceId(Long insuranceID);
-    List<Long> getInsuranceIds(Long customerId);
-    String getPremium(Long selectedCustomerId, Long selectedInsuranceId);
-    boolean updateCancellation(Long customerId, Long insuranceId);
-    void setResurrection(Long customerID);
-    void setMaturity(Long customerID);
+
+    public List<Contract> getContracts(Customer customer);
+    void createContract(InsuranceApplication insuranceApplication);
+    ContractDetailResponse getContractDetail(Long contractId);
+    List<ContractAllInfoResponse> getContractList(Long customerId);
+
+    Integer getPremium(Long contractId);
 }
