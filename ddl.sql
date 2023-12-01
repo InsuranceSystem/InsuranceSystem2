@@ -224,7 +224,7 @@ VALUES
 (19, 16),
 (20, 17);
 
-INSERT INTO Customer (id, customerName, job, pnumber, birth, eGender, address)
+INSERT INTO Customer (loginId, customerName, job, pnumber, birth, eGender, address)
 VALUES ('id1', '김철수', '회사원', '01012345678', '1997-11-19', '남', '서울특별시 서대문구 거북골로 12'),
        ('id2', '김영희', '학생', '01023456789', '1997-11-19', '여', '서울특별시 서대문구 거북골로 23'),
        ('id3', '김가나', '학생', '01034567891', '1997-04-19', '여', '서울특별시 서대문구 거북골로 34'),
