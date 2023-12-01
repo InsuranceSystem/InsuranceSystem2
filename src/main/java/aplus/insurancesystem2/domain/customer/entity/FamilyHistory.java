@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,6 +40,7 @@ public class FamilyHistory {
     private String diseaseName;
     private String relationship;
 
+    @Builder
     public FamilyHistory(Customer customer, String diseaseName, String relationship) {
         this.customer = customer;
         this.diseaseName = diseaseName;

@@ -1,7 +1,6 @@
 package aplus.insurancesystem2.domain.customer.entity.customer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

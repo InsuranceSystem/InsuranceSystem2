@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.compensation.entity;
+package aplus.insurancesystem2.domain.compensationClaim.entity;
 
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
@@ -10,10 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * CREATE TABLE CompensationClaim (
@@ -58,6 +55,7 @@ public class CompensationClaim {
     private String accountNumber;
     private String accountHolderName;
 
+    @Builder
     public CompensationClaim(Insurance insurance, Customer customer, String receptionistName,
                              String receptionistPNumber, String relationshipOfContractor,
                              String documentFilePath,

@@ -1,4 +1,4 @@
-package aplus.insurancesystem2.domain.contract.dto;
+package aplus.insurancesystem2.domain.contract.dto.response;
 
 import aplus.insurancesystem2.domain.contract.entity.Contract;
 import io.swagger.v3.oas.annotations.media.Schema;

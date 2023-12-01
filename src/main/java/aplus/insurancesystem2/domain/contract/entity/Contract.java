@@ -1,5 +1,6 @@
 package aplus.insurancesystem2.domain.contract.entity;
 
+import jakarta.persistence.Column;
 import java.time.LocalDate;
 
 import aplus.insurancesystem2.domain.Insurance.entity.Insurance;
@@ -25,6 +26,7 @@ public class Contract {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contractID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,9 +38,9 @@ public class Contract {
     private Customer customer;
 
     private String insurancePeriod;
+    private String paymentPeriod;
     private Integer premium;
     private String paymentCycle;
-    private String paymentPeriod;
     private Integer maxCompensation;
     private LocalDate dateOfSubscription;
     private LocalDate dateOfMaturity;
