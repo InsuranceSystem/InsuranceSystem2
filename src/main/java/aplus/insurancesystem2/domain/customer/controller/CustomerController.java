@@ -204,4 +204,22 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = "admin 여부 확인")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "admin 여부 반환 (관리자: true, 고객: false)"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "U001: id에 해당하는 고객을 찾을 수 없습니다.",
+                content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{id}/admin")
+    public ResponseEntity<SuccessResponse<Boolean>> isAdmin(
+            @Parameter(description = "고객 id", in = ParameterIn.PATH)
+            @PathVariable("id") Long customerId) {
+        return SuccessResponse.of(
+                customerService.isAdmin(customerId)
+        ).asHttp(HttpStatus.OK);
+    }
 }

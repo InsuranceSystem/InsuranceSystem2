@@ -16,6 +16,7 @@ import aplus.insurancesystem2.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem2.domain.customer.dto.response.CustomerInfoResponse;
 import aplus.insurancesystem2.domain.customer.entity.TargetType;
 import aplus.insurancesystem2.domain.customer.entity.customer.Customer;
+import aplus.insurancesystem2.domain.customer.entity.customer.Role;
 import aplus.insurancesystem2.domain.customer.exception.CustomerNotFoundException;
 import aplus.insurancesystem2.domain.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -106,5 +107,11 @@ public class CustomerServiceImpl implements CustomerService {
         request.getFamilyHistoryList()
                 .forEach(familyHistory ->
                                  familyHistoryService.createFamilyHistory(joinCustomer, familyHistory));
+    }
+
+    @Override
+    public Boolean isAdmin(Long customerId) {
+        return customerQueryService.getCustomer(customerId)
+                                   .getRole().equals(Role.ADMIN);
     }
 }
