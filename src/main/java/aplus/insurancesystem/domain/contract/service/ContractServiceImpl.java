@@ -1,18 +1,20 @@
 package aplus.insurancesystem.domain.contract.service;
 
-import aplus.insurancesystem.domain.Insurance.entity.InsuranceApplication;
-import aplus.insurancesystem.domain.contract.dto.response.ContractDetailResponse;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
 import aplus.insurancesystem.domain.contract.dto.response.ContractAllInfoResponse;
+import aplus.insurancesystem.domain.contract.dto.response.ContractDetailResponse;
 import aplus.insurancesystem.domain.contract.entity.Contract;
 import aplus.insurancesystem.domain.contract.exception.ContractNotFoundException;
 import aplus.insurancesystem.domain.contract.repository.ContractRepository;
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)

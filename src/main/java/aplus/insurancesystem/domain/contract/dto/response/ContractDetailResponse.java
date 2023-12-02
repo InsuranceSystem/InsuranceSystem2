@@ -1,10 +1,12 @@
 package aplus.insurancesystem.domain.contract.dto.response;
 
-import aplus.insurancesystem.domain.contract.entity.Contract;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
+import aplus.insurancesystem.domain.contract.entity.Contract;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,7 +21,7 @@ public class ContractDetailResponse {
     private String insuranceType;
     private String insurancePeriod;
     private Integer premium;
-    private String paymentCycle;
+    private PaymentCycle paymentCycle;
     private String paymentPeriod;
     private Integer maxCompensation;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

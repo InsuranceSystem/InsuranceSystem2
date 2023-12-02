@@ -15,7 +15,7 @@ import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationR
 import aplus.insurancesystem.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem.domain.Insurance.entity.Insurance;
-import aplus.insurancesystem.domain.Insurance.entity.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
 import aplus.insurancesystem.domain.Insurance.exception.InsuranceApplicationNotFoundException;
 import aplus.insurancesystem.domain.Insurance.repository.InsuranceApplicationRepository;
 import aplus.insurancesystem.domain.contract.service.ContractService;

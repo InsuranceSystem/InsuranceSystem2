@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import aplus.insurancesystem.domain.Insurance.entity.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
 package aplus.insurancesystem.domain.Insurance.dto.request;
 
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class CreateInsuranceApplicationRequest {
 
     private final Long customerId;
-    private final String paymentCycle;
+    private final PaymentCycle paymentCycle;
     private final String subscriptionFilePath;
 
 }

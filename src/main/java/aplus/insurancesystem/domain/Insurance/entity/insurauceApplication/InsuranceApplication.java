@@ -1,10 +1,13 @@
-package aplus.insurancesystem.domain.Insurance.entity;
+package aplus.insurancesystem.domain.Insurance.entity.insurauceApplication;
 
 import java.time.LocalDate;
 
+import aplus.insurancesystem.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,7 +41,8 @@ public class InsuranceApplication {
 
     private LocalDate createdAt;
     private String insurancePeriod;
-    private String paymentCycle;
+    @Enumerated(EnumType.STRING)
+    private PaymentCycle paymentCycle;
     private String paymentPeriod;
     private String subscriptionFilePath;
     private Integer premium;
@@ -49,7 +53,7 @@ public class InsuranceApplication {
     @Builder
     public InsuranceApplication(Insurance insurance, Customer customer, LocalDate createdAt,
                                 String insurancePeriod, String paymentPeriod,
-                                String paymentCycle, String subscriptionFilePath, Integer premium,
+                                PaymentCycle paymentCycle, String subscriptionFilePath, Integer premium,
                                 Integer maxCompensation, Boolean approval, String reasonOfApproval) {
         this.insurance = insurance;
         this.customer = customer;

@@ -4,7 +4,8 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import aplus.insurancesystem.domain.Insurance.entity.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class MyInsuranceApplicationResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private final LocalDate createdAt;
     private final String insurancePeriod;
-    private final String paymentCycle;
+    private final PaymentCycle paymentCycle;
     private final String paymentPeriod;
     private final String subscriptionFilePath;
     private final Integer premium;

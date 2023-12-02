@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import aplus.insurancesystem.domain.Insurance.entity.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 import aplus.insurancesystem.domain.customer.dto.response.FamilyHistoryInfoResponse;
 import aplus.insurancesystem.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem.domain.customer.entity.customer.EGender;
@@ -38,7 +39,7 @@ public class InsuranceApplicationDetailResponse {
     private final String customerJob;
     private final List<FamilyHistoryInfoResponse> familyHistories;
     private final String insurancePeriod;
-    private final String paymentCycle;
+    private final PaymentCycle paymentCycle;
 
     public static InsuranceApplicationDetailResponse of(InsuranceApplication insuranceApplication,
                                                         List<FamilyHistory> familyHistories) {

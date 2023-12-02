@@ -3,7 +3,7 @@ package aplus.insurancesystem.domain.Insurance.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import aplus.insurancesystem.domain.Insurance.entity.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
 import aplus.insurancesystem.domain.Insurance.exception.InsuranceApplicationNotFoundException;
 import aplus.insurancesystem.domain.Insurance.repository.InsuranceApplicationRepository;
 import lombok.RequiredArgsConstructor;
