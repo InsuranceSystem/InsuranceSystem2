@@ -16,6 +16,7 @@ import aplus.insurancesystem.domain.customer.dto.response.CustomerIdResponse;
 import aplus.insurancesystem.domain.customer.dto.response.CustomerInfoResponse;
 import aplus.insurancesystem.domain.customer.entity.TargetType;
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
+import aplus.insurancesystem.domain.customer.entity.customer.Role;
 import aplus.insurancesystem.domain.customer.exception.CustomerNotFoundException;
 import aplus.insurancesystem.domain.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;

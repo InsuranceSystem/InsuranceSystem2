@@ -26,4 +26,6 @@ public interface CustomerService {
     List<CustomerAllInfoResponse> getContractMaintenanceCustomers(TargetType targetType);
 
     void join(JoinRequest request);
+
+    Boolean isAdmin(Long customerId);
 }
