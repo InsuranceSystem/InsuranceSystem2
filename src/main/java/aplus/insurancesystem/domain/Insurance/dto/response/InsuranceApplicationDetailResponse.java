@@ -11,6 +11,7 @@ import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.Paymen
 import aplus.insurancesystem.domain.customer.dto.response.FamilyHistoryInfoResponse;
 import aplus.insurancesystem.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem.domain.customer.entity.customer.EGender;
+import aplus.insurancesystem.domain.customer.entity.customer.Job;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,8 +27,6 @@ public class InsuranceApplicationDetailResponse {
     private final String insuranceName;
     @Schema(description = "기본 보험료")
     private final Integer insuranceBasicPremium;
-    @Schema(description = "요율")
-    private final String insuranceRate;
     @Schema(description = "insuranceApplication.createAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private final LocalDate insuranceApplicationDate;
@@ -36,7 +35,7 @@ public class InsuranceApplicationDetailResponse {
     private final EGender customerGender;
     private final String customerAddress;
     private final String customerPhoneNumber;
-    private final String customerJob;
+    private final Job customerJob;
     private final List<FamilyHistoryInfoResponse> familyHistories;
     private final String insurancePeriod;
     private final PaymentCycle paymentCycle;
@@ -47,7 +46,6 @@ public class InsuranceApplicationDetailResponse {
                 .insuranceType(insuranceApplication.getInsurance().getType())
                 .insuranceName(insuranceApplication.getInsurance().getInsuranceName())
                 .insuranceBasicPremium(insuranceApplication.getInsurance().getBasicPremium())
-                .insuranceRate(insuranceApplication.getInsurance().getRate())
                 .insuranceApplicationDate(insuranceApplication.getCreatedAt())
                 .customerName(insuranceApplication.getCustomer().getCustomerName())
                 .customerBirth(insuranceApplication.getCustomer().getBirth())

@@ -41,7 +41,6 @@ public class Insurance {
     private String periodOfInsurance;
     private String ageOfTarget;
     private int basicPremium;
-    private String rate;
     private boolean distributionStatus;
     private String insuranceClausePeriod;
     private String precaution;
@@ -50,9 +49,8 @@ public class Insurance {
 
     @Builder
     public Insurance(String insuranceName, String type, int maxCompensation, String periodOfInsurance,
-                     String paymentCycle, String paymentPeriod, String ageOfTarget,
-                     int basicPremium, String rate, boolean distributionStatus, String insuranceClausePeriod,
-                     String precaution, boolean authorization) {
+                     String ageOfTarget, int basicPremium, boolean distributionStatus,
+                     String insuranceClausePeriod, String precaution, boolean authorization) {
         this.guaranteeList = new ArrayList<>();
         this.insuranceName = insuranceName;
         this.type = type;
@@ -60,7 +58,6 @@ public class Insurance {
         this.periodOfInsurance = periodOfInsurance;
         this.ageOfTarget = ageOfTarget;
         this.basicPremium = basicPremium;
-        this.rate = rate;
         this.distributionStatus = distributionStatus;
         this.insuranceClausePeriod = insuranceClausePeriod;
         this.precaution = precaution;

@@ -17,7 +17,6 @@ public class DesignInsuranceRequest {
     private final String periodOfInsurance;
     private final String ageOfTarget;
     private final int basicPremium;
-    private final String rate;
     private final boolean distributionStatus;
     private final String insuranceClausePeriod;
     private final String precaution;

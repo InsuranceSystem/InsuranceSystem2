@@ -6,13 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@Schema(description = "보험료 산정 Request")
+@Schema(description = "보험 가입 신청 승인 Request")
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
-public class CalculatePremiumRequest {
+public class ApprovalInsuranceApplicationRequest {
 
-    private final Long insuranceApplicationId;
     private final String reasonOfApproval;
-    private final String paymentPeriod;
-    private final Integer premium;
 }

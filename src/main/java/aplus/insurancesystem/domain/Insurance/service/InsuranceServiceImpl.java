@@ -54,7 +54,6 @@ public class InsuranceServiceImpl implements InsuranceService {
                                        .periodOfInsurance(request.getPeriodOfInsurance())
                                        .ageOfTarget(request.getAgeOfTarget())
                                        .basicPremium(request.getBasicPremium())
-                                       .rate(request.getRate())
                                        .distributionStatus(request.isDistributionStatus())
                                        .insuranceClausePeriod(request.getInsuranceClausePeriod())
                                        .precaution(request.getPrecaution())
@@ -82,7 +81,6 @@ public class InsuranceServiceImpl implements InsuranceService {
         insurance.setPeriodOfInsurance(request.getPeriodOfInsurance());
         insurance.setAgeOfTarget(request.getAgeOfTarget());
         insurance.setBasicPremium(request.getBasicPremium());
-        insurance.setRate(request.getRate());
         insurance.setDistributionStatus(request.isDistributionStatus());
         insurance.setInsuranceClausePeriod(request.getInsuranceClausePeriod());
         insurance.setPrecaution(request.getPrecaution());

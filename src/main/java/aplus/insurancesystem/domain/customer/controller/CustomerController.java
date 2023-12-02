@@ -222,4 +222,23 @@ public class CustomerController {
                 customerService.isAdmin(customerId)
         ).asHttp(HttpStatus.OK);
     }
+
+    @Operation(summary = "로그인 id 중복 확인 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "중복 여부 반환 (중복: true, 중복 아님: false)"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "U001: id에 해당하는 고객을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/validate-login-id")
+    public ResponseEntity<SuccessResponse<Boolean>> validateLoginId(
+            @Parameter(description = "login id", in = ParameterIn.QUERY)
+            @RequestParam String loginId) {
+        return SuccessResponse.of(
+                customerService.validateLoginId(loginId)
+        ).asHttp(HttpStatus.OK);
+    }
 }

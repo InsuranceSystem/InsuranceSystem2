@@ -114,4 +114,9 @@ public class CustomerServiceImpl implements CustomerService {
         return customerQueryService.getCustomer(customerId)
                                    .getRole().equals(Role.ADMIN);
     }
+
+    @Override
+    public Boolean validateLoginId(String loginId) {
+        return customerRepository.findByLoginId(loginId).isEmpty();
+    }
 }

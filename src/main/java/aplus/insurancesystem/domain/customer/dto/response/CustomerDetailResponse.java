@@ -6,6 +6,7 @@ import aplus.insurancesystem.domain.contract.dto.response.ContractInfoResponse;
 import aplus.insurancesystem.domain.contract.entity.Contract;
 import aplus.insurancesystem.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
+import aplus.insurancesystem.domain.customer.entity.customer.Job;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class CustomerDetailResponse {
     @Schema(description = "고객 주소")
     private final String customerAddress;
     @Schema(description = "고객 직업")
-    private final String customerJob;
+    private final Job customerJob;
     @Schema(description = "가족력 정보 List")
     private final List<FamilyHistoryInfoResponse> familyHistoryInfoResponses;
     @Schema(description = "계약 정보 List")

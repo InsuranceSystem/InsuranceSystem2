@@ -1,6 +1,7 @@
 package aplus.insurancesystem.domain.customer.dto.request;
 
 import aplus.insurancesystem.domain.customer.entity.customer.EGender;
+import aplus.insurancesystem.domain.customer.entity.customer.Job;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,6 @@ public class CustomerUpdateRequest {
     @Schema(description = "고객 주소")
     private final String customerAddress;
     @Schema(description = "고객 직업")
-    private final String customerJob;
+    private final Job customerJob;
 
 }

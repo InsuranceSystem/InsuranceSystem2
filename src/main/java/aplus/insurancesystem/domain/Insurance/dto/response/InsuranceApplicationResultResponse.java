@@ -10,12 +10,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class InsuranceApplicationResultResponse {
 
+    private final Boolean isApproved;
     private final String reasonOfApproval;
     private final String paymentPeriod;
     private final Integer premium;
 
     public static InsuranceApplicationResultResponse of(InsuranceApplication insuranceApplication) {
         return new InsuranceApplicationResultResponse(
+                insuranceApplication.getApproval(),
                 insuranceApplication.getReasonOfApproval(),
                 insuranceApplication.getPaymentPeriod(),
                 insuranceApplication.getPremium()

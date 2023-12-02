@@ -28,4 +28,6 @@ public interface CustomerService {
     void join(JoinRequest request);
 
     Boolean isAdmin(Long customerId);
+
+    Boolean validateLoginId(String customerId);
 }

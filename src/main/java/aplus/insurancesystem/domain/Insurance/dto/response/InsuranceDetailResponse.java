@@ -20,7 +20,6 @@ public class InsuranceDetailResponse {
     private final String periodOfInsurance;
     private final String ageOfTarget;
     private final int basicPremium;
-    private final String rate;
     private final boolean distributionStatus;
     @Schema(description = "보장 내용 id 리스트(콤마로 구분)")
     private final String termsIDList;
@@ -37,7 +36,6 @@ public class InsuranceDetailResponse {
                 insurance.getPeriodOfInsurance(),
                 insurance.getAgeOfTarget(),
                 insurance.getBasicPremium(),
-                insurance.getRate(),
                 insurance.isDistributionStatus(),
                 insurance.getGuaranteeList().stream()
                          .map(guarantee -> guarantee.getTerms().getTermsID().toString())

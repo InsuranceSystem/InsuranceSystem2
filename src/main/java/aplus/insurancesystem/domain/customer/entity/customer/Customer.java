@@ -33,10 +33,9 @@ public class Customer {
     private String loginId;
     private String address;
     private String customerName;
-    private String job;
+    private Job job;
     private String pnumber;
     private String birth; // 생년월일(yyyy-mm-dd, String)
-//    @Enumerated(EnumType.STRING)
     private EGender eGender; // 성별
     private LocalDateTime deletedAt;
     private String password;
@@ -44,7 +43,7 @@ public class Customer {
     private Role role;
 
     @Builder
-    public Customer(String loginId, String address, String customerName, String job, String pnumber,
+    public Customer(String loginId, String address, String customerName, Job job, String pnumber,
                     String password, String birth, EGender eGender) {
         this.loginId = loginId;
         this.address = address;

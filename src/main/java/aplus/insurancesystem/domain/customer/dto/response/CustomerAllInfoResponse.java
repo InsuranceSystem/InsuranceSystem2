@@ -1,6 +1,7 @@
 package aplus.insurancesystem.domain.customer.dto.response;
 
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
+import aplus.insurancesystem.domain.customer.entity.customer.Job;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class CustomerAllInfoResponse {
     private final String gender;
     private final String pnumber;
     private final String address;
-    private final String job;
+    private final Job job;
 
     public static CustomerAllInfoResponse of (Customer customer) {
         return new CustomerAllInfoResponse(

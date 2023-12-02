@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import aplus.insurancesystem.common.converter.GetCustomer;
 import aplus.insurancesystem.common.dto.SuccessResponse;
 import aplus.insurancesystem.common.security.CustomerInfo;
-import aplus.insurancesystem.domain.Insurance.dto.request.CalculatePremiumRequest;
+import aplus.insurancesystem.domain.Insurance.dto.request.ApprovalInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.Insurance.dto.request.RejectInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
@@ -113,22 +112,6 @@ public class InsuranceApplicationController {
         ).asHttp(HttpStatus.OK);
     }
 
-    @Operation(summary = "보험료 산정", description = "menu 10(보험 가입 신청 내역): 보험료 산정 API")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "보험료 산정 완료"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "IA001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
-                    content = @Content(schema = @Schema(hidden = true)))
-    })
-    @PatchMapping("/calculate-premium")
-    public ResponseEntity<Void> calculatePremium(@RequestBody CalculatePremiumRequest request) {
-        insuranceApplicationService.calculatePremium(request);
-        return ResponseEntity.ok().build();
-    }
-
     @Operation(summary = "보험 가입 신청 승인" , description = "menu 10(보험 가입 신청 내역): 보험 가입 신청 승인 API")
     @ApiResponses(value = {
             @ApiResponse(
@@ -142,8 +125,10 @@ public class InsuranceApplicationController {
     @PostMapping("/{id}/approval")
     public ResponseEntity<Void> approvalInsuranceApplication(
             @Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
-            @PathVariable("id") Long insuranceApplicationId) {
-        insuranceApplicationService.approvalInsuranceApplication(insuranceApplicationId);
+            @PathVariable("id") Long insuranceApplicationId,
+            @RequestBody ApprovalInsuranceApplicationRequest request) {
+        insuranceApplicationService.approvalInsuranceApplication(insuranceApplicationId,
+                                                                 request.getReasonOfApproval());
         return ResponseEntity.ok().build();
     }
 
