@@ -20,7 +20,9 @@ public class JavaFileService implements FileService{
     @Override
     public void uploadFile(MultipartFile file, String filePath) {
         try {
-            file.transferTo(new File(FILE_PATH + filePath));
+            String finalFilePath = FILE_PATH + filePath;
+            makeDirectoryIfNotExist(finalFilePath);
+            file.transferTo(new File(finalFilePath));
         } catch (IOException e) {
             throw new BusinessException(ErrorCode.UPLOAD_FILE_ERROR, e);
         }
@@ -32,6 +34,15 @@ public class JavaFileService implements FileService{
             return new File(FILE_PATH + filePath).toURI().toURL().openStream();
         } catch (IOException e) {
             throw new BusinessException(ErrorCode.DOWNLOAD_FILE_ERROR, e);
+        }
+    }
+
+    private void makeDirectoryIfNotExist(String filePath) {
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            if (!directory.mkdirs()) {
+                throw new BusinessException(ErrorCode.UPLOAD_FILE_ERROR);
+            }
         }
     }
 }
