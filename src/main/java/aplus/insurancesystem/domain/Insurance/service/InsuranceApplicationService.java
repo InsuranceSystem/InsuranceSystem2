@@ -2,12 +2,13 @@ package aplus.insurancesystem.domain.Insurance.service;
 
 import java.util.List;
 
+import org.springframework.core.io.InputStreamResource;
+
 import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
-import aplus.insurancesystem.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 
 public interface InsuranceApplicationService {
 
@@ -17,7 +18,7 @@ public interface InsuranceApplicationService {
 
     InsuranceApplicationDetailResponse getInsuranceApplication(Long insuranceApplicationId);
 
-    SubscriptionFilePathResponse getSubscription(Long insuranceApplicationId);
+    InputStreamResource getSubscription(Long insuranceApplicationId);
 
     void approvalInsuranceApplication(Long insuranceApplicationId, String reasonOfApproval);
 

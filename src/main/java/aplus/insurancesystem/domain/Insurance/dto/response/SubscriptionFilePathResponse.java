@@ -1,18 +1,19 @@
 package aplus.insurancesystem.domain.Insurance.dto.response;
 
-import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
+import org.springframework.core.io.InputStreamResource;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@Schema(description = "보험 상세 조회 Response")
+@Schema(description = "청약서 조회 Response")
 @RequiredArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class SubscriptionFilePathResponse {
 
-    private final String subscriptionFilePath;
+    private final InputStreamResource subscriptionFileInputStreamResource;
 
-    public static SubscriptionFilePathResponse of(InsuranceApplication insuranceApplication) {
-        return new SubscriptionFilePathResponse(insuranceApplication.getSubscriptionFilePath());
+    public static SubscriptionFilePathResponse of(InputStreamResource insuranceApplication) {
+        return new SubscriptionFilePathResponse(insuranceApplication);
     }
 }

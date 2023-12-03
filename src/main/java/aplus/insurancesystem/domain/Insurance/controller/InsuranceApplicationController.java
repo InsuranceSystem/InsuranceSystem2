@@ -2,9 +2,13 @@ package aplus.insurancesystem.domain.Insurance.controller;
 
 import java.util.List;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +25,6 @@ import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationD
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
-import aplus.insurancesystem.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem.domain.Insurance.service.InsuranceApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -50,11 +53,11 @@ public class InsuranceApplicationController {
                                   + "U001: id에 해당하는 유저를 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @PostMapping("/{id}")
+    @PostMapping(path = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> applyInsurance(
             @Parameter(description = "보험 id", in = ParameterIn.PATH)
             @PathVariable("id") Long insuranceId,
-            @RequestBody CreateInsuranceApplicationRequest request) {
+            @ModelAttribute CreateInsuranceApplicationRequest request) {
         insuranceApplicationService.applyInsurance(insuranceId, request);
         return ResponseEntity.ok().build();
     }
@@ -97,19 +100,22 @@ public class InsuranceApplicationController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "청약서 반환"),
+                    description = "청약서 반환",
+                    content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE)),
             @ApiResponse(
                     responseCode = "404",
                     description = "IA001: id에 해당하는 보험 가입 신청 내역을 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/{id}/subscription")
-    public ResponseEntity<SuccessResponse<SubscriptionFilePathResponse>>
+    public ResponseEntity<InputStreamResource>
         getSubscription(@Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
                         @PathVariable("id") Long insuranceApplicationId) {
-        return SuccessResponse.of(
-                insuranceApplicationService.getSubscription(insuranceApplicationId)
-        ).asHttp(HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return ResponseEntity.ok()
+                             .headers(headers)
+                             .body(insuranceApplicationService.getSubscription(insuranceApplicationId));
     }
 
     @Operation(summary = "보험 가입 신청 승인" , description = "menu 10(보험 가입 신청 내역): 보험 가입 신청 승인 API")

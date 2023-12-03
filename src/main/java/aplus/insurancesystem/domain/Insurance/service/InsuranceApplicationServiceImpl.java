@@ -1,18 +1,22 @@
 package aplus.insurancesystem.domain.Insurance.service;
 
+import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import aplus.insurancesystem.common.service.FileService;
 import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
-import aplus.insurancesystem.domain.Insurance.dto.response.SubscriptionFilePathResponse;
 import aplus.insurancesystem.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
@@ -36,6 +40,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
     private final InsuranceQueryService insuranceQueryService;
     private final FamilyHistoryService familyHistoryService;
     private final ContractService contractService;
+    private final FileService fileService;
 
     @Override
     @Transactional
@@ -48,6 +53,10 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
         float rate = calculateRate(customer, request.getPaymentCycle());
         int premium = Math.round(insurance.getBasicPremium() * rate);
 
+        MultipartFile subscriptionFile = request.getSubscriptionFile();
+        String subscriptionFilePath = subscriptionFile.getOriginalFilename() + LocalDateTime.now();
+        fileService.uploadFile(subscriptionFile, subscriptionFilePath);
+
         InsuranceApplication insuranceApplication = InsuranceApplication.builder()
                                                                         .insurance(insurance)
                                                                         .customer(customer)
@@ -57,7 +66,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
                                                                         .paymentPeriod(paymentPeriod)
                                                                         .premium(premium)
                                                                         .maxCompensation(insurance.getMaxCompensation())
-                                                                        .subscriptionFilePath(request.getSubscriptionFilePath())
+                                                                        .subscriptionFilePath(subscriptionFilePath)
                                                                         .build();
         insuranceApplicationRepository.save(insuranceApplication);
     }
@@ -79,10 +88,11 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
     }
 
     @Override
-    public SubscriptionFilePathResponse getSubscription(Long insuranceApplicationId) {
-        return SubscriptionFilePathResponse.of(
-                insuranceApplicationQueryService.getInsurance(insuranceApplicationId)
-        );
+    public InputStreamResource getSubscription(Long insuranceApplicationId) {
+        InsuranceApplication insuranceApplication =
+                insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
+        InputStream inputStream = fileService.downloadFile(insuranceApplication.getSubscriptionFilePath());
+        return new InputStreamResource(inputStream);
     }
 
     @Override
