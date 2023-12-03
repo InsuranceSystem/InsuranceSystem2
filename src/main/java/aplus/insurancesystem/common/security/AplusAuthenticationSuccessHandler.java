@@ -14,6 +14,12 @@ public class AplusAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws
                                                                                                                                  IOException {
-        // do nothing
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        // 사용자 ID 가져오기
+        Long userId = userDetails.getCustomer().getId();
+
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write("{ \"userId\": \"" + userId + "\" }");
     }
 }
