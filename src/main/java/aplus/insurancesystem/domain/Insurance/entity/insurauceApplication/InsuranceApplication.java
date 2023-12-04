@@ -47,14 +47,15 @@ public class InsuranceApplication {
     private String subscriptionFilePath;
     private Integer premium;
     private Integer maxCompensation;
-    private Boolean approval;
+    @Enumerated(EnumType.STRING)
+    private InsuranceApplicationState state;
     private String reasonOfApproval;
 
     @Builder
     public InsuranceApplication(Insurance insurance, Customer customer, LocalDate createdAt,
                                 String insurancePeriod, String paymentPeriod,
                                 PaymentCycle paymentCycle, String subscriptionFilePath, Integer premium,
-                                Integer maxCompensation, Boolean approval, String reasonOfApproval) {
+                                Integer maxCompensation, InsuranceApplicationState state, String reasonOfApproval) {
         this.insurance = insurance;
         this.customer = customer;
         this.createdAt = createdAt;
@@ -64,7 +65,7 @@ public class InsuranceApplication {
         this.subscriptionFilePath = subscriptionFilePath;
         this.premium = premium;
         this.maxCompensation = maxCompensation;
-        this.approval = approval;
+        this.state = state;
         this.reasonOfApproval = reasonOfApproval;
     }
 }
