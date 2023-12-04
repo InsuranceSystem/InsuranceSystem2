@@ -16,7 +16,9 @@ public class InsuranceApplicationInfoResponse {
 
     private final Long insuranceApplicationID;
     private final Long insuranceID;
+    private final String insuranceName;
     private final Long customerID;
+    private final String customerName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private final LocalDate createdAt;
 
@@ -24,7 +26,9 @@ public class InsuranceApplicationInfoResponse {
         return new InsuranceApplicationInfoResponse(
                 insuranceApplication.getId(),
                 insuranceApplication.getInsurance().getId(),
+                insuranceApplication.getInsurance().getInsuranceName(),
                 insuranceApplication.getCustomer().getId(),
+                insuranceApplication.getCustomer().getCustomerName(),
                 insuranceApplication.getCreatedAt()
         );
     }
