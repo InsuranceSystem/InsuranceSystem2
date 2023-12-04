@@ -1,5 +1,8 @@
 package aplus.insurancesystem.domain.payment.service;
 
+import aplus.insurancesystem.domain.payment.dto.PaymentUpdateResponse;
+import aplus.insurancesystem.domain.payment.entity.Payment;
+import aplus.insurancesystem.domain.payment.exception.PaymentNotFoundException;
 import aplus.insurancesystem.domain.contract.service.ContractService;
 import aplus.insurancesystem.domain.payment.dto.PaymentInfoResponse;
 import aplus.insurancesystem.domain.payment.repository.PaymentRepository;
@@ -24,5 +27,16 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findByContractId(contractId).stream()
                 .map(payment -> PaymentInfoResponse.of(payment, premium))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public PaymentUpdateResponse updatePayment(Long paymentId) {
+        Payment payment = paymentRepository.findById(paymentId).orElseThrow(PaymentNotFoundException::new);
+        if (payment.getWhetherPayment()) {
+            return PaymentUpdateResponse.of(true);
+        }
+        payment.setWhetherPayment(true);
+        return PaymentUpdateResponse.of(false);
     }
 }
