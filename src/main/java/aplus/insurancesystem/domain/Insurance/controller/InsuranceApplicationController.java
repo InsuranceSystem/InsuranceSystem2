@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import aplus.insurancesystem.common.converter.GetCustomer;
 import aplus.insurancesystem.common.dto.SuccessResponse;
-import aplus.insurancesystem.common.security.CustomerInfo;
 import aplus.insurancesystem.domain.Insurance.dto.request.ApprovalInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.Insurance.dto.request.RejectInsuranceApplicationRequest;
@@ -164,11 +162,12 @@ public class InsuranceApplicationController {
                     responseCode = "200",
                     description = "내 보험 가입 신청 내역 리스트 반환(신청 내역이 없다면 빈 리스트 반환)")
     })
-    @GetMapping("/my")
+    @GetMapping("/{id}/my")
     public ResponseEntity<SuccessResponse<List<MyInsuranceApplicationResponse>>>
-        getMyInsuranceApplicationList(@GetCustomer CustomerInfo customerInfo) {
+        getMyInsuranceApplicationList(@Parameter(description = "고객 id", in = ParameterIn.PATH)
+                                      @PathVariable("id") Long customerId) {
         return SuccessResponse.of(
-                insuranceApplicationService.getMyInsuranceApplicationList(customerInfo.getCustomerId())
+                insuranceApplicationService.getMyInsuranceApplicationList(customerId)
         ).asHttp(HttpStatus.OK);
     }
 
