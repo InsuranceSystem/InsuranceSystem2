@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,15 @@ import aplus.insurancesystem.common.exception.ErrorCode;
 @Transactional(readOnly = true)
 public class JavaFileService implements FileService{
 
-    private static final String FILE_PATH = System.getProperty("user.dir") + "/files/";
+    private final String FILE_PATH;
+
+    public JavaFileService(@Value("${spring.active.profile}") String activeProfile) {
+        if (activeProfile.equals("test")) {
+            FILE_PATH = "/app/files/";
+        } else {
+            FILE_PATH = System.getProperty("user.dir") + "/files/";
+        }
+    }
 
     @Override
     public void uploadFile(MultipartFile file, String filePath) {
