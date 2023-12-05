@@ -11,19 +11,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import aplus.insurancesystem.common.exception.BusinessException;
 import aplus.insurancesystem.common.exception.ErrorCode;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 public class JavaFileService implements FileService{
 
     private final String FILE_PATH;
 
-    public JavaFileService(@Value("${spring.active.profile}") String activeProfile) {
+    public JavaFileService(@Value("${spring.profiles.active}") String activeProfile) {
         if (activeProfile.equals("test")) {
-            FILE_PATH = "/app/files/";
+            FILE_PATH = "/home/worker/files/";
         } else {
             FILE_PATH = System.getProperty("user.dir") + "/files/";
         }
+        log.info("FILE_PATH: {}", FILE_PATH);
     }
 
     @Override
