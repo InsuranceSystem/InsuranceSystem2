@@ -1,11 +1,13 @@
 package aplus.insurancesystem.domain.contract.service;
 
-import aplus.insurancesystem.domain.payment.entity.Payment;
+import aplus.insurancesystem.domain.contract.dto.response.ContractCancelContentResponse;
 import aplus.insurancesystem.domain.payment.service.PaymentService;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,5 +76,31 @@ public class ContractServiceImpl implements ContractService {
                 .stream()
                 .map(ContractAllInfoResponse::of)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ContractCancelContentResponse getCancelContent(Long contractId) {
+        Contract contract = contractRepository.findById(contractId).orElseThrow(() -> new ContractNotFoundException());
+        Double totalPremiumPaid = paymentService.getTotalPremiumPaid(contractId);
+        Double refundAmount;
+        if (contract.getMaturity()) {
+            refundAmount = totalPremiumPaid * 0.8;
+        }
+        else {
+            refundAmount = (totalPremiumPaid - (totalPremiumPaid * 0.6) + totalPremiumPaid * 0.3);
+        }
+        return ContractCancelContentResponse.of(contract.getInsurance().getInsuranceName(),
+                contract.getCustomer().getCustomerName(),
+                String.valueOf(totalPremiumPaid),
+                String.valueOf(refundAmount));
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    @Transactional
+    public void updateMaturity() {
+        contractRepository.findAll()
+                .stream()
+                .filter(contract -> contract.getDateOfMaturity().isEqual(LocalDate.now()))
+                .forEach(contract -> contract.setMaturity(true));
     }
 }

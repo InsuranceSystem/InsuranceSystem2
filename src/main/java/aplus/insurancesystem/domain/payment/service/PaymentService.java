@@ -9,5 +9,7 @@ import java.util.List;
 public interface PaymentService {
     void createPayment(Contract contract);
     List<PaymentInfoResponse> getPaymentList(Long contractId);
+
+    Double getTotalPremiumPaid(Long contractId);
     PaymentUpdateResponse updatePayment(Long paymentId);
 }

@@ -46,10 +46,21 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<PaymentInfoResponse> getPaymentList(Long contractId) {
         Integer premium = contractQueryService.getPremium(contractId);
+        LocalDate today = LocalDate.now();
 
         return paymentRepository.findByContractId(contractId).stream()
+                .filter(payment -> payment.getDateOfPayment().isEqual(today)
+                        || payment.getDateOfPayment().isBefore(today))
                 .map(payment -> PaymentInfoResponse.of(payment, premium))
                 .collect(Collectors.toList());
+    }
+
+    public Double getTotalPremiumPaid(Long contractId) {
+        return paymentRepository.findByContractId(contractId)
+                .stream()
+                .filter(Payment::getWhetherPayment)
+                .mapToDouble(payment -> payment.getContract().getPremium())
+                .sum();
     }
 
     @Override
