@@ -12,11 +12,11 @@ import lombok.Getter;
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class PaymentInfoResponse {
     @Schema(description = "납입 id")
-    private Long id;
-    private Integer premium;
-    private Boolean whetherPayment;
+    private final Long id;
+    private final Integer premium;
+    private final Boolean whetherPayment;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate stringDateOfPayment;
+    private final LocalDate stringDateOfPayment;
 
     public static PaymentInfoResponse of(Payment payment, Integer premium) {
         return new PaymentInfoResponse(

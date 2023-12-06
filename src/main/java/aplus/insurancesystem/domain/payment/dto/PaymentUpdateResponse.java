@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class PaymentUpdateResponse {
     @Schema(description = "이전에 납입이 완료되었는지 여부")
-    boolean isExistedPayment;
+    private final Boolean isExistedPayment;
 
     public static PaymentUpdateResponse of(Boolean isExistedPayment) {
         return new PaymentUpdateResponse(isExistedPayment);
