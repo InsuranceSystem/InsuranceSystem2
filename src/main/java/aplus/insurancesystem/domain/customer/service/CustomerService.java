@@ -30,4 +30,8 @@ public interface CustomerService {
     Boolean isAdmin(Long customerId);
 
     Boolean validateLoginId(String customerId);
+
+    List<CustomerAllInfoResponse> getCustomerList();
+
+    void setAdmin(Long customerId, boolean setAdmin);
 }
