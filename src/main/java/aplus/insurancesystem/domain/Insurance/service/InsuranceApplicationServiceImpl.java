@@ -19,6 +19,7 @@ import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationR
 import aplus.insurancesystem.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
 import aplus.insurancesystem.domain.Insurance.entity.Insurance;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplicationState;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 import aplus.insurancesystem.domain.Insurance.repository.InsuranceApplicationRepository;
 import aplus.insurancesystem.domain.contract.service.ContractService;
@@ -67,6 +68,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
                                                                         .premium(premium)
                                                                         .maxCompensation(insurance.getMaxCompensation())
                                                                         .subscriptionFilePath(subscriptionFilePath)
+                                                                        .state(InsuranceApplicationState.PROCESSING)
                                                                         .build();
         insuranceApplicationRepository.save(insuranceApplication);
     }
@@ -102,7 +104,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
         InsuranceApplication insuranceApplication =
                 insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
         insuranceApplication.setReasonOfApproval(reasonOfApproval);
-        insuranceApplication.setApproval(true);
+        insuranceApplication.setState(InsuranceApplicationState.APPROVAL);
 
         contractService.createContract(insuranceApplication);
     }
@@ -113,7 +115,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
         InsuranceApplication insuranceApplication =
                 insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
         insuranceApplication.setReasonOfApproval(reasonOfRejection);
-        insuranceApplication.setApproval(false);
+        insuranceApplication.setState(InsuranceApplicationState.REJECTION);
     }
 
     @Override

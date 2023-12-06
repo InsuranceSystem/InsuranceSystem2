@@ -119,4 +119,19 @@ public class CustomerServiceImpl implements CustomerService {
     public Boolean validateLoginId(String loginId) {
         return customerRepository.findByLoginId(loginId).isEmpty();
     }
+
+    @Override
+    public List<CustomerAllInfoResponse> getCustomerList() {
+        return customerRepository.findAll()
+                                 .stream()
+                                 .map(CustomerAllInfoResponse::of)
+                                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void setAdmin(Long customerId, boolean setAdmin) {
+        Customer customer = customerQueryService.getCustomer(customerId);
+        customer.setRole(setAdmin ? Role.ADMIN : Role.CUSTOMER);
+    }
 }

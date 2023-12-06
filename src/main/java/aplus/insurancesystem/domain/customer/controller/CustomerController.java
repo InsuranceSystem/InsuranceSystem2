@@ -61,6 +61,19 @@ public class CustomerController {
         ).asHttp(HttpStatus.OK);
     }
 
+    @Operation(summary = "전체 고객 조회")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "고객 정보 전체 반환(고객이 없다면 빈 리스트 반환)")
+    })
+    @GetMapping("/all")
+    public ResponseEntity<SuccessResponse<List<CustomerAllInfoResponse>>> getCustomerList() {
+        return SuccessResponse.of(
+                customerService.getCustomerList()
+        ).asHttp(HttpStatus.OK);
+    }
+
     @Operation(summary = "고객 정보 전체 조회")
     @ApiResponses(value = {
             @ApiResponse(
@@ -240,5 +253,25 @@ public class CustomerController {
         return SuccessResponse.of(
                 customerService.validateLoginId(loginId)
         ).asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "고객 admin 지정/헤제 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "고객 admin 지정/헤제 완료"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "U001: id에 해당하는 고객을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PatchMapping("/{id}/admin")
+    public ResponseEntity<Void> setAdmin(
+            @Parameter(description = "고객 id", in = ParameterIn.PATH)
+            @PathVariable("id") Long customerId,
+            @Parameter(description = "admin 여부", in = ParameterIn.QUERY)
+            @RequestParam boolean setAdmin) {
+        customerService.setAdmin(customerId, setAdmin);
+        return ResponseEntity.ok().build();
     }
 }

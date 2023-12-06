@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
+import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplicationState;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -28,7 +29,8 @@ public class MyInsuranceApplicationResponse {
     private final String subscriptionFilePath;
     private final Integer premium;
     private final Integer maxCompensation;
-    private final Boolean approval;
+    @Schema(description = "보험 가입 신청 상태(PROCESSING, APPROVAL, REJECT)")
+    private final InsuranceApplicationState state;
     private final String reasonOfApproval;
 
     public static MyInsuranceApplicationResponse of(InsuranceApplication insuranceApplication) {
@@ -43,7 +45,7 @@ public class MyInsuranceApplicationResponse {
                 .subscriptionFilePath(insuranceApplication.getSubscriptionFilePath())
                 .premium(insuranceApplication.getPremium())
                 .maxCompensation(insuranceApplication.getMaxCompensation())
-                .approval(insuranceApplication.getApproval())
+                .state(insuranceApplication.getState())
                 .reasonOfApproval(insuranceApplication.getReasonOfApproval())
                 .build();
     }

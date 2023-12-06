@@ -39,6 +39,8 @@ public class InsuranceApplicationDetailResponse {
     private final List<FamilyHistoryInfoResponse> familyHistories;
     private final String insurancePeriod;
     private final PaymentCycle paymentCycle;
+    private final String paymentPeriod;
+    private final Integer premium;
 
     public static InsuranceApplicationDetailResponse of(InsuranceApplication insuranceApplication,
                                                         List<FamilyHistory> familyHistories) {
@@ -58,6 +60,8 @@ public class InsuranceApplicationDetailResponse {
                                                 .collect(Collectors.toList()))
                 .insurancePeriod(insuranceApplication.getInsurancePeriod())
                 .paymentCycle(insuranceApplication.getPaymentCycle())
+                .paymentPeriod(insuranceApplication.getPaymentPeriod())
+                .premium(insuranceApplication.getPremium())
                 .build();
     }
 }

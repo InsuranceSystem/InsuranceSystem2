@@ -2,6 +2,7 @@ package aplus.insurancesystem.domain.customer.dto.response;
 
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
 import aplus.insurancesystem.domain.customer.entity.customer.Job;
+import aplus.insurancesystem.domain.customer.entity.customer.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class CustomerAllInfoResponse {
     private final String pnumber;
     private final String address;
     private final Job job;
+    private final Role customerRole;
 
     public static CustomerAllInfoResponse of (Customer customer) {
         return new CustomerAllInfoResponse(
@@ -27,7 +29,8 @@ public class CustomerAllInfoResponse {
                 customer.getEGender().getGenderStr(),
                 customer.getPnumber(),
                 customer.getAddress(),
-                customer.getJob()
+                customer.getJob(),
+                customer.getRole()
         );
     }
 }

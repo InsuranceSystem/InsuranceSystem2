@@ -84,4 +84,15 @@ public class SwaggerConfig {
                 .pathsToMatch(paths)
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi compensationClaimOpenApi() {
+        String[] paths = {"/compensation-claim/**"};
+
+        return GroupedOpenApi
+                .builder()
+                .group("보상금 청구 API")
+                .pathsToMatch(paths)
+                .build();
+    }
 }
