@@ -1,6 +1,7 @@
 package aplus.insurancesystem.domain.compensationClaim.controller;
 
 import aplus.insurancesystem.common.dto.SuccessResponse;
+import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCarAccidentRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCompensationClaimRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateSurveyRequest;
@@ -17,7 +18,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,6 +99,28 @@ public class CompensationClaimController {
         ).asHttp(HttpStatus.OK);
     }
 
+    @Operation(summary = "청구 서류 조회", description = "청구서류 조회 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "청구서류 반환",
+                    content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE)),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "CC001: id에 해당하는 청구 내역을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{id}/document")
+    public ResponseEntity<InputStreamResource>
+    getSubscription(@Parameter(description = "청구 id", in = ParameterIn.PATH)
+                    @PathVariable("id") Long ccid) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(compensationClaimService.getDocument(ccid));
+    }
+
     @Operation(summary = "보상금 청구", description = "보상금 청구 API")
     @ApiResponses(value = {
             @ApiResponse(
@@ -106,8 +132,9 @@ public class CompensationClaimController {
                             + "U001: id에 해당하는 유저를 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @PostMapping("/claim")
-    public ResponseEntity<Void> createCompensationClaim(@RequestBody CreateCompensationClaimRequest request) {
+    @PostMapping(path = "/claim", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> createCompensationClaim(
+            @ModelAttribute CreateCompensationClaimRequest request) {
         compensationClaimService.createCompensationClaim(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -122,59 +149,9 @@ public class CompensationClaimController {
                             + "U001: id에 해당하는 유저를 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @PostMapping("/claim/car")
-    public ResponseEntity<Void> createCarAccident(@RequestBody CreateCarAccidentRequest request) {
+    @PostMapping(path = "/claim/car", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> createCarAccident(@ModelAttribute CreateCarAccidentRequest request) {
         compensationClaimService.createCarAccident(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    //손해사정
-    @Operation(summary = "손해사정 내역 상세 조회", description = "청구ID로 손해사정 내역 조회 API")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "청구ID로 손해사정 내역 반환"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "S001: id에 해당하는 손해사정 내역을 찾을 수 없습니다.",
-                    //compensationClaim Exception도 던져야하나? (serviceImpl)
-                    content = @Content(schema = @Schema(hidden = true)))
-    })
-    @GetMapping("/survey/{ccid}")
-    public ResponseEntity<SuccessResponse<SurveyResponse>> getSurvey(
-            @Parameter(description = "청구 id", in = ParameterIn.PATH)
-            @PathVariable("ccid") Long CCID) {
-        return SuccessResponse.of(
-                compensationClaimService.getSurvey(CCID)
-        ).asHttp(HttpStatus.OK);
-    }
-    @Operation(summary = "손해사정", description = "손해사정 생성 API")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "손해사정 완료"),
-    })
-    @PostMapping("/survey")
-    public ResponseEntity<Void> createSurvey(@RequestBody CreateSurveyRequest request) {
-        compensationClaimService.createSurvey(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @Operation(summary = "손해사정 수정", description = "손해사정 수정 API")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "손해사정 내역 수정 완료"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "S001: id에 해당하는 손해사정 내역을 찾을 수 없습니다.",
-                    content = @Content(schema = @Schema(hidden = true)))
-    })
-    @PutMapping("/survey/{ccid}")
-    public ResponseEntity<Void> updateSurvey(
-            @Parameter(description = "청구 id", in = ParameterIn.PATH)
-            @PathVariable("ccid") Long ccid, @RequestBody UpdateSurveyRequest request) {
-        compensationClaimService.updateSurvey(ccid, request);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

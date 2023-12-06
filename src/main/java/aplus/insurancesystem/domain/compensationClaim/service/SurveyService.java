@@ -11,13 +11,11 @@ import org.springframework.core.io.InputStreamResource;
 
 import java.util.List;
 
-public interface CompensationClaimService {
-    List<CompensationClaimResponse> getAllCompensationClaim();
-    List<CompensationClaimResponse> getCompensationClaim(Long customerId);
-    CompensationClaimResponse getCompensationClaimDetail(Long ccid);
-    CarAccidentResponse getCarAccidentDetail(Long ccid);
-    InputStreamResource getDocument(Long ccid);
-    void createCompensationClaim(CreateCompensationClaimRequest request);
-    void createCarAccident(CreateCarAccidentRequest request);
+public interface SurveyService {
+    SurveyResponse getSurvey(Long ccid);
+    void createSurvey(Long ccid, CreateSurveyRequest request);
+    void updateSurvey(Long ccid, UpdateSurveyRequest request);
+    InputStreamResource getReport(Long ccid);
+
 
 }

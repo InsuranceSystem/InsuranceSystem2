@@ -3,6 +3,7 @@ package aplus.insurancesystem.domain.compensationClaim.dto.request;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +16,7 @@ public class CreateCarAccidentRequest {
     private final String receptionistName;
     private final String receptionistPNumber;
     private final String relationshipOfContractor;
-    private final String documentFilePath;
+    private final MultipartFile documentFile;
     private final String bank;
     private final String accountNumber;
     private final String accountHolderName;
