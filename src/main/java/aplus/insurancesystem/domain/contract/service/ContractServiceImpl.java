@@ -1,6 +1,7 @@
 package aplus.insurancesystem.domain.contract.service;
 
 import aplus.insurancesystem.domain.contract.dto.response.ContractCancelContentResponse;
+import aplus.insurancesystem.domain.contract.dto.response.ContractCancelResponse;
 import aplus.insurancesystem.domain.payment.service.PaymentService;
 import java.time.LocalDate;
 import java.util.List;
@@ -80,7 +81,8 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public ContractCancelContentResponse getCancelContent(Long contractId) {
-        Contract contract = contractRepository.findById(contractId).orElseThrow(() -> new ContractNotFoundException());
+        Contract contract = contractRepository.findById(contractId)
+                .orElseThrow(() -> new ContractNotFoundException());
         Double totalPremiumPaid = paymentService.getTotalPremiumPaid(contractId);
         Double refundAmount;
         if (contract.getMaturity()) {
@@ -93,6 +95,18 @@ public class ContractServiceImpl implements ContractService {
                 contract.getCustomer().getCustomerName(),
                 String.valueOf(totalPremiumPaid),
                 String.valueOf(refundAmount));
+    }
+
+    @Override
+    @Transactional
+    public ContractCancelResponse cancel(Long contractId) {
+        Contract contract = contractRepository.findById(contractId)
+                .orElseThrow(() -> new ContractNotFoundException());
+        if (contract.getCancellation()) {
+            return ContractCancelResponse.of(true);
+        }
+        contract.setCancellation(true);
+        return ContractCancelResponse.of(false);
     }
 
     @Scheduled(cron = "0 0 0 * * ?")

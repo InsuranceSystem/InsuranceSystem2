@@ -3,6 +3,7 @@ package aplus.insurancesystem.domain.contract.controller;
 import aplus.insurancesystem.common.dto.SuccessResponse;
 import aplus.insurancesystem.domain.contract.dto.response.ContractCancelContentResponse;
 import aplus.insurancesystem.domain.contract.dto.response.ContractAllInfoResponse;
+import aplus.insurancesystem.domain.contract.dto.response.ContractCancelResponse;
 import aplus.insurancesystem.domain.contract.dto.response.ContractDetailResponse;
 import aplus.insurancesystem.domain.contract.service.ContractService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -65,7 +66,7 @@ public class ContractController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "해지 정보 반환"),
+                    description = "해지 시 예상 정보 반환"),
             @ApiResponse(
                     responseCode = "404",
                     description = "C001: id에 해당하는 계약을 찾을 수 없습니다.",
@@ -73,8 +74,27 @@ public class ContractController {
     })
     @GetMapping("/{id}/cancel-content")
     public ResponseEntity<SuccessResponse<ContractCancelContentResponse>> getCancelContent(
+        @Parameter(description = "계약 id", in = ParameterIn.PATH)
         @PathVariable("id") Long contractId) {
         return SuccessResponse.of(contractService.getCancelContent(contractId))
+                .asHttp(HttpStatus.OK);
+    }
+
+    @Operation(summary = "계약 해지", description = "계약 해지: 계약 중도/만기 해지 API")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "해지 시 필요 정보 반환"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "C001: id에 해당하는 계약을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<SuccessResponse<ContractCancelResponse>> cancel(
+        @Parameter(description = "계약 id", in = ParameterIn.PATH)
+        @PathVariable("id") Long contractId) {
+        return SuccessResponse.of(contractService.cancel(contractId))
                 .asHttp(HttpStatus.OK);
     }
 }
