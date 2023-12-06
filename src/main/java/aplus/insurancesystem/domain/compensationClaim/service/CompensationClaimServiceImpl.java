@@ -1,7 +1,6 @@
 package aplus.insurancesystem.domain.compensationClaim.service;
 
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
-import aplus.insurancesystem.domain.Insurance.service.InsuranceQueryService;
+
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCarAccidentRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCompensationClaimRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateSurveyRequest;
@@ -18,13 +17,16 @@ import aplus.insurancesystem.domain.compensationClaim.exception.SurveyNotFoundEx
 import aplus.insurancesystem.domain.compensationClaim.repository.CarAccidentRepository;
 import aplus.insurancesystem.domain.compensationClaim.repository.CompensationClaimRepository;
 import aplus.insurancesystem.domain.compensationClaim.repository.SurveyRepository;
-import aplus.insurancesystem.domain.customer.entity.customer.Customer;
-import aplus.insurancesystem.domain.customer.service.CustomerQueryService;
+import aplus.insurancesystem.domain.contract.entity.Contract;
+import aplus.insurancesystem.domain.contract.exception.ContractNotFoundException;
+import aplus.insurancesystem.domain.contract.repository.ContractRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -33,26 +35,33 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
     private final CompensationClaimRepository compensationClaimRepository;
     private final CarAccidentRepository carAccidentRepository;
     private final SurveyRepository surveyRepository;
-    private final InsuranceQueryService insuranceQueryService;
-    private final CustomerQueryService customerQueryService;
+    private final ContractRepository contractRepository;
+
+
     @Override
     public List<CompensationClaimResponse> getAllCompensationClaim() {
         return compensationClaimRepository.findAll()
                 .stream()
-                .map(CompensationClaimResponse::of)
+                .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
                 .toList();
     }
     @Override
     public List<CompensationClaimResponse> getCompensationClaim(Long customerId) {
-        return compensationClaimRepository.findAllByCustomerId(customerId)
-                .stream()
-                .map(CompensationClaimResponse::of)
-                .toList();
+        List<CompensationClaimResponse> compensationClaimResponseList = new ArrayList<>();
+        for (Contract contract : contractRepository.findByCustomerId(customerId)) {
+            List<CompensationClaimResponse> compensationClaims = compensationClaimRepository.findAllByContractId(contract.getId())
+                    .stream()
+                    .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
+                    .toList();
+            compensationClaimResponseList.addAll(compensationClaims);
+
+        }
+        return compensationClaimResponseList;
     }
     @Override
     public CompensationClaimResponse getCompensationClaimDetail(Long ccid) {
         return compensationClaimRepository.findById(ccid)
-                .map(CompensationClaimResponse::of)
+                .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
                 .orElseThrow(CompensationClaimNotFoundException::new);
     }
     @Override
@@ -64,11 +73,9 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
     @Override
     @Transactional
     public void createCompensationClaim(CreateCompensationClaimRequest request) {
-        Insurance insurance = insuranceQueryService.getInsurance(request.getInsuranceId());
-        Customer customer = customerQueryService.getCustomer(request.getCustomerId());
+        Contract contract = contractRepository.findById(request.getContractId()).orElseThrow(ContractNotFoundException::new);
         CompensationClaim compensationClaim = CompensationClaim.builder()
-                .insurance(insurance)
-                .customer(customer)
+                .contract(contract)
                 .receptionistName(request.getReceptionistName())
                 .receptionistPNumber(request.getReceptionistPNumber())
                 .relationshipOfContractor(request.getRelationshipOfContractor())
@@ -76,6 +83,7 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
                 .bank(request.getBank())
                 .accountNumber(request.getAccountNumber())
                 .accountHolderName(request.getAccountHolderName())
+                .isSurveyed(request.isSurveyed())
                 .build();
         compensationClaimRepository.save(compensationClaim);
     }
@@ -83,11 +91,9 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
     @Override
     @Transactional
     public void createCarAccident(CreateCarAccidentRequest request) {
-        Insurance insurance = insuranceQueryService.getInsurance(request.getInsuranceId());
-        Customer customer = customerQueryService.getCustomer(request.getCustomerId());
+        Contract contract = contractRepository.findById(request.getContractId()).orElseThrow(ContractNotFoundException::new);
         CompensationClaim compensationClaim = CompensationClaim.builder()
-                .insurance(insurance)
-                .customer(customer)
+                .contract(contract)
                 .receptionistName(request.getReceptionistName())
                 .receptionistPNumber(request.getReceptionistPNumber())
                 .relationshipOfContractor(request.getRelationshipOfContractor())
@@ -95,6 +101,7 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
                 .bank(request.getBank())
                 .accountNumber(request.getAccountNumber())
                 .accountHolderName(request.getAccountHolderName())
+                .isSurveyed(request.isSurveyed())
                 .build();
         compensationClaimRepository.saveAndFlush(compensationClaim);
         CarAccident carAccident = CarAccident.builder()
@@ -132,6 +139,8 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
                 .responsibility(request.getResponsibility())
                 .responsibilityReason(request.getResponsibilityReason())
                 .build();
+        compensationClaim.setSurveyed(true);
+        compensationClaimRepository.save(compensationClaim);
         surveyRepository.save(survey);
     }
 

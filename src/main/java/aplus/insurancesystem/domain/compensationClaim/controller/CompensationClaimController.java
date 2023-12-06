@@ -1,7 +1,6 @@
 package aplus.insurancesystem.domain.compensationClaim.controller;
 
 import aplus.insurancesystem.common.dto.SuccessResponse;
-import aplus.insurancesystem.common.exception.ErrorCode;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCarAccidentRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCompensationClaimRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateSurveyRequest;
@@ -48,6 +47,7 @@ public class CompensationClaimController {
             @ApiResponse(
                     responseCode = "200",
                     description = "고객ID로 청구 내역(리스트) 반환"),
+
     })
     @GetMapping("/{id}")
     public ResponseEntity<SuccessResponse<List<CompensationClaimResponse>>> getCompensationClaim(
@@ -65,6 +65,8 @@ public class CompensationClaimController {
             @ApiResponse(
                     responseCode = "404",
                     description = "CC001: id에 해당하는 청구 내역을 찾을 수 없습니다.",
+//                    responseCode = ErrorCode.COMPENSATION_CLAIM_NOT_FOUND.getStatus(),
+//                    description = ErrorCode.COMPENSATION_CLAIM_NOT_FOUND.getCode() + ": " + ErrorCode.COMPENSATION_CLIAM_NOT_FOUND.getMessage(),
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/detail/{ccid}")
@@ -137,6 +139,7 @@ public class CompensationClaimController {
             @ApiResponse(
                     responseCode = "404",
                     description = "S001: id에 해당하는 손해사정 내역을 찾을 수 없습니다.",
+                    //compensationClaim Exception도 던져야하나? (serviceImpl)
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/survey/{ccid}")

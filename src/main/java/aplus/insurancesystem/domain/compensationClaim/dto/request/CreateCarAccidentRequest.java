@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class CreateCarAccidentRequest {
-    private final Long insuranceId;
-    private final Long customerId;
+    private final Long contractId;
 
     private final String receptionistName;
     private final String receptionistPNumber;
@@ -20,6 +19,7 @@ public class CreateCarAccidentRequest {
     private final String bank;
     private final String accountNumber;
     private final String accountHolderName;
+    private final boolean isSurveyed;
 
     private final String type;
     private final LocalDateTime dateTime;

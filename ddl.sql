@@ -32,8 +32,7 @@ CREATE TABLE Customer (
 
 CREATE TABLE CompensationClaim (
                                    CCID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                   insuranceID BIGINT,
-                                   customerID BIGINT,
+                                   contractID BIGINT,
                                    receptionistName VARCHAR(255),
                                    receptionistPNumber VARCHAR(255),
                                    relationshipOfContractor VARCHAR(255),
@@ -41,8 +40,8 @@ CREATE TABLE CompensationClaim (
                                    bank VARCHAR(255),
                                    accountNumber VARCHAR(255),
                                    accountHolderName VARCHAR(255),
-                                   FOREIGN KEY (customerID) REFERENCES Customer(customerID),
-                                   FOREIGN KEY (insuranceID) REFERENCES Insurance(insuranceID)
+                                   isSurveyed boolean,
+                                   FOREIGN KEY (contractID) REFERENCES Contract(contractID)
 );
 
 CREATE TABLE CarAccident (
