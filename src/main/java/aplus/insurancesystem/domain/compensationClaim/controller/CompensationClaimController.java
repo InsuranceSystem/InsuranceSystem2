@@ -65,8 +65,6 @@ public class CompensationClaimController {
             @ApiResponse(
                     responseCode = "404",
                     description = "CC001: id에 해당하는 청구 내역을 찾을 수 없습니다.",
-//                    responseCode = ErrorCode.COMPENSATION_CLAIM_NOT_FOUND.getStatus(),
-//                    description = ErrorCode.COMPENSATION_CLAIM_NOT_FOUND.getCode() + ": " + ErrorCode.COMPENSATION_CLIAM_NOT_FOUND.getMessage(),
                     content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/detail/{ccid}")
