@@ -53,6 +53,7 @@ public class ContractServiceImpl implements ContractService {
                 .cancellation(false)
                 .build();
         contractRepository.save(contract);
+        paymentService.createPayment(contract);
     }
 
     @Override
@@ -73,11 +74,5 @@ public class ContractServiceImpl implements ContractService {
                 .stream()
                 .map(ContractAllInfoResponse::of)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Integer getPremium(Long contractId) {
-        return contractRepository.findById(contractId)
-                .orElseThrow(ContractNotFoundException::new).getPremium();
     }
 }

@@ -14,5 +14,4 @@ public interface ContractService {
     ContractDetailResponse getContractDetail(Long contractId);
     List<ContractAllInfoResponse> getContractList(Long customerId);
 
-    Integer getPremium(Long contractId);
 }
