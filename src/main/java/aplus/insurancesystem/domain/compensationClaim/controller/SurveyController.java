@@ -88,7 +88,7 @@ public class SurveyController {
             @PathVariable("ccid") Long ccid,
             @ModelAttribute UpdateSurveyRequest request) {
         surveyService.updateSurvey(ccid, request);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "청구 서류 조회", description = "청구서류 조회 API")

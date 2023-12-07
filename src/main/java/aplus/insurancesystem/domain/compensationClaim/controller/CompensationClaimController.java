@@ -157,6 +157,6 @@ public class CompensationClaimController {
             @PathVariable("contractId") Long contractId,
             @ModelAttribute CreateCarAccidentRequest request) {
         compensationClaimService.createCarAccident(contractId,request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok().build();
     }
 }
