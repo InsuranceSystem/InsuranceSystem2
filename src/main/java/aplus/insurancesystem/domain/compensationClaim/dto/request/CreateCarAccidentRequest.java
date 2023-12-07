@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor
-@NoArgsConstructor(force = true)
 @Schema(description = "보상금청구 및 사고접수 Request")
 public class CreateCarAccidentRequest {
 
