@@ -20,6 +20,17 @@ import io.swagger.v3.oas.annotations.servers.Server;
 public class SwaggerConfig {
 
     @Bean
+    public GroupedOpenApi allOpenApi() {
+        String[] paths = {"/**"};
+
+        return GroupedOpenApi
+                .builder()
+                .group("전체 API")
+                .pathsToMatch(paths)
+                .build();
+    }
+
+    @Bean
     public GroupedOpenApi customerOpenApi() {
         String[] paths = {"/customers/**"};
 
