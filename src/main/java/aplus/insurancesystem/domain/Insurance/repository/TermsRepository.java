@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import aplus.insurancesystem.domain.Insurance.entity.Terms;
 
 public interface TermsRepository extends JpaRepository<Terms, Long> {

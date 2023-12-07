@@ -1,5 +1,6 @@
 package aplus.insurancesystem.domain.Insurance.entity;
 
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

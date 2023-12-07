@@ -11,7 +11,7 @@ import aplus.insurancesystem.domain.Insurance.dto.request.DesignInsuranceRequest
 import aplus.insurancesystem.domain.Insurance.dto.request.UpdateInsuranceRequest;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceDetailResponse;
 import aplus.insurancesystem.domain.Insurance.entity.Guarantee;
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import aplus.insurancesystem.domain.Insurance.entity.Terms;
 import aplus.insurancesystem.domain.Insurance.exception.InsuranceNotFoundException;
 import aplus.insurancesystem.domain.Insurance.repository.GuaranteeRepository;

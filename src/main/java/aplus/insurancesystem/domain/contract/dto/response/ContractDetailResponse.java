@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import aplus.insurancesystem.domain.Insurance.entity.insurance.InsuranceType;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 import aplus.insurancesystem.domain.contract.entity.Contract;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,7 +19,7 @@ public class ContractDetailResponse {
     @Schema(description = "계약 id")
     private final Long id;
     private final String insuranceName;
-    private final String insuranceType;
+    private final InsuranceType insuranceType;
     private final String insurancePeriod;
     private final Integer premium;
     private final PaymentCycle paymentCycle;

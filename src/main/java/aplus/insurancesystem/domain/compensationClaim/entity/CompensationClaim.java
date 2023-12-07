@@ -1,7 +1,6 @@
 package aplus.insurancesystem.domain.compensationClaim.entity;
 
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
-import aplus.insurancesystem.domain.customer.entity.customer.Customer;
+import aplus.insurancesystem.domain.contract.entity.Contract;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,8 +14,7 @@ import lombok.*;
 /**
  * CREATE TABLE CompensationClaim (
  *   CCID BIGINT AUTO_INCREMENT PRIMARY KEY,
- *   insuranceID BIGINT,
- *   customerID BIGINT,
+ *   contractID BIGINT,
  *   receptionistName VARCHAR(255),
  *   receptionistPNumber VARCHAR(255),
  *   relationshipOfContractor VARCHAR(255),
@@ -24,8 +22,8 @@ import lombok.*;
  *   bank VARCHAR(255),
  *   accountNumber VARCHAR(255),
  *   accountHolderName VARCHAR(255),
- *   FOREIGN KEY (customerID) REFERENCES Customer(customerID),
- *   FOREIGN KEY (insuranceID) REFERENCES Insurance(insuranceID)
+ *   isSurveyed boolean,
+ *   FOREIGN KEY (contractID) REFERENCES Contract(contractID)
  * );
  */
 @Entity
@@ -40,12 +38,8 @@ public class CompensationClaim {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "insuranceID")
-    private Insurance insurance;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerID")
-    private Customer customer;
+    @JoinColumn(name = "contractId")
+    private Contract contract;
 
     private String receptionistName;
     private String receptionistPNumber;
@@ -54,14 +48,14 @@ public class CompensationClaim {
     private String bank;
     private String accountNumber;
     private String accountHolderName;
+    private boolean isSurveyed;
 
     @Builder
-    public CompensationClaim(Insurance insurance, Customer customer, String receptionistName,
+    public CompensationClaim(Contract contract, String receptionistName,
                              String receptionistPNumber, String relationshipOfContractor,
                              String documentFilePath,
-                             String bank, String accountNumber, String accountHolderName) {
-        this.insurance = insurance;
-        this.customer = customer;
+                             String bank, String accountNumber, String accountHolderName, boolean isSurveyed) {
+        this.contract = contract;
         this.receptionistName = receptionistName;
         this.receptionistPNumber = receptionistPNumber;
         this.relationshipOfContractor = relationshipOfContractor;
@@ -69,5 +63,6 @@ public class CompensationClaim {
         this.bank = bank;
         this.accountNumber = accountNumber;
         this.accountHolderName = accountHolderName;
+        this.isSurveyed = isSurveyed;
     }
 }

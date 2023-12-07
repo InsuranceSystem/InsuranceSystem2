@@ -2,7 +2,8 @@ package aplus.insurancesystem.domain.Insurance.dto.response;
 
 import java.util.stream.Collectors;
 
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.InsuranceType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class InsuranceDetailResponse {
     @Schema(description = "보험 id", required = true)
     private final Long id;
     private final String insuranceName;
-    private final String type;
+    private final InsuranceType type;
     private final int maxCompensation;
     private final String periodOfInsurance;
     private final String ageOfTarget;

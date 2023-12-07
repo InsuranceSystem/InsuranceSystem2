@@ -1,5 +1,6 @@
 package aplus.insurancesystem.domain.contract.dto.response;
 
+import aplus.insurancesystem.domain.Insurance.entity.insurance.InsuranceType;
 import aplus.insurancesystem.domain.contract.entity.Contract;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
@@ -13,7 +14,7 @@ public class ContractAllInfoResponse {
     @Schema(description = "계약 id", requiredMode = RequiredMode.REQUIRED)
     private final Long id;
     private final String insuranceName;
-    private final String insuranceType;
+    private final InsuranceType insuranceType;
     private final Integer premium;
     private final String paymentPeriod;
     private final Boolean maturity;

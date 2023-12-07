@@ -2,7 +2,7 @@ package aplus.insurancesystem.domain.contract.entity;
 
 import java.time.LocalDate;
 
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
 import jakarta.persistence.Column;

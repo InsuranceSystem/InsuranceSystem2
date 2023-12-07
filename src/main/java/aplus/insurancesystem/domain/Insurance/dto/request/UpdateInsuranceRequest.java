@@ -1,5 +1,6 @@
 package aplus.insurancesystem.domain.Insurance.dto.request;
 
+import aplus.insurancesystem.domain.Insurance.entity.insurance.InsuranceType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class UpdateInsuranceRequest {
 
     private final String insuranceName;
-    private final String type;
+    private final InsuranceType type;
     private final int maxCompensation;
     private final String periodOfInsurance;
     private final String ageOfTarget;

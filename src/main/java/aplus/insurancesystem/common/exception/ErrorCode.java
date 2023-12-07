@@ -31,7 +31,7 @@ public enum ErrorCode {
     // Payment
     PAYMENT_NOT_FOUND(404, "P001", "납입을 찾을 수 없습니다."),
 
-    COMPENSATION_CLIAM_NOT_FOUND(404, "CC001" , "청구 내역을 찾을 수 없습니다."),
+    COMPENSATION_CLAIM_NOT_FOUND(404, "CC001" , "청구 내역을 찾을 수 없습니다."),
     CAR_ACCIDENT_NOT_FOUND(404, "CA001" ,"사고 접수 내역을 찾을 수 없습니다." ),
     SURVEY_NOT_FOUND(404, "SV001", "손해사정 내역을 찾을 수 없습니다.");
 

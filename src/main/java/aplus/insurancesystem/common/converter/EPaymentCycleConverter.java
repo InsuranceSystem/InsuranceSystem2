@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 
 @Component
-public class PaymentCycleConverter implements Converter<String, PaymentCycle> {
+public class EPaymentCycleConverter implements Converter<String, PaymentCycle> {
 
     @Override
     public PaymentCycle convert(String source) {

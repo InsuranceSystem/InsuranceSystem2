@@ -30,45 +30,6 @@ CREATE TABLE Customer (
                           role VARCHAR(255) DEFAULT "CUSTOMER"
 );
 
-CREATE TABLE CompensationClaim (
-                                   CCID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                   insuranceID BIGINT,
-                                   customerID BIGINT,
-                                   receptionistName VARCHAR(255),
-                                   receptionistPNumber VARCHAR(255),
-                                   relationshipOfContractor VARCHAR(255),
-                                   documentFilePath VARCHAR(255),
-                                   bank VARCHAR(255),
-                                   accountNumber VARCHAR(255),
-                                   accountHolderName VARCHAR(255),
-                                   FOREIGN KEY (customerID) REFERENCES Customer(customerID),
-                                   FOREIGN KEY (insuranceID) REFERENCES Insurance(insuranceID)
-);
-
-CREATE TABLE CarAccident (
-                             CCID BIGINT PRIMARY KEY,
-                             type VARCHAR(255),
-                             dateTime DATETIME,
-                             place VARCHAR(255),
-                             carNumber VARCHAR(255),
-                             driverName VARCHAR(255),
-                             licenseNumber VARCHAR(255),
-                             accidentDetail VARCHAR(255),
-                             FOREIGN KEY (CCID) REFERENCES CompensationClaim(CCID)
-                                 on update cascade
-);
-
-CREATE TABLE Survey (
-                        CCID BIGINT PRIMARY KEY,
-                        managerName VARCHAR(255),
-                        reportFilePath VARCHAR(255),
-                        surveyFee INT,
-                        decisionMoney INT,
-                        responsibility BOOL,
-                        responsibilityReason VARCHAR(255),
-                        FOREIGN KEY (CCID) REFERENCES CompensationClaim(CCID)
-);
-
 CREATE TABLE InsuranceApplication (
                                       applicationID BIGINT AUTO_INCREMENT PRIMARY KEY,
                                       insuranceID BIGINT,
@@ -159,6 +120,44 @@ CREATE TABLE Payment (
                          FOREIGN KEY (contractID) REFERENCES Contract(contractID)
 );
 
+CREATE TABLE CompensationClaim (
+                                   CCID BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                   contractID BIGINT,
+                                   receptionistName VARCHAR(255),
+                                   receptionistPNumber VARCHAR(255),
+                                   relationshipOfContractor VARCHAR(255),
+                                   documentFilePath VARCHAR(255),
+                                   bank VARCHAR(255),
+                                   accountNumber VARCHAR(255),
+                                   accountHolderName VARCHAR(255),
+                                   isSurveyed boolean,
+                                   FOREIGN KEY (contractID) REFERENCES Contract(contractID)
+);
+
+CREATE TABLE CarAccident (
+                             CCID BIGINT PRIMARY KEY,
+                             type VARCHAR(255),
+                             dateTime DATETIME,
+                             place VARCHAR(255),
+                             carNumber VARCHAR(255),
+                             driverName VARCHAR(255),
+                             licenseNumber VARCHAR(255),
+                             accidentDetail VARCHAR(255),
+                             FOREIGN KEY (CCID) REFERENCES CompensationClaim(CCID)
+                                 on update cascade
+);
+
+CREATE TABLE Survey (
+                        CCID BIGINT PRIMARY KEY,
+                        managerName VARCHAR(255),
+                        reportFilePath VARCHAR(255),
+                        surveyFee INT,
+                        decisionMoney INT,
+                        responsibility BOOL,
+                        responsibilityReason VARCHAR(255),
+                        FOREIGN KEY (CCID) REFERENCES CompensationClaim(CCID)
+);
+
 INSERT INTO Terms (termsName, calculatedMoneyMethod, termsContent) VALUES
                                                                        ('자동차보험 약관 A', '실비지급', '자동차 사고로 인한 손해배상'),
                                                                        ('건강보험 약관 A', '실비지급', '입원비용 및 수술비용 보장'),
@@ -179,26 +178,26 @@ INSERT INTO Terms (termsName, calculatedMoneyMethod, termsContent) VALUES
                                                                        ('건강보험 약관 D', '정액지급', '입원비용 및 수술비용 보장');
 
 INSERT INTO Insurance (insuranceName, type, maxCompensation, periodOfInsurance, ageOfTarget, basicPremium, distributionStatus, insuranceClausePeriod, precaution, authorization) VALUES
-                                                                                                                                                                                     ('자동차보험A', 'Car', 10000000, '10년', '30세', 200000, False, '2년', '사고 발생시 보험금 지급을 위해 경찰 보고서 필요', True),
-                                                                                                                                                                                     ('건강보험A', 'Health', 5000000, '10년', '40세', 100000, False, '없음', '선처리 요구사항 확인 필요', True),
-                                                                                                                                                                                     ('재물보험A', 'Property', 50000000, '5년', '35세', 500000, False, '없음', '가입 후 30일 이내에 보험금 청구서 제출 필요', True),
-                                                                                                                                                                                     ('자동차보험B', 'Car', 1000000, '4년', '25세', 200000, False, '없음', '사고 발생시 보험금 지급을 위해 경찰 보고서 필요', True),
-                                                                                                                                                                                     ('화재보험A', 'Fire', 100000000, '20년', '45세', 1000000, False, '없음', '화재 발생 시 경찰과의 협조 필요', True),
-                                                                                                                                                                                     ('종신보험A', 'Life', 500000000, '평생', '35세', 1000000, False, '2년', '보험가입 후 2년 동안 자살에 의한 사망은 보험금 지급 제한', True),
-                                                                                                                                                                                     ('자동차보험C', 'Car', 20000000, '3년', '28세', 150000, False, '없음', '운전 중 음주로 인한 사고는 보험 적용 제한', True),
-                                                                                                                                                                                     ('건강보험B', 'Health', 3000000, '5년', '35세', 80000, False, '없음', '의료기관 방문 시 의사소견서 필요', True),
-                                                                                                                                                                                     ('재물보험B', 'Property', 20000000, '1년', '40세', 300000, False, '없음', '보험금 지급을 위해 재물 명세서 필요', True),
-                                                                                                                                                                                     ('종신보험B', 'Life', 200000000, '8년', '32세', 3000000, False, '2년', '보험가입 후 2년 동안 자살에 의한 사망은 보험금 지급 제한', True),
-                                                                                                                                                                                     ('화재보험B', 'Fire', 200000000, '15년', '50세', 800000, False, '없음', '화재 발생 시 보험금 지급을 위해 화재 경찰 조사 필요', True),
-                                                                                                                                                                                     ('종신보험C', 'Life', 1000000000, '평생', '40세', 2000000, False, '5년', '보험 가입 후 3년 동안 자살에 의한 사망은 보험금 지급 제한', True),
-                                                                                                                                                                                     ('자동차보험D', 'Car', 5000000, '1년', '27세', 120000, False, '없음', '운전 중 교통법규 위반으로 인한 사고는 보험 적용 제한', True),
-                                                                                                                                                                                     ('건강보험C', 'Health', 1000000, '3년', '32세', 50000, False, '1년', '일부 질병은 면책 기간이 적용될 수 있음', True),
-                                                                                                                                                                                     ('재물보험C', 'Property', 30000000, '3년', '38세', 350000, False, '없음', '보험금 청구 시 사고 경위에 대한 상세한 설명 필요', True),
-                                                                                                                                                                                     ('자동차보험D', 'Car', 30000000, '5년', '30세', 400000, False, '없음', '운전 중 음주로 인한 사고는 보험 적용 제한', False),
-                                                                                                                                                                                     ('화재보험C', 'Fire', 150000000, '10년', '55세', 700000, False, '없음', '화재 발생 시 화재 경찰 조사 결과 필요', False),
-                                                                                                                                                                                     ('종신보험D', 'Life', 800000000, '평생', '42세', 1500000, False, '없음', '7년 보험 가입 후 5년 동안 자살에 의한 사망은 보험금 지급 제한', False),
-                                                                                                                                                                                     ('자동차보험E', 'Car', 15000000, '2년', '31세', 180000, False, '없음', '운전 중 음주, 도주로 인한 사고는 보험 적용 제한', False),
-                                                                                                                                                                                     ('건강보험D', 'Health', 2500000, '7년', '37세', 90000, False, '없음', '의료비 청구 시 영수증 및 진단서 제출 필요', False);
+                                                                                                                                                                                     ('자동차보험A', '자동차', 10000000, '10년', '30세', 200000, False, '2년', '사고 발생시 보험금 지급을 위해 경찰 보고서 필요', True),
+                                                                                                                                                                                     ('건강보험A', '건강', 5000000, '10년', '40세', 100000, False, '없음', '선처리 요구사항 확인 필요', True),
+                                                                                                                                                                                     ('재물보험A', '재산', 50000000, '5년', '35세', 500000, False, '없음', '가입 후 30일 이내에 보험금 청구서 제출 필요', True),
+                                                                                                                                                                                     ('자동차보험B', '자동차', 1000000, '4년', '25세', 200000, False, '없음', '사고 발생시 보험금 지급을 위해 경찰 보고서 필요', True),
+                                                                                                                                                                                     ('화재보험A', '화재', 100000000, '20년', '45세', 1000000, False, '없음', '화재 발생 시 경찰과의 협조 필요', True),
+                                                                                                                                                                                     ('유병자보험A', '유병자', 500000000, '평생', '35세', 1000000, False, '2년', '보험가입 후 2년 동안 자살에 의한 사망은 보험금 지급 제한', True),
+                                                                                                                                                                                     ('자동차보험C', '자동차', 20000000, '3년', '28세', 150000, False, '없음', '운전 중 음주로 인한 사고는 보험 적용 제한', True),
+                                                                                                                                                                                     ('건강보험B', '건강', 3000000, '5년', '35세', 80000, False, '없음', '의료기관 방문 시 의사소견서 필요', True),
+                                                                                                                                                                                     ('재물보험B', '재산', 20000000, '1년', '40세', 300000, False, '없음', '보험금 지급을 위해 재물 명세서 필요', True),
+                                                                                                                                                                                     ('유병자보험B', '유병자', 200000000, '8년', '32세', 3000000, False, '2년', '보험가입 후 2년 동안 자살에 의한 사망은 보험금 지급 제한', True),
+                                                                                                                                                                                     ('화재보험B', '화재', 200000000, '15년', '50세', 800000, False, '없음', '화재 발생 시 보험금 지급을 위해 화재 경찰 조사 필요', True),
+                                                                                                                                                                                     ('유병자보험C', '유병자', 1000000000, '평생', '40세', 2000000, False, '5년', '보험 가입 후 3년 동안 자살에 의한 사망은 보험금 지급 제한', True),
+                                                                                                                                                                                     ('자동차보험D', '자동차', 5000000, '1년', '27세', 120000, False, '없음', '운전 중 교통법규 위반으로 인한 사고는 보험 적용 제한', True),
+                                                                                                                                                                                     ('건강보험C', '건강', 1000000, '3년', '32세', 50000, False, '1년', '일부 질병은 면책 기간이 적용될 수 있음', True),
+                                                                                                                                                                                     ('재물보험C', '재산', 30000000, '3년', '38세', 350000, False, '없음', '보험금 청구 시 사고 경위에 대한 상세한 설명 필요', True),
+                                                                                                                                                                                     ('자동차보험D', '자동차', 30000000, '5년', '30세', 400000, False, '없음', '운전 중 음주로 인한 사고는 보험 적용 제한', False),
+                                                                                                                                                                                     ('화재보험C', '화재', 150000000, '10년', '55세', 700000, False, '없음', '화재 발생 시 화재 경찰 조사 결과 필요', False),
+                                                                                                                                                                                     ('유병자보험D', '유병자', 800000000, '평생', '42세', 1500000, False, '없음', '7년 보험 가입 후 5년 동안 자살에 의한 사망은 보험금 지급 제한', False),
+                                                                                                                                                                                     ('자동차보험E', '자동차', 15000000, '2년', '31세', 180000, False, '없음', '운전 중 음주, 도주로 인한 사고는 보험 적용 제한', False),
+                                                                                                                                                                                     ('건강보험D', '건강', 2500000, '7년', '37세', 90000, False, '없음', '의료비 청구 시 영수증 및 진단서 제출 필요', False);
 
 INSERT INTO Guarantee (insuranceID, termsID)
 VALUES
@@ -225,17 +224,17 @@ VALUES
     (19, 16),
     (20, 17);
 
-INSERT INTO Customer (loginId, customerName, job, pnumber, birth, eGender, address)
-VALUES ('id1', '김철수', '회사원', '01012345678', '1997-11-19', '남', '서울특별시 서대문구 거북골로 12'),
-       ('id2', '김영희', '학생', '01023456789', '1997-11-19', '여', '서울특별시 서대문구 거북골로 23'),
-       ('id3', '김가나', '학생', '01034567891', '1997-04-19', '여', '서울특별시 서대문구 거북골로 34'),
-       ('id4', '김나다', '교사/교수', '01045678912', '1997-11-29', '여', '서울특별시 서대문구 거북골로 45'),
-       ('id5', '김다라', '전문직 종사', '01056789123', '1997-11-19', '여', '서울특별시 서대문구 거북골로 56'),
-       ('id6', '김마바', '가정주부', '01067891234', '1997-11-19', '여', '서울특별시 서대문구 거북골로 67'),
-       ('id7', '김바사', '프리랜서', '01078912345', '1997-11-19', '여', '서울특별시 서대문구 거북골로 78'),
-       ('id8', '김사아', '자영업자', '01089123456', '1997-11-09', '여', '서울특별시 서대문구 거북골로 89'),
-       ('id9', '김아자', '예술가', '01091234567', '1997-11-19', '여', '서울특별시 서대문구 거북골로 90'),
-       ('id10', '김자차', '자영업자', '01013243546', '1999-03-23', '남', '서울특별시 서대문구 거북골로 91');
+INSERT INTO Customer (loginId, customerName, job, pnumber, birth, eGender, address, password, role)
+VALUES ('id1', '김철수', '회사원', '01012345678', '1997-11-19', '남', '서울특별시 서대문구 거북골로 12', null, 'CUSTOMER'),
+       ('id2', '김영희', '학생', '01023456789', '1997-11-19', '여', '서울특별시 서대문구 거북골로 23', null, 'CUSTOMER'),
+       ('id3', '김가나', '학생', '01034567891', '1997-04-19', '여', '서울특별시 서대문구 거북골로 34', null, 'CUSTOMER'),
+       ('id4', '김나다', '교사/교수', '01045678912', '1997-11-29', '여', '서울특별시 서대문구 거북골로 45', null, 'CUSTOMER'),
+       ('id5', '김다라', '전문직 종사', '01056789123', '1997-11-19', '여', '서울특별시 서대문구 거북골로 56', null, 'CUSTOMER'),
+       ('id6', '김마바', '가정주부', '01067891234', '1997-11-19', '여', '서울특별시 서대문구 거북골로 67', null, 'CUSTOMER'),
+       ('id7', '김바사', '프리랜서', '01078912345', '1997-11-19', '여', '서울특별시 서대문구 거북골로 78', null, 'CUSTOMER'),
+       ('id8', '김사아', '자영업자', '01089123456', '1997-11-09', '여', '서울특별시 서대문구 거북골로 89', null, 'CUSTOMER'),
+       ('id9', '김아자', '예술가', '01091234567', '1997-11-19', '여', '서울특별시 서대문구 거북골로 90', null, 'CUSTOMER'),
+       ('a', '어드민', '회사원', 010123443210, '1999-11-11', '남', 'S1350', '$2a$10$h9SLWISUWnSAQaD7OkwFQubuUU8WwDYEQOdWQgDguRRE5jjFV759u', 'ADMIN');
 
 INSERT INTO Contract (insuranceID, insurancePeriod, premium, paymentCycle, paymentPeriod, maxCompensation, dateOfSubscription, dateOfMaturity, maturity, resurrection, cancellation, customerID)
 VALUES
@@ -253,18 +252,11 @@ VALUES
     (1, '10년', 200000, 'QUARTERLY_PAYMENT', '36개월', 3000000, '2019-08-29', '2024-03-23', 1, 1, 0, 3),
     (2, '10년', 100000, 'MONTHLY_PAYMENT', '12개월', 3000000, '2019-03-29', '2024-03-23', 1, 0, 0, 4),
     (1, '10년', 200000, 'QUARTERLY_PAYMENT', '36개월', 3000000, '2019-02-22', '2024-03-23', 0, 1, 0, 5),
-    (1, '10년', 200000, 'QUARTERLY_PAYMENT', '36개월', 3000000, '2008-02-22', '2018-02-22', 1, 1, 1, 10),
-    (2, '10년', 100000, 'MONTHLY_PAYMENT', '12개월', 3000000, '2009-03-23', '2019-03-23', 1, 1, 1, 10),
-    (3, '5년', 500000, 'MONTHLY_PAYMENT', '12개월', 3000000, '2010-02-22', '2015-02-22', 1, 1, 1, 10),
-    (9, '1년', 300000, 'QUARTERLY_PAYMENT', '36개월', 20000000, '2019-02-22', '2020-02-22', 1, 1, 0, 10),
-    (13, '1년', 120000, 'MONTHLY_PAYMENT', '12개월', 5000000, '2020-06-07', '2021-06-07', 1, 1, 0, 10),
-    (14, '3년', 50000, 'MONTHLY_PAYMENT', '12개월', 1000000, '2020-05-19', '2023-05-19', 1, 1, 0, 10),
-    (11, '15년', 800000, 'QUARTERLY_PAYMENT', '36개월', 200000000, '2022-04-30', '2037-04-30', 0, 0, 0, 10),
-    (18, '평생', 1500000, 'QUARTERLY_PAYMENT', '36개월', 800000000, '2019-02-22', '2099-12-31', 0, 0, 0, 10),
-    (8, '5년', 80000, 'MONTHLY_PAYMENT', '12개월', 3000000, '2019-08-02', '2024-08-02', 0, 0, 0, 10),
-    (10, '8년', 3000000, 'QUARTERLY_PAYMENT', '36개월', 200000000, '2020-09-30', '2028-09-30', 0, 0, 1, 10),
-    (12, '평생', 2000000, 'QUARTERLY_PAYMENT', '36개월', 1000000000, '2023-12-06', '2099-12-31', 0, 0, 1, 10),
-    (19, '2년', 180000, 'MONTHLY_PAYMENT', '12개월', 15000000, '2023-12-06', '2025-12-06', 0, 0, 1, 10);
+    (1, '10년', 200000, 'MONTHLY_PAYMENT', '12개월', 3000000, '2019-01-29', '2024-03-23', 1, 1, 0, 6),
+    (1, '10년', 200000, 'MONTHLY_PAYMENT', '12개월', 3000000, '2019-01-29', '2023-03-23', 1, 0, 0, 10),
+    (2, '10년', 100000, 'MONTHLY_PAYMENT', '12개월', 3000000, '2019-01-29', '2023-12-23', 0, 0, 1, 10),
+    (3, '5년', 500000, 'QUARTERLY_PAYMENT', '36개월', 3000000, '2019-01-29', '2023-12-24', 0, 0, 0, 10),
+    (4, '5년', 500000, 'QUARTERLY_PAYMENT', '36개월', 3000000, '2019-01-30', '2023-12-25', 0, 0, 0, 10);
 
 INSERT INTO Payment (customerID, insuranceID, ContractID, dateOfPayment, whetherPayment)
 VALUES
@@ -440,13 +432,13 @@ VALUES
     (5, '폐암', '본인'),
     (6, '백혈병', '본인');
 
-INSERT INTO CompensationClaim (insuranceID, customerID, receptionistName, receptionistPNumber, relationshipOfContractor, documentFilePath, bank, accountNumber, accountHolderName)
+INSERT INTO CompensationClaim (contractID, receptionistName, receptionistPNumber, relationshipOfContractor, documentFilePath, bank, accountNumber, accountHolderName, isSurveyed)
 VALUES
-    (1, 1, '김철수', '01012345678', '본인', 'DocumentFilePath1', 'KB국민은행', '1101231234232222', '김철수'),
-    (2, 2, '김영희', '01023456789', '본인', 'DocumentFilePath2', '신한은행', '333316243556888', '김영희'),
-    (3, 3, '김가나', '01034567891', '본인', 'DocumentFilePath3', '하나은행', '160025532634532', '김가나'),
-    (2, 4, '김나다', '01045678912', '본인', 'DocumentFilePath5', '하나은행', '1106696221551234', '김나다'),
-    (3, 5, '김다라', '01056789123', '본인', 'DocumentFilePath6', '신한은행', '333326937434523456', '김다라');
+    (1, '김철수', '01012345678', '본인', 'DocumentFilePath1', 'KB국민은행', '1101231234232222', '김철수', true),
+    (2, '김영희', '01023456789', '본인', 'DocumentFilePath2', '신한은행', '333316243556888', '김영희', false),
+    (2, '김가나', '01034567891', '본인', 'DocumentFilePath3', '하나은행', '160025532634532', '김가나', false),
+    (3, '김나다', '01045678912', '본인', 'DocumentFilePath5', '하나은행', '1106696221551234', '김나다', false),
+    (4, '김다라', '01056789123', '본인', 'DocumentFilePath6', '신한은행', '333326937434523456', '김다라', false);
 
 INSERT INTO CarAccident (CCID, type, dateTime, place, carNumber, driverName, licenseNumber, accidentDetail)
 VALUES
