@@ -101,7 +101,7 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
                 .bank(request.getBank())
                 .accountNumber(request.getAccountNumber())
                 .accountHolderName(request.getAccountHolderName())
-                .isSurveyed(request.isSurveyed())
+                .isSurveyed(false)
                 .build();
         compensationClaimRepository.save(compensationClaim);
     }
@@ -124,7 +124,7 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
                 .bank(request.getBank())
                 .accountNumber(request.getAccountNumber())
                 .accountHolderName(request.getAccountHolderName())
-                .isSurveyed(request.isSurveyed())
+                .isSurveyed(false)
                 .build();
         compensationClaimRepository.saveAndFlush(compensationClaim);
         CarAccident carAccident = CarAccident.builder()

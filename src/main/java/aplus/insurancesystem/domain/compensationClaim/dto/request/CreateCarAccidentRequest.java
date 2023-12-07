@@ -22,7 +22,6 @@ public class CreateCarAccidentRequest {
     private final String bank;
     private final String accountNumber;
     private final String accountHolderName;
-    private final boolean isSurveyed;
 
     private final String type;
     private final LocalDateTime dateTime;
