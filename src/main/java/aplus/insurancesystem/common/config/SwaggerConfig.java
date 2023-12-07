@@ -95,4 +95,15 @@ public class SwaggerConfig {
                 .pathsToMatch(paths)
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi surveyOpenApi() {
+        String[] paths = {"/survey/**"};
+
+        return GroupedOpenApi
+                .builder()
+                .group("손해사정 API")
+                .pathsToMatch(paths)
+                .build();
+    }
 }
