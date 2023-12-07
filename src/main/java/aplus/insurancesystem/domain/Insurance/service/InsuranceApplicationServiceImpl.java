@@ -17,7 +17,7 @@ import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationD
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.MyInsuranceApplicationResponse;
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplicationState;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;

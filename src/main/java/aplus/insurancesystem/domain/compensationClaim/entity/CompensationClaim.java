@@ -1,6 +1,6 @@
 package aplus.insurancesystem.domain.compensationClaim.entity;
 
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

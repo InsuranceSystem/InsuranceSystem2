@@ -1,4 +1,4 @@
-package aplus.insurancesystem.domain.Insurance.entity;
+package aplus.insurancesystem.domain.Insurance.entity.insurance;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import aplus.insurancesystem.domain.Insurance.entity.Guarantee;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class Insurance {
     private List<Guarantee> guaranteeList;
 
     private String insuranceName;
-    private String type;
+    private InsuranceType type;
     private int maxCompensation;
     private String periodOfInsurance;
     private String ageOfTarget;
@@ -48,7 +49,7 @@ public class Insurance {
     private LocalDateTime deletedAt;
 
     @Builder
-    public Insurance(String insuranceName, String type, int maxCompensation, String periodOfInsurance,
+    public Insurance(String insuranceName, InsuranceType type, int maxCompensation, String periodOfInsurance,
                      String ageOfTarget, int basicPremium, boolean distributionStatus,
                      String insuranceClausePeriod, String precaution, boolean authorization) {
         this.guaranteeList = new ArrayList<>();

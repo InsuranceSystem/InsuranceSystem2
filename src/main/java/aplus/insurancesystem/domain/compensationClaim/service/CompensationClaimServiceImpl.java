@@ -1,6 +1,6 @@
 package aplus.insurancesystem.domain.compensationClaim.service;
 
-import aplus.insurancesystem.domain.Insurance.entity.Insurance;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import aplus.insurancesystem.domain.Insurance.service.InsuranceQueryService;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCarAccidentRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCompensationClaimRequest;

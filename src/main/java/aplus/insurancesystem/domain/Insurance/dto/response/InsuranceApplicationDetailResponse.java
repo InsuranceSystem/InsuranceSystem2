@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import aplus.insurancesystem.domain.Insurance.entity.insurance.InsuranceType;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.InsuranceApplication;
 import aplus.insurancesystem.domain.Insurance.entity.insurauceApplication.PaymentCycle;
 import aplus.insurancesystem.domain.customer.dto.response.FamilyHistoryInfoResponse;
@@ -23,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class InsuranceApplicationDetailResponse {
 
-    private final String insuranceType;
+    private final InsuranceType insuranceType;
     private final String insuranceName;
     @Schema(description = "기본 보험료")
     private final Integer insuranceBasicPremium;
