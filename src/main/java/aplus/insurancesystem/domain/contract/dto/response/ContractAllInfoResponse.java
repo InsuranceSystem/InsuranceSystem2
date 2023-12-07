@@ -12,14 +12,14 @@ import lombok.Getter;
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ContractAllInfoResponse {
     @Schema(description = "계약 id", requiredMode = RequiredMode.REQUIRED)
-    private Long id;
-    private String insuranceName;
-    private InsuranceType insuranceType;
-    private Integer premium;
-    private String paymentPeriod;
-    private Boolean maturity;
-    private Boolean resurrection;
-    private Boolean cancellation;
+    private final Long id;
+    private final String insuranceName;
+    private final InsuranceType insuranceType;
+    private final Integer premium;
+    private final String paymentPeriod;
+    private final Boolean maturity;
+    private final Boolean resurrection;
+    private final Boolean cancellation;
 
     public static ContractAllInfoResponse of(Contract contract) {
         return new ContractAllInfoResponse(

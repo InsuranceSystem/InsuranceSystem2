@@ -17,18 +17,20 @@ import lombok.Getter;
 public class ContractDetailResponse {
 
     @Schema(description = "계약 id")
-    private Long id;
-    private String insuranceName;
-    private InsuranceType insuranceType;
-    private String insurancePeriod;
-    private Integer premium;
-    private PaymentCycle paymentCycle;
-    private String paymentPeriod;
-    private Integer maxCompensation;
+    private final Long id;
+    private final String insuranceName;
+    private final InsuranceType insuranceType;
+    private final String insurancePeriod;
+    private final Integer premium;
+    private final PaymentCycle paymentCycle;
+    private final String paymentPeriod;
+    private final Integer maxCompensation;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dateOfSubscription;
+    private final LocalDate dateOfSubscription;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dateOfMaturity;
+    private final LocalDate dateOfMaturity;
+    private final Boolean Maturity;
+    private final Boolean Cancellation;
 
     public static ContractDetailResponse of(Contract contract) {
         return new ContractDetailResponse(
@@ -41,6 +43,8 @@ public class ContractDetailResponse {
                 contract.getPaymentPeriod(),
                 contract.getMaxCompensation(),
                 contract.getDateOfSubscription(),
-                contract.getDateOfMaturity());
+                contract.getDateOfMaturity(),
+                contract.getMaturity(),
+                contract.getCancellation());
     }
 }

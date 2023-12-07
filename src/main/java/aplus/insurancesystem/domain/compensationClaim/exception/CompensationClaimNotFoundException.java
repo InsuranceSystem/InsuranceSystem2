@@ -5,7 +5,7 @@ import aplus.insurancesystem.common.exception.ErrorCode;
 
 public class CompensationClaimNotFoundException extends BusinessException {
     public CompensationClaimNotFoundException() {
-        super(ErrorCode.COMPENSATION_CLIAM_NOT_FOUND);
+        super(ErrorCode.COMPENSATION_CLAIM_NOT_FOUND);
     }
 
 }

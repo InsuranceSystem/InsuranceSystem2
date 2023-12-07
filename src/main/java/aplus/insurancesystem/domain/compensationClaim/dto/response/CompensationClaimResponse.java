@@ -16,8 +16,12 @@ public class CompensationClaimResponse {
     private final String bank;
     private final String accountNumber;
     private final String accountHolderName;
+    private final boolean isSurveyed;
 
-    public static CompensationClaimResponse of (CompensationClaim compensationClaim) {
+    private final String insuranceName;
+
+
+    public static CompensationClaimResponse of (CompensationClaim compensationClaim, String insuranceName) {
         return new CompensationClaimResponse(
                 compensationClaim.getId(),
                 compensationClaim.getReceptionistName(),
@@ -26,7 +30,9 @@ public class CompensationClaimResponse {
                 compensationClaim.getDocumentFilePath(),
                 compensationClaim.getBank(),
                 compensationClaim.getAccountNumber(),
-                compensationClaim.getAccountHolderName()
+                compensationClaim.getAccountHolderName(),
+                compensationClaim.isSurveyed(),
+                insuranceName
         );
     }
 }

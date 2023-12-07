@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -56,6 +57,7 @@ public class Payment {
     private LocalDate dateOfPayment;
     private Boolean whetherPayment;
 
+    @Builder
     public Payment(Customer customer, Insurance insurance, Contract contract,
                    LocalDate dateOfPayment, Boolean whetherPayment) {
         this.customer = customer;

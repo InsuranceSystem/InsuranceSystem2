@@ -1,7 +1,7 @@
 package aplus.insurancesystem.domain.compensationClaim.service;
 
-import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
-import aplus.insurancesystem.domain.Insurance.service.InsuranceQueryService;
+
+import aplus.insurancesystem.common.service.FileService;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCarAccidentRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCompensationClaimRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateSurveyRequest;
@@ -18,12 +18,18 @@ import aplus.insurancesystem.domain.compensationClaim.exception.SurveyNotFoundEx
 import aplus.insurancesystem.domain.compensationClaim.repository.CarAccidentRepository;
 import aplus.insurancesystem.domain.compensationClaim.repository.CompensationClaimRepository;
 import aplus.insurancesystem.domain.compensationClaim.repository.SurveyRepository;
-import aplus.insurancesystem.domain.customer.entity.customer.Customer;
-import aplus.insurancesystem.domain.customer.service.CustomerQueryService;
+import aplus.insurancesystem.domain.contract.entity.Contract;
+import aplus.insurancesystem.domain.contract.exception.ContractNotFoundException;
+import aplus.insurancesystem.domain.contract.repository.ContractRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,27 +38,34 @@ import java.util.List;
 public class CompensationClaimServiceImpl implements CompensationClaimService {
     private final CompensationClaimRepository compensationClaimRepository;
     private final CarAccidentRepository carAccidentRepository;
-    private final SurveyRepository surveyRepository;
-    private final InsuranceQueryService insuranceQueryService;
-    private final CustomerQueryService customerQueryService;
+    private final ContractRepository contractRepository;
+    private final FileService fileService;
+
+
     @Override
     public List<CompensationClaimResponse> getAllCompensationClaim() {
         return compensationClaimRepository.findAll()
                 .stream()
-                .map(CompensationClaimResponse::of)
+                .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
                 .toList();
     }
     @Override
     public List<CompensationClaimResponse> getCompensationClaim(Long customerId) {
-        return compensationClaimRepository.findAllByCustomerId(customerId)
-                .stream()
-                .map(CompensationClaimResponse::of)
-                .toList();
+        List<CompensationClaimResponse> compensationClaimResponseList = new ArrayList<>();
+        for (Contract contract : contractRepository.findByCustomerId(customerId)) {
+            List<CompensationClaimResponse> compensationClaims = compensationClaimRepository.findAllByContractId(contract.getId())
+                    .stream()
+                    .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
+                    .toList();
+            compensationClaimResponseList.addAll(compensationClaims);
+
+        }
+        return compensationClaimResponseList;
     }
     @Override
     public CompensationClaimResponse getCompensationClaimDetail(Long ccid) {
         return compensationClaimRepository.findById(ccid)
-                .map(CompensationClaimResponse::of)
+                .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
                 .orElseThrow(CompensationClaimNotFoundException::new);
     }
     @Override
@@ -61,21 +74,34 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
                 .map(CarAccidentResponse::of)
                 .orElseThrow(CarAccidentNotFoundException::new);
     }
+
+    @Override
+    public InputStreamResource getDocument(Long ccid) {
+        CompensationClaim compensationClaim =
+                compensationClaimRepository.findById(ccid).orElseThrow(CompensationClaimNotFoundException::new);
+        InputStream inputStream = fileService.downloadFile(compensationClaim.getDocumentFilePath());
+        return new InputStreamResource(inputStream);
+    }
+
     @Override
     @Transactional
     public void createCompensationClaim(CreateCompensationClaimRequest request) {
-        Insurance insurance = insuranceQueryService.getInsurance(request.getInsuranceId());
-        Customer customer = customerQueryService.getCustomer(request.getCustomerId());
+        Contract contract = contractRepository.findById(request.getContractId()).orElseThrow(ContractNotFoundException::new);
+
+        MultipartFile documentFile = request.getDocumentFile();
+        String documentFilePath = documentFile.getOriginalFilename() + LocalDateTime.now();
+        fileService.uploadFile(documentFile, documentFilePath);
+
         CompensationClaim compensationClaim = CompensationClaim.builder()
-                .insurance(insurance)
-                .customer(customer)
+                .contract(contract)
                 .receptionistName(request.getReceptionistName())
                 .receptionistPNumber(request.getReceptionistPNumber())
                 .relationshipOfContractor(request.getRelationshipOfContractor())
-                .documentFilePath(request.getDocumentFilePath())
+                .documentFilePath(documentFilePath)
                 .bank(request.getBank())
                 .accountNumber(request.getAccountNumber())
                 .accountHolderName(request.getAccountHolderName())
+                .isSurveyed(request.isSurveyed())
                 .build();
         compensationClaimRepository.save(compensationClaim);
     }
@@ -83,18 +109,22 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
     @Override
     @Transactional
     public void createCarAccident(CreateCarAccidentRequest request) {
-        Insurance insurance = insuranceQueryService.getInsurance(request.getInsuranceId());
-        Customer customer = customerQueryService.getCustomer(request.getCustomerId());
+        Contract contract = contractRepository.findById(request.getContractId()).orElseThrow(ContractNotFoundException::new);
+
+        MultipartFile documentFile = request.getDocumentFile();
+        String documentFilePath = documentFile.getOriginalFilename() + LocalDateTime.now();
+        fileService.uploadFile(documentFile, documentFilePath);
+
         CompensationClaim compensationClaim = CompensationClaim.builder()
-                .insurance(insurance)
-                .customer(customer)
+                .contract(contract)
                 .receptionistName(request.getReceptionistName())
                 .receptionistPNumber(request.getReceptionistPNumber())
                 .relationshipOfContractor(request.getRelationshipOfContractor())
-                .documentFilePath(request.getDocumentFilePath())
+                .documentFilePath(documentFilePath)
                 .bank(request.getBank())
                 .accountNumber(request.getAccountNumber())
                 .accountHolderName(request.getAccountHolderName())
+                .isSurveyed(request.isSurveyed())
                 .build();
         compensationClaimRepository.saveAndFlush(compensationClaim);
         CarAccident carAccident = CarAccident.builder()
@@ -109,41 +139,5 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
                 .accidentDetail(request.getAccidentDetail())
                 .build();
         carAccidentRepository.save(carAccident);
-    }
-
-    @Override
-    public SurveyResponse getSurvey(Long ccid) {
-        return surveyRepository.findById(ccid)
-        .map(SurveyResponse::of)
-        .orElseThrow(SurveyNotFoundException::new);
-    }
-
-    @Override
-    @Transactional
-    public void createSurvey(CreateSurveyRequest request) {
-        CompensationClaim compensationClaim = compensationClaimRepository.findById(request.getId()).orElseThrow(CompensationClaimNotFoundException::new);
-        Survey survey = Survey.builder()
-                .id(request.getId())
-                .compensationClaim(compensationClaim)
-                .managerName(request.getManagerName())
-                .reportFilePath(request.getReportFilePath())
-                .surveyFee(request.getSurveyFee())
-                .decisionMoney(request.getDecisionMoney())
-                .responsibility(request.getResponsibility())
-                .responsibilityReason(request.getResponsibilityReason())
-                .build();
-        surveyRepository.save(survey);
-    }
-
-    @Override
-    @Transactional
-    public void updateSurvey(Long ccid, UpdateSurveyRequest request) {
-        Survey survey = surveyRepository.findById(ccid).orElseThrow(SurveyNotFoundException::new);
-        survey.setManagerName(request.getManagerName());
-        survey.setReportFilePath(request.getReportFilePath());
-        survey.setSurveyFee(request.getSurveyFee());
-        survey.setDecisionMoney(request.getDecisionMoney());
-        survey.setResponsibility(request.getResponsibility());
-        survey.setResponsibilityReason(request.getResponsibilityReason());
     }
 }
