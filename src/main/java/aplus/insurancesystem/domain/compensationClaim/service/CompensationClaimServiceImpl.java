@@ -94,8 +94,8 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
 
     @Override
     @Transactional
-    public void createCompensationClaim(CreateCompensationClaimRequest request) {
-        Contract contract = contractRepository.findById(request.getContractId()).orElseThrow(ContractNotFoundException::new);
+    public void createCompensationClaim(Long contractId, CreateCompensationClaimRequest request) {
+        Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
 
         MultipartFile documentFile = request.getDocumentFile();
         String documentFilePath = documentFile.getOriginalFilename() + LocalDateTime.now();
@@ -117,8 +117,8 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
 
     @Override
     @Transactional
-    public void createCarAccident(CreateCarAccidentRequest request) {
-        Contract contract = contractRepository.findById(request.getContractId()).orElseThrow(ContractNotFoundException::new);
+    public void createCarAccident(Long contractId, CreateCarAccidentRequest request) {
+        Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
 
         MultipartFile documentFile = request.getDocumentFile();
         String documentFilePath = documentFile.getOriginalFilename() + LocalDateTime.now();

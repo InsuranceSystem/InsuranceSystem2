@@ -132,11 +132,13 @@ public class CompensationClaimController {
                             + "U001: id에 해당하는 유저를 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @PostMapping(path = "/claim", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/claim/{contractId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> createCompensationClaim(
+            @Parameter(description = "계약 id", in = ParameterIn.PATH)
+            @PathVariable("contractId") Long contractId,
             @ModelAttribute CreateCompensationClaimRequest request) {
-        compensationClaimService.createCompensationClaim(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        compensationClaimService.createCompensationClaim(contractId, request);
+        return ResponseEntity.ok().build();
     }
     @Operation(summary = "보상금 청구 및 사고 접수", description = "보상금 청구 및 사고 접수 API")
     @ApiResponses(value = {
@@ -149,9 +151,12 @@ public class CompensationClaimController {
                             + "U001: id에 해당하는 유저를 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @PostMapping(path = "/claim/car", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> createCarAccident(@ModelAttribute CreateCarAccidentRequest request) {
-        compensationClaimService.createCarAccident(request);
+    @PostMapping(path = "/claim/car/{contractId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> createCarAccident(
+            @Parameter(description = "계약 id", in = ParameterIn.PATH)
+            @PathVariable("contractId") Long contractId,
+            @ModelAttribute CreateCarAccidentRequest request) {
+        compensationClaimService.createCarAccident(contractId,request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

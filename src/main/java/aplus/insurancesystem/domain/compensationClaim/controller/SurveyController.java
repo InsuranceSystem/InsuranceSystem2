@@ -58,12 +58,18 @@ public class SurveyController {
                     description = "손해사정 완료"),
             @ApiResponse(
                     responseCode = "404",
-                    description = "CC001: id에 해당하는 청구내역을 찾을 수 없습니다."),
+                    description = "CC001: id에 해당하는 청구내역을 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(hidden = true))
+            ),
+
     })
     @PostMapping(path = "/{ccid}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> createSurvey(@PathVariable("ccid") Long ccid, @ModelAttribute CreateSurveyRequest request) {
+    public ResponseEntity<Void> createSurvey(
+            @Parameter(description = "청구 id", in = ParameterIn.PATH)
+            @PathVariable("ccid") Long ccid,
+            @ModelAttribute CreateSurveyRequest request) {
         surveyService.createSurvey(ccid, request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "손해사정 수정", description = "손해사정 수정 API")
@@ -79,7 +85,8 @@ public class SurveyController {
     @PutMapping(path = "/{ccid}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateSurvey(
             @Parameter(description = "청구 id", in = ParameterIn.PATH)
-            @PathVariable("ccid") Long ccid, @ModelAttribute UpdateSurveyRequest request) {
+            @PathVariable("ccid") Long ccid,
+            @ModelAttribute UpdateSurveyRequest request) {
         surveyService.updateSurvey(ccid, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

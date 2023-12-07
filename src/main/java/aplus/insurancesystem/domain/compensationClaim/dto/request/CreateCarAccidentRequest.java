@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(force = true)
 @Schema(description = "보상금청구 및 사고접수 Request")
 public class CreateCarAccidentRequest {
-    private final Long contractId;
 
     private final String receptionistName;
     private final String receptionistPNumber;

@@ -11,13 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor(force = true)
 @Schema(description = "보상금청구 Request")
 public class CreateCompensationClaimRequest {
-    private final Long contractId;
 
     private final String receptionistName;
     private final String receptionistPNumber;
     private final String relationshipOfContractor;
-    private final MultipartFile documentFile;
     private final String bank;
     private final String accountNumber;
     private final String accountHolderName;
+    private final MultipartFile documentFile;
+
 }

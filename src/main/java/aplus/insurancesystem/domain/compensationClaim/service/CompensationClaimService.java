@@ -17,7 +17,7 @@ public interface CompensationClaimService {
     CompensationClaimResponse getCompensationClaimDetail(Long ccid);
     CarAccidentResponse getCarAccidentDetail(Long ccid);
     InputStreamResource getDocument(Long ccid);
-    void createCompensationClaim(CreateCompensationClaimRequest request);
-    void createCarAccident(CreateCarAccidentRequest request);
+    void createCompensationClaim(Long contractId, CreateCompensationClaimRequest request);
+    void createCarAccident(Long contractId,CreateCarAccidentRequest request);
 
 }
