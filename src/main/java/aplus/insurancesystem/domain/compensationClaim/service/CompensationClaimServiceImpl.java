@@ -46,7 +46,10 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
     public List<CompensationClaimResponse> getAllCompensationClaim() {
         return compensationClaimRepository.findAll()
                 .stream()
-                .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
+                .map(compensationClaim -> CompensationClaimResponse.of(
+                        compensationClaim,
+                        compensationClaim.getContract().getInsurance().getInsuranceName(),
+                        compensationClaim.getContract().getInsurance().getType()))
                 .toList();
     }
     @Override
@@ -55,7 +58,10 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
         for (Contract contract : contractRepository.findByCustomerId(customerId)) {
             List<CompensationClaimResponse> compensationClaims = compensationClaimRepository.findAllByContractId(contract.getId())
                     .stream()
-                    .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
+                    .map(compensationClaim -> CompensationClaimResponse.of(
+                            compensationClaim,
+                            compensationClaim.getContract().getInsurance().getInsuranceName(),
+                            compensationClaim.getContract().getInsurance().getType()))
                     .toList();
             compensationClaimResponseList.addAll(compensationClaims);
 
@@ -65,7 +71,10 @@ public class CompensationClaimServiceImpl implements CompensationClaimService {
     @Override
     public CompensationClaimResponse getCompensationClaimDetail(Long ccid) {
         return compensationClaimRepository.findById(ccid)
-                .map(compensationClaim -> CompensationClaimResponse.of(compensationClaim, compensationClaim.getContract().getInsurance().getInsuranceName()))
+                .map(compensationClaim -> CompensationClaimResponse.of(
+                        compensationClaim,
+                        compensationClaim.getContract().getInsurance().getInsuranceName(),
+                        compensationClaim.getContract().getInsurance().getType()))
                 .orElseThrow(CompensationClaimNotFoundException::new);
     }
     @Override

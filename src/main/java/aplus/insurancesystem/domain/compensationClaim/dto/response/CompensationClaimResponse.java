@@ -1,5 +1,6 @@
 package aplus.insurancesystem.domain.compensationClaim.dto.response;
 
+import aplus.insurancesystem.domain.Insurance.entity.insurance.InsuranceType;
 import aplus.insurancesystem.domain.compensationClaim.entity.CompensationClaim;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,9 +20,10 @@ public class CompensationClaimResponse {
     private final boolean isSurveyed;
 
     private final String insuranceName;
+    private final InsuranceType insuranceType;
 
 
-    public static CompensationClaimResponse of (CompensationClaim compensationClaim, String insuranceName) {
+    public static CompensationClaimResponse of (CompensationClaim compensationClaim, String insuranceName, InsuranceType insuranceType) {
         return new CompensationClaimResponse(
                 compensationClaim.getId(),
                 compensationClaim.getReceptionistName(),
@@ -32,7 +34,8 @@ public class CompensationClaimResponse {
                 compensationClaim.getAccountNumber(),
                 compensationClaim.getAccountHolderName(),
                 compensationClaim.isSurveyed(),
-                insuranceName
+                insuranceName,
+                insuranceType
         );
     }
 }
