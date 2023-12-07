@@ -30,44 +30,6 @@ CREATE TABLE Customer (
                           role VARCHAR(255) DEFAULT "CUSTOMER"
 );
 
-CREATE TABLE CompensationClaim (
-                                   CCID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                   contractID BIGINT,
-                                   receptionistName VARCHAR(255),
-                                   receptionistPNumber VARCHAR(255),
-                                   relationshipOfContractor VARCHAR(255),
-                                   documentFilePath VARCHAR(255),
-                                   bank VARCHAR(255),
-                                   accountNumber VARCHAR(255),
-                                   accountHolderName VARCHAR(255),
-                                   isSurveyed boolean,
-                                   FOREIGN KEY (contractID) REFERENCES Contract(contractID)
-);
-
-CREATE TABLE CarAccident (
-                             CCID BIGINT PRIMARY KEY,
-                             type VARCHAR(255),
-                             dateTime DATETIME,
-                             place VARCHAR(255),
-                             carNumber VARCHAR(255),
-                             driverName VARCHAR(255),
-                             licenseNumber VARCHAR(255),
-                             accidentDetail VARCHAR(255),
-                             FOREIGN KEY (CCID) REFERENCES CompensationClaim(CCID)
-                                 on update cascade
-);
-
-CREATE TABLE Survey (
-                        CCID BIGINT PRIMARY KEY,
-                        managerName VARCHAR(255),
-                        reportFilePath VARCHAR(255),
-                        surveyFee INT,
-                        decisionMoney INT,
-                        responsibility BOOL,
-                        responsibilityReason VARCHAR(255),
-                        FOREIGN KEY (CCID) REFERENCES CompensationClaim(CCID)
-);
-
 CREATE TABLE InsuranceApplication (
                                       applicationID BIGINT AUTO_INCREMENT PRIMARY KEY,
                                       insuranceID BIGINT,
@@ -156,6 +118,43 @@ CREATE TABLE Payment (
                          FOREIGN KEY (customerID) REFERENCES Customer(customerID),
                          FOREIGN KEY (insuranceID) REFERENCES Insurance(insuranceID),
                          FOREIGN KEY (contractID) REFERENCES Contract(contractID)
+);
+CREATE TABLE CompensationClaim (
+                                   CCID BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                   contractID BIGINT,
+                                   receptionistName VARCHAR(255),
+                                   receptionistPNumber VARCHAR(255),
+                                   relationshipOfContractor VARCHAR(255),
+                                   documentFilePath VARCHAR(255),
+                                   bank VARCHAR(255),
+                                   accountNumber VARCHAR(255),
+                                   accountHolderName VARCHAR(255),
+                                   isSurveyed boolean,
+                                   FOREIGN KEY (contractID) REFERENCES Contract(contractID)
+);
+
+CREATE TABLE CarAccident (
+                             CCID BIGINT PRIMARY KEY,
+                             type VARCHAR(255),
+                             dateTime DATETIME,
+                             place VARCHAR(255),
+                             carNumber VARCHAR(255),
+                             driverName VARCHAR(255),
+                             licenseNumber VARCHAR(255),
+                             accidentDetail VARCHAR(255),
+                             FOREIGN KEY (CCID) REFERENCES CompensationClaim(CCID)
+                                 on update cascade
+);
+
+CREATE TABLE Survey (
+                        CCID BIGINT PRIMARY KEY,
+                        managerName VARCHAR(255),
+                        reportFilePath VARCHAR(255),
+                        surveyFee INT,
+                        decisionMoney INT,
+                        responsibility BOOL,
+                        responsibilityReason VARCHAR(255),
+                        FOREIGN KEY (CCID) REFERENCES CompensationClaim(CCID)
 );
 
 INSERT INTO Terms (termsName, calculatedMoneyMethod, termsContent) VALUES
@@ -311,13 +310,13 @@ VALUES
     (5, '폐암', '본인'),
     (6, '백혈병', '본인');
 
-INSERT INTO CompensationClaim (insuranceID, customerID, receptionistName, receptionistPNumber, relationshipOfContractor, documentFilePath, bank, accountNumber, accountHolderName)
+INSERT INTO CompensationClaim (contractID, receptionistName, receptionistPNumber, relationshipOfContractor, documentFilePath, bank, accountNumber, accountHolderName, isSurveyed)
 VALUES
-    (1, 1, '김철수', '01012345678', '본인', 'DocumentFilePath1', 'KB국민은행', '1101231234232222', '김철수'),
-    (2, 2, '김영희', '01023456789', '본인', 'DocumentFilePath2', '신한은행', '333316243556888', '김영희'),
-    (3, 3, '김가나', '01034567891', '본인', 'DocumentFilePath3', '하나은행', '160025532634532', '김가나'),
-    (2, 4, '김나다', '01045678912', '본인', 'DocumentFilePath5', '하나은행', '1106696221551234', '김나다'),
-    (3, 5, '김다라', '01056789123', '본인', 'DocumentFilePath6', '신한은행', '333326937434523456', '김다라');
+    (1, '김철수', '01012345678', '본인', 'DocumentFilePath1', 'KB국민은행', '1101231234232222', '김철수', true),
+    (2, '김영희', '01023456789', '본인', 'DocumentFilePath2', '신한은행', '333316243556888', '김영희', false),
+    (2, '김가나', '01034567891', '본인', 'DocumentFilePath3', '하나은행', '160025532634532', '김가나', false),
+    (3, '김나다', '01045678912', '본인', 'DocumentFilePath5', '하나은행', '1106696221551234', '김나다', false),
+    (4, '김다라', '01056789123', '본인', 'DocumentFilePath6', '신한은행', '333326937434523456', '김다라', false);
 
 INSERT INTO CarAccident (CCID, type, dateTime, place, carNumber, driverName, licenseNumber, accidentDetail)
 VALUES
