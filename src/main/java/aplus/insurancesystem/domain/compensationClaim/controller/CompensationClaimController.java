@@ -1,9 +1,7 @@
 package aplus.insurancesystem.domain.compensationClaim.controller;
 
 import aplus.insurancesystem.common.dto.SuccessResponse;
-import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCarAccidentRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCompensationClaimRequest;
-import aplus.insurancesystem.domain.compensationClaim.dto.response.CarAccidentResponse;
 import aplus.insurancesystem.domain.compensationClaim.dto.response.CompensationClaimResponse;
 import aplus.insurancesystem.domain.compensationClaim.service.CompensationClaimService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,25 +74,6 @@ public class CompensationClaimController {
         ).asHttp(HttpStatus.OK);
     }
 
-    @Operation(summary = "개별 사고 접수 내역 상세 조회", description = "청구ID로 사고 접수 내역 조회 API")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "청구ID로 사고 접수 내역 반환"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "CA001: id에 해당하는 사고 접수 내역을 찾을 수 없습니다.",
-                    content = @Content(schema = @Schema(hidden = true)))
-    })
-    @GetMapping("/detail/car/{ccid}")
-    public ResponseEntity<SuccessResponse<CarAccidentResponse>> getCarAccidentDetail(
-            @Parameter(description = "청구 id", in = ParameterIn.PATH)
-            @PathVariable("ccid") Long CCID) {
-        return SuccessResponse.of(
-                compensationClaimService.getCarAccidentDetail(CCID)
-        ).asHttp(HttpStatus.OK);
-    }
-
     @Operation(summary = "청구 서류 조회", description = "청구서류 조회 API")
     @ApiResponses(value = {
             @ApiResponse(
@@ -136,23 +115,5 @@ public class CompensationClaimController {
         compensationClaimService.createCompensationClaim(contractId, request);
         return ResponseEntity.ok().build();
     }
-    @Operation(summary = "보상금 청구 및 사고 접수", description = "보상금 청구 및 사고 접수 API")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "보상금 청구 및 사고 접수 완료"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "I001: id에 해당하는 보험을 찾을 수 없습니다. \n"
-                            + "U001: id에 해당하는 유저를 찾을 수 없습니다.",
-                    content = @Content(schema = @Schema(hidden = true)))
-    })
-    @PostMapping(path = "/claim/car/{contractId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> createCarAccident(
-            @Parameter(description = "계약 id", in = ParameterIn.PATH)
-            @PathVariable("contractId") Long contractId,
-            @ModelAttribute CreateCarAccidentRequest request) {
-        compensationClaimService.createCarAccident(contractId,request);
-        return ResponseEntity.ok().build();
-    }
+
 }
