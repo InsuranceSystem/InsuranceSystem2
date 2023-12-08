@@ -16,9 +16,3 @@ decorator:
   datasource:
     p6spy:
       enable-logging: true
-
-coolsms:
-  api:
-    key: ${APIKEY}
-    secret: ${APISECRET}
-    from-number: ${FROMNUMBER}
