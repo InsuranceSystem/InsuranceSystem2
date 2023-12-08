@@ -1,27 +1,28 @@
 package aplus.insurancesystem.common.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.MessageListRequest;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.MessageListResponse;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
 
+@Service
+@Transactional(readOnly = true)
 public class MessageService {
-    final DefaultMessageService messageService;
 
-    @Value("${coolsms.api.key}")
-    private String apiKey;
-    @Value("${coolsms.api.secret}")
-    private String apiSecretKey;
-    @Value("${coolsms.api.from-number}")
+    private final DefaultMessageService messageService;
+
     private String fromNumber;
 
-    public MessageService(DefaultMessageService messageService) {
+    public MessageService(@Value("${coolsms.api.key}") String apiKey,
+                          @Value("${coolsms.api.secret}") String apiSecretKey,
+                          @Value("${coolsms.api.from-number}") String fromNumber) {
         this.messageService = NurigoApp.INSTANCE.initialize(apiKey, apiSecretKey, "https://api.coolsms.co.kr");
+        this.fromNumber = fromNumber;
     }
 
     public SingleMessageSentResponse sendOne(String to, Esms esms) {
