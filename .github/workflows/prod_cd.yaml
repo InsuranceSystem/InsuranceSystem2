@@ -1,0 +1,70 @@
+name: main branch cd
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  MAIN_YML_PATH: ./src/main/resources/application.yml
+  PROD_YML_PATH: ./src/main/resources/application-prod.yml
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: application.yml setting
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ${{ env.MAIN_YML_PATH }}
+        env:
+          coolsms.api.key: ${{ secrets.COOLSMS_API_KEY }}
+          coolsms.api.secret: ${{ secrets.COOLSMS_API_SECRET }}
+          coolsms.api.from-number: ${{ secrets.COOLSMS_API_FROM_NUMBER }}
+
+      - name: application-prod.yml setting
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ${{ env.PROD_YML_PATH }}
+        env:
+          spring.datasource.url: ${{ secrets.RDS_URL }}
+          spring.datasource.username: ${{ secrets.PROD_DB_USERNAME }}
+          spring.datasource.password: ${{ secrets.PROD_DB_PASSWORD }}
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Clean and Build with Gradle
+        run: ./gradlew clean build -x test
+
+      - name: Docker build & push
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/insurance_system_prod .
+          docker push ${{ secrets.DOCKER_USERNAME }}/insurance_system_prod
+
+      - name: Deploy EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST_IP }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          port: 22
+          script: |
+            docker stop insurance_system_prod
+            docker rm insurance_system_prod
+            docker rmi choihyeok/insurance_system_prod
+            docker pull choihyeok/insurance_system_prod
+            docker run -d -p 80:8080 --name insurance_system_prod choihyeok/insurance_system_prod
