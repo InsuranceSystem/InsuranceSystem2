@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.core.io.InputStreamResource;
 
-import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
+import aplus.insurancesystem.domain.Insurance.dto.request.ApplyInsuranceRequest;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
@@ -12,11 +12,11 @@ import aplus.insurancesystem.domain.Insurance.dto.response.MyInsuranceApplicatio
 
 public interface InsuranceApplicationService {
 
-    void applyInsurance(Long insuranceId, CreateInsuranceApplicationRequest request);
+    void applyInsurance(Long insuranceId, ApplyInsuranceRequest request);
 
-    List<InsuranceApplicationInfoResponse> getInsuranceApplicationList();
+    List<InsuranceApplicationInfoResponse> getInsuranceApplicationInfoList();
 
-    InsuranceApplicationDetailResponse getInsuranceApplication(Long insuranceApplicationId);
+    InsuranceApplicationDetailResponse getInsuranceApplicationDetail(Long insuranceApplicationId);
 
     InputStreamResource getSubscription(Long insuranceApplicationId);
 

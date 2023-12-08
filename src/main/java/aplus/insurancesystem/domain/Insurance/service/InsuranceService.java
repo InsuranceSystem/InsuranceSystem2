@@ -7,8 +7,8 @@ import aplus.insurancesystem.domain.Insurance.dto.request.UpdateInsuranceRequest
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceDetailResponse;
 
 public interface InsuranceService {
-    InsuranceDetailResponse getInsuranceInfo(Long insuranceId);
-    List<InsuranceDetailResponse> getInsuranceList();
+    InsuranceDetailResponse getInsuranceDetail(Long insuranceId);
+    List<InsuranceDetailResponse> getInsuranceDetailList();
     void designInsurance(DesignInsuranceRequest request);
 
     void updateInsurance(Long insuranceId, UpdateInsuranceRequest request);

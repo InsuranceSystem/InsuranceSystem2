@@ -53,7 +53,7 @@ public class CustomerController {
                 content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/{id}")
-    public ResponseEntity<SuccessResponse<CustomerInfoResponse>> getCustomer(
+    public ResponseEntity<SuccessResponse<CustomerInfoResponse>> getCustomerInfo(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
             @PathVariable("id") Long customerId) {
         return SuccessResponse.of(
@@ -68,9 +68,9 @@ public class CustomerController {
                     description = "고객 정보 전체 반환(고객이 없다면 빈 리스트 반환)")
     })
     @GetMapping("/all")
-    public ResponseEntity<SuccessResponse<List<CustomerAllInfoResponse>>> getCustomerList() {
+    public ResponseEntity<SuccessResponse<List<CustomerAllInfoResponse>>> getCustomerAllInfoList() {
         return SuccessResponse.of(
-                customerService.getCustomerList()
+                customerService.getCustomerAllInfoList()
         ).asHttp(HttpStatus.OK);
     }
 
@@ -85,7 +85,7 @@ public class CustomerController {
                 content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/{id}/all")
-    public ResponseEntity<SuccessResponse<CustomerAllInfoResponse>> getCustomerList(
+    public ResponseEntity<SuccessResponse<CustomerAllInfoResponse>> getCustomerAllInfo(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
             @PathVariable("id") Long customerId
     ) {
@@ -181,11 +181,11 @@ public class CustomerController {
                 content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("/{id}/families")
-    public ResponseEntity<SuccessResponse<List<FamilyHistoryInfoResponse>>> getFamilyHistories(
+    public ResponseEntity<SuccessResponse<List<FamilyHistoryInfoResponse>>> getFamilyHistoryList(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
             @PathVariable("id") Long customerId) {
         return SuccessResponse.of(
-                familyHistoryService.getFamilyHistories(customerId)
+                familyHistoryService.getFamilyHistoryList(customerId)
         ).asHttp(HttpStatus.OK);
     }
 
@@ -197,11 +197,11 @@ public class CustomerController {
                     description = "고객 가족력 반환")
     })
     @GetMapping("/contract-maintenance")
-    public ResponseEntity<SuccessResponse<List<CustomerAllInfoResponse>>> getContractMaintenanceCustomers(
+    public ResponseEntity<SuccessResponse<List<CustomerAllInfoResponse>>> getContractMaintenanceCustomerList(
             @Parameter(description = "계약 유지 대상자 타입", in = ParameterIn.QUERY)
             @RequestParam TargetType targetType) {
         return SuccessResponse.of(
-                customerService.getContractMaintenanceCustomers(targetType)
+                customerService.getContractMaintenanceCustomerList(targetType)
         ).asHttp(HttpStatus.OK);
     }
 

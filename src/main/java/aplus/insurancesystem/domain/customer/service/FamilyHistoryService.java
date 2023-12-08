@@ -8,9 +8,9 @@ import aplus.insurancesystem.domain.customer.entity.FamilyHistory;
 import aplus.insurancesystem.domain.customer.entity.customer.Customer;
 
 public interface FamilyHistoryService {
-    List<FamilyHistory> getFamilyHistories(Customer customer);
+    List<FamilyHistory> getFamilyHistoryList(Customer customer);
 
-    List<FamilyHistoryInfoResponse> getFamilyHistories(Long customerId);
+    List<FamilyHistoryInfoResponse> getFamilyHistoryList(Long customerId);
 
     void createFamilyHistory(Customer customer, CreateFamilyHistoryRequest request);
 }

@@ -51,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerQueryService.getCustomer(customerId);
         return CustomerDetailResponse.of(
                 customer,
-                familyHistoryService.getFamilyHistories(customer),
+                familyHistoryService.getFamilyHistoryList(customer),
                 contractService.getContracts(customer)
         );
     }
@@ -83,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerAllInfoResponse> getContractMaintenanceCustomers(TargetType targetType) {
+    public List<CustomerAllInfoResponse> getContractMaintenanceCustomerList(TargetType targetType) {
         return targetType.applyFunction(customerRepository)
                          .stream()
                          .map(CustomerAllInfoResponse::of)
@@ -121,7 +121,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerAllInfoResponse> getCustomerList() {
+    public List<CustomerAllInfoResponse> getCustomerAllInfoList() {
         return customerRepository.findAll()
                                  .stream()
                                  .map(CustomerAllInfoResponse::of)
