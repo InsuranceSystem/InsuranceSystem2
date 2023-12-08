@@ -30,14 +30,14 @@ public class InsuranceServiceImpl implements InsuranceService {
     private final TermsQueryService termsQueryService;
 
     @Override
-    public InsuranceDetailResponse getInsuranceInfo(Long insuranceId) {
+    public InsuranceDetailResponse getInsuranceDetail(Long insuranceId) {
         return insuranceRepository.findById(insuranceId)
                                   .map(InsuranceDetailResponse::of)
                                   .orElseThrow(InsuranceNotFoundException::new);
     }
 
     @Override
-    public List<InsuranceDetailResponse> getInsuranceList() {
+    public List<InsuranceDetailResponse> getInsuranceDetailList() {
         return insuranceRepository.findAllWithGuarantees()
                                   .stream()
                                   .map(InsuranceDetailResponse::of)

@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Schema(description = "보험 신청 Request")
 @RequiredArgsConstructor
-public class CreateInsuranceApplicationRequest {
+public class ApplyInsuranceRequest {
 
     private final Long customerId;
     private final PaymentCycle paymentCycle;

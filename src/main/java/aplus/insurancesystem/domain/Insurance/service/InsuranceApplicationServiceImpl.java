@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import aplus.insurancesystem.common.service.FileService;
-import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
+import aplus.insurancesystem.domain.Insurance.dto.request.ApplyInsuranceRequest;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationResultResponse;
@@ -45,7 +45,7 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
 
     @Override
     @Transactional
-    public void applyInsurance(Long insuranceId, CreateInsuranceApplicationRequest request) {
+    public void applyInsurance(Long insuranceId, ApplyInsuranceRequest request) {
         Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
         Customer customer = customerQueryService.getCustomer(request.getCustomerId());
 
@@ -74,18 +74,18 @@ public class InsuranceApplicationServiceImpl implements InsuranceApplicationServ
     }
 
     @Override
-    public List<InsuranceApplicationInfoResponse> getInsuranceApplicationList() {
+    public List<InsuranceApplicationInfoResponse> getInsuranceApplicationInfoList() {
         return insuranceApplicationRepository.findAll().stream()
                 .map(InsuranceApplicationInfoResponse::of)
                 .toList();
     }
 
     @Override
-    public InsuranceApplicationDetailResponse getInsuranceApplication(Long insuranceApplicationId) {
+    public InsuranceApplicationDetailResponse getInsuranceApplicationDetail(Long insuranceApplicationId) {
         InsuranceApplication insuranceApplication =
                 insuranceApplicationQueryService.getInsurance(insuranceApplicationId);
         List<FamilyHistory> familyHistories =
-                familyHistoryService.getFamilyHistories(insuranceApplication.getCustomer());
+                familyHistoryService.getFamilyHistoryList(insuranceApplication.getCustomer());
         return InsuranceApplicationDetailResponse.of(insuranceApplication, familyHistories);
     }
 

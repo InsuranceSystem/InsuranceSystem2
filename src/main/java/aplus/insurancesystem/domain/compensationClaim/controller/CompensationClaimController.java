@@ -1,14 +1,10 @@
 package aplus.insurancesystem.domain.compensationClaim.controller;
 
 import aplus.insurancesystem.common.dto.SuccessResponse;
-import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCarAccidentRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateCompensationClaimRequest;
-import aplus.insurancesystem.domain.compensationClaim.dto.request.CreateSurveyRequest;
-import aplus.insurancesystem.domain.compensationClaim.dto.request.UpdateSurveyRequest;
 import aplus.insurancesystem.domain.compensationClaim.dto.response.CarAccidentResponse;
 import aplus.insurancesystem.domain.compensationClaim.dto.response.CompensationClaimResponse;
-import aplus.insurancesystem.domain.compensationClaim.dto.response.SurveyResponse;
 import aplus.insurancesystem.domain.compensationClaim.service.CompensationClaimService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import aplus.insurancesystem.common.dto.SuccessResponse;
 import aplus.insurancesystem.domain.Insurance.dto.request.ApprovalInsuranceApplicationRequest;
-import aplus.insurancesystem.domain.Insurance.dto.request.CreateInsuranceApplicationRequest;
+import aplus.insurancesystem.domain.Insurance.dto.request.ApplyInsuranceRequest;
 import aplus.insurancesystem.domain.Insurance.dto.request.RejectInsuranceApplicationRequest;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationDetailResponse;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceApplicationInfoResponse;
@@ -55,7 +55,7 @@ public class InsuranceApplicationController {
     public ResponseEntity<Void> applyInsurance(
             @Parameter(description = "보험 id", in = ParameterIn.PATH)
             @PathVariable("id") Long insuranceId,
-            @ModelAttribute CreateInsuranceApplicationRequest request) {
+            @ModelAttribute ApplyInsuranceRequest request) {
         insuranceApplicationService.applyInsurance(insuranceId, request);
         return ResponseEntity.ok().build();
     }
@@ -68,9 +68,9 @@ public class InsuranceApplicationController {
     })
     @GetMapping
     public ResponseEntity<SuccessResponse<List<InsuranceApplicationInfoResponse>>>
-        getInsuranceApplicationList() {
+    getInsuranceApplicationInfoList() {
         return SuccessResponse.of(
-                insuranceApplicationService.getInsuranceApplicationList()
+                insuranceApplicationService.getInsuranceApplicationInfoList()
         ).asHttp(HttpStatus.OK);
     }
 
@@ -87,10 +87,10 @@ public class InsuranceApplicationController {
     })
     @GetMapping("/{id}/detail")
     public ResponseEntity<SuccessResponse<InsuranceApplicationDetailResponse>>
-        getInsuranceApplication(@Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
+    getInsuranceApplicationDetail(@Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
                                 @PathVariable("id") Long insuranceApplicationId) {
         return SuccessResponse.of(
-                insuranceApplicationService.getInsuranceApplication(insuranceApplicationId)
+                insuranceApplicationService.getInsuranceApplicationDetail(insuranceApplicationId)
         ).asHttp(HttpStatus.OK);
     }
 
@@ -183,7 +183,7 @@ public class InsuranceApplicationController {
     })
     @GetMapping("/{id}/result")
     public ResponseEntity<SuccessResponse<InsuranceApplicationResultResponse>>
-        getInsuranceApplicationInfo(@Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
+    getInsuranceApplicationResult(@Parameter(description = "보험 신청 id", in = ParameterIn.PATH)
                                     @PathVariable("id") Long insuranceApplicationId) {
         return SuccessResponse.of(
                 insuranceApplicationService.getInsuranceApplicationResult(insuranceApplicationId)

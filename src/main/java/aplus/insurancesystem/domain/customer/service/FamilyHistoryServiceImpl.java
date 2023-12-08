@@ -21,12 +21,12 @@ public class FamilyHistoryServiceImpl implements FamilyHistoryService{
     private final CustomerQueryService customerQueryService;
 
     @Override
-    public List<FamilyHistory> getFamilyHistories(Customer customer) {
+    public List<FamilyHistory> getFamilyHistoryList(Customer customer) {
         return familyHistoryRepository.findAllByCustomer(customer);
     }
 
     @Override
-    public List<FamilyHistoryInfoResponse> getFamilyHistories(Long customerId) {
+    public List<FamilyHistoryInfoResponse> getFamilyHistoryList(Long customerId) {
         return familyHistoryRepository.findAllByCustomer(customerQueryService.getCustomer(customerId))
                 .stream()
                 .map(FamilyHistoryInfoResponse::of)

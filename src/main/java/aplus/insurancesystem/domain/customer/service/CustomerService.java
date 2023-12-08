@@ -23,7 +23,7 @@ public interface CustomerService {
 
     CustomerAllInfoResponse getCustomerAllInfo(Long customerId);
 
-    List<CustomerAllInfoResponse> getContractMaintenanceCustomers(TargetType targetType);
+    List<CustomerAllInfoResponse> getContractMaintenanceCustomerList(TargetType targetType);
 
     void join(JoinRequest request);
 
@@ -31,7 +31,7 @@ public interface CustomerService {
 
     Boolean validateLoginId(String customerId);
 
-    List<CustomerAllInfoResponse> getCustomerList();
+    List<CustomerAllInfoResponse> getCustomerAllInfoList();
 
     void setAdmin(Long customerId, boolean setAdmin);
 }
