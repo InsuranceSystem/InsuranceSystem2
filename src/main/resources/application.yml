@@ -14,3 +14,9 @@ spring:
 
 springdoc:
   show-login-endpoint: true
+
+coolsms:
+  api:
+    key: ${COOLSMS_API_KEY}
+    secret: ${COOLSMS_API_SECRET}
+    from-number: ${COOLSMS_API_FROM_NUMBER}
