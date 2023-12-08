@@ -47,10 +47,10 @@ public class CompensationClaimController {
                     description = "고객ID로 청구 내역(리스트) 반환"),
 
     })
-    @GetMapping("/{id}")
+    @GetMapping("/{customerId}")
     public ResponseEntity<SuccessResponse<List<CompensationClaimResponse>>> getCompensationClaim(
             @Parameter(description = "고객 id", in = ParameterIn.PATH)
-            @PathVariable("id") Long customerId) {
+            @PathVariable("customerId") Long customerId) {
         return SuccessResponse.of(
                 compensationClaimService.getCompensationClaim(customerId)
         ).asHttp(HttpStatus.OK);
@@ -85,10 +85,10 @@ public class CompensationClaimController {
                     description = "CC001: id에 해당하는 청구 내역을 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @GetMapping("/{id}/document")
+    @GetMapping("/{ccid}/document")
     public ResponseEntity<InputStreamResource>
     getSubscription(@Parameter(description = "청구 id", in = ParameterIn.PATH)
-                    @PathVariable("id") Long ccid) {
+                    @PathVariable("ccid") Long ccid) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return ResponseEntity.ok()
