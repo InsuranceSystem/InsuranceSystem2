@@ -65,7 +65,7 @@ public class SecurityConfig {
                         .configurationSource(apiConfigurationSource()))
                 .formLogin((login) -> login
                         .loginPage("/loginpage")
-                        .loginProcessingUrl("/login")
+                        .loginProcessingUrl("/api/login")
                         .usernameParameter("loginId")
                         .passwordParameter("password")
                         .successHandler(loginSuccessHandler())
@@ -76,7 +76,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(authenticationEntryPoint())
                 )
                 .logout((logout) -> logout
-                        .logoutUrl("/logout")
+                        .logoutUrl("/api/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")

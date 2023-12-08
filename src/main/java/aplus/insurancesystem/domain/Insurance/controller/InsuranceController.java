@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/insurances")
+@RequestMapping("/api/insurances")
 @RequiredArgsConstructor
 public class InsuranceController {
 

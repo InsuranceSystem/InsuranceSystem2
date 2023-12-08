@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/terms")
+@RequestMapping("/api/terms")
 @RequiredArgsConstructor
 public class TermsController {
 
