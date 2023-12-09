@@ -14,6 +14,8 @@ spring:
 
 springdoc:
   show-login-endpoint: true
+  swagger-ui:
+    path: /api/index.html
 
 coolsms:
   api:
