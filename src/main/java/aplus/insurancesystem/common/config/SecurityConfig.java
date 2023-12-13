@@ -1,5 +1,6 @@
 package aplus.insurancesystem.common.config;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -11,20 +12,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import aplus.insurancesystem.common.security.AplusAccessDeniedHandler;
 import aplus.insurancesystem.common.security.AplusAuthenticationFailureHandler;
 import aplus.insurancesystem.common.security.AplusAuthenticationSuccessHandler;
+import aplus.insurancesystem.common.security.RoleToPath;
+import aplus.insurancesystem.domain.customer.entity.customer.Role;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private static final AntPathRequestMatcher[] adminPathRequestMatcher =
+        Arrays.stream(RoleToPath.ADMIN_URL.values())
+        .map(path -> new AntPathRequestMatcher(path.getUrl(), path.getMethod()))
+        .toArray(AntPathRequestMatcher[]::new);
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -42,23 +50,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new AplusAccessDeniedHandler();
-    }
-
-    @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return new AplusAuthenticationEntryPoint();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-                http
+        http
                 .authorizeHttpRequests((auth) -> auth
-//                        .requestMatchers("/customer/**").hasRole(Role.CUSTOMER.name())
-//                        .requestMatchers("/admin").hasRole(Role.ADMIN.name())
-                        .requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated()
+                    .requestMatchers(adminPathRequestMatcher).hasRole(Role.ADMIN.name())
+                    .requestMatchers("/**").permitAll()
+                    .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors((cors) -> cors
@@ -72,7 +74,6 @@ public class SecurityConfig {
                         .failureHandler(loginFailureHandler())
                 )
                 .exceptionHandling((exception) -> exception
-                        .accessDeniedHandler(accessDeniedHandler())
                         .authenticationEntryPoint(authenticationEntryPoint())
                 )
                 .logout((logout) -> logout
