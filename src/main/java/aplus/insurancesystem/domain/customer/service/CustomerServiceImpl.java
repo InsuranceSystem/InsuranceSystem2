@@ -3,10 +3,13 @@ package aplus.insurancesystem.domain.customer.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import aplus.insurancesystem.common.cache.CacheConst;
 import aplus.insurancesystem.domain.contract.service.ContractService;
 import aplus.insurancesystem.domain.customer.dto.request.CustomerUpdateRequest;
 import aplus.insurancesystem.domain.customer.dto.request.JoinRequest;
@@ -33,8 +36,9 @@ public class CustomerServiceImpl implements CustomerService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public CustomerInfoResponse getCustomerInfo(Long userId) {
-        return customerRepository.findById(userId)
+    @Cacheable(value = CacheConst.CUSTOMER_INFO, key = "#customerId")
+    public CustomerInfoResponse getCustomerInfo(Long customerId) {
+        return customerRepository.findById(customerId)
                 .map(CustomerInfoResponse::of)
                 .orElseThrow(CustomerNotFoundException::new);
     }
@@ -58,6 +62,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {CacheConst.CUSTOMER_INFO, CacheConst.CUSTOMER_ALL_INFO}, key = "#customerId")
     public void updateCustomer(Long customerId, CustomerUpdateRequest request) {
         Customer customer = customerQueryService.getCustomer(customerId);
         customer.setCustomerName(request.getCustomerName());
@@ -70,12 +75,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {CacheConst.CUSTOMER_INFO, CacheConst.CUSTOMER_ALL_INFO}, key = "#customerId")
     public void deleteCustomer(Long customerId) {
         Customer customer = customerQueryService.getCustomer(customerId);
         customerRepository.delete(customer);
     }
 
     @Override
+    @Cacheable(value = CacheConst.CUSTOMER_ALL_INFO, key = "#customerId")
     public CustomerAllInfoResponse getCustomerAllInfo(Long customerId) {
         return customerRepository.findById(customerId)
                 .map(CustomerAllInfoResponse::of)
