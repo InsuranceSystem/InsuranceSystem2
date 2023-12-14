@@ -54,4 +54,4 @@ jobs:
             docker rm insurance_system_prod
             docker rmi choihyeok/insurance_system_prod
             docker pull choihyeok/insurance_system_prod
-            docker run -d -p 8080:8080 --name insurance_system_prod choihyeok/insurance_system_prod
+            docker run -d -p 8080:8080 -v file_volume:/app/files --name insurance_system_prod choihyeok/insurance_system_prod

@@ -4,15 +4,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import aplus.insurancesystem.common.cache.CacheConst;
 import aplus.insurancesystem.domain.Insurance.dto.request.DesignInsuranceRequest;
 import aplus.insurancesystem.domain.Insurance.dto.request.UpdateInsuranceRequest;
 import aplus.insurancesystem.domain.Insurance.dto.response.InsuranceDetailResponse;
 import aplus.insurancesystem.domain.Insurance.entity.Guarantee;
-import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import aplus.insurancesystem.domain.Insurance.entity.Terms;
+import aplus.insurancesystem.domain.Insurance.entity.insurance.Insurance;
 import aplus.insurancesystem.domain.Insurance.exception.InsuranceNotFoundException;
 import aplus.insurancesystem.domain.Insurance.repository.GuaranteeRepository;
 import aplus.insurancesystem.domain.Insurance.repository.InsuranceRepository;
@@ -30,6 +33,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     private final TermsQueryService termsQueryService;
 
     @Override
+    @Cacheable(value = CacheConst.INSURANCE_DETAIL, key = "#insuranceId")
     public InsuranceDetailResponse getInsuranceDetail(Long insuranceId) {
         return insuranceRepository.findById(insuranceId)
                                   .map(InsuranceDetailResponse::of)
@@ -73,6 +77,7 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     @Override
     @Transactional
+    @CacheEvict(value = CacheConst.INSURANCE_DETAIL, key = "#insuranceId")
     public void updateInsurance(Long insuranceId, UpdateInsuranceRequest request) {
         Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
         insurance.setInsuranceName(request.getInsuranceName());
@@ -98,6 +103,7 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     @Override
     @Transactional
+    @CacheEvict(value = CacheConst.INSURANCE_DETAIL, key = "#insuranceId")
     public void deleteInsurance(Long insuranceId) {
         Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
         insuranceRepository.delete(insurance);
@@ -105,6 +111,7 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     @Override
     @Transactional
+    @CacheEvict(value = CacheConst.INSURANCE_DETAIL, key = "#insuranceId")
     public void registerInsurance(Long insuranceId) {
         Insurance insurance = insuranceQueryService.getInsurance(insuranceId);
         insurance.setAuthorization(true);
