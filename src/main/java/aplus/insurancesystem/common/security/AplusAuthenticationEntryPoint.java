@@ -1,4 +1,4 @@
-package aplus.insurancesystem.common.config;
+package aplus.insurancesystem.common.security;
 
 import java.io.IOException;
 
