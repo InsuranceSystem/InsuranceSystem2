@@ -21,7 +21,9 @@ public class JavaFileService implements FileService{
     private final String FILE_PATH;
 
     public JavaFileService(@Value("${spring.profiles.active}") String activeProfile) {
-        if (activeProfile.equals("test")) {
+        if (activeProfile.equals("prod")) {
+            FILE_PATH = "/app/files/";
+        } else if (activeProfile.equals("test")) {
             FILE_PATH = "/home/worker/files/";
         } else {
             FILE_PATH = System.getProperty("user.dir") + "/files/";
