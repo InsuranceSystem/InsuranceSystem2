@@ -35,7 +35,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 @RequiredArgsConstructor
 public class CustomerController {
 

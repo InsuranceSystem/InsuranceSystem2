@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 version = "v1"),
         servers = {
                 @Server(url = "https://port-0-insurancesystem-euegqv2blnzmormf.sel5.cloudtype.app/", description = "테스트 서버"),
+                @Server(url = "http://52.78.86.187/", description = "실서버")
         }
 )
 @Configuration
@@ -21,7 +22,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi allOpenApi() {
-        String[] paths = {"/**"};
+        String[] paths = {"/api/**"};
 
         return GroupedOpenApi
                 .builder()
@@ -32,7 +33,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi customerOpenApi() {
-        String[] paths = {"/customers/**"};
+        String[] paths = {"/api/customers/**"};
 
         return GroupedOpenApi
                 .builder()
@@ -43,7 +44,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi insuranceOpenApi() {
-        String[] paths = {"/insurances/**"};
+        String[] paths = {"/api/insurances/**"};
 
         return GroupedOpenApi
                 .builder()
@@ -54,7 +55,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi termsOpenApi() {
-        String[] paths = {"/terms/**"};
+        String[] paths = {"/api/terms/**"};
 
         return GroupedOpenApi
                 .builder()
@@ -65,7 +66,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi insuranceApplicationOpenApi() {
-        String[] paths = {"/insurance-applications/**"};
+        String[] paths = {"/api/insurance-applications/**"};
 
         return GroupedOpenApi
                 .builder()
@@ -76,7 +77,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi contractOpenApi() {
-        String[] paths = {"/contracts/**"};
+        String[] paths = {"/api/contracts/**"};
 
         return GroupedOpenApi
                 .builder()
@@ -87,7 +88,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi paymentOpenApi() {
-        String[] paths = {"/payments/**"};
+        String[] paths = {"/api/payments/**"};
 
         return GroupedOpenApi
                 .builder()
@@ -98,7 +99,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi compensationClaimOpenApi() {
-        String[] paths = {"/compensation-claim/**"};
+        String[] paths = {"/api/compensation-claim/**"};
 
         return GroupedOpenApi
                 .builder()
@@ -118,7 +119,7 @@ public class SwaggerConfig {
     }
     @Bean
     public GroupedOpenApi surveyOpenApi() {
-        String[] paths = {"/survey/**"};
+        String[] paths = {"/api/survey/**"};
 
         return GroupedOpenApi
                 .builder()
